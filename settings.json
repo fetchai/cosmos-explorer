@@ -1,0 +1,50 @@
+{
+  "public":{
+    "chainName": "Enigma Mainnet",
+    "chainId": "enigma-1",
+    "gtm": "{Add your Google Tag Manager ID here}",
+    "slashingWindow": 100,
+    "uptimeWindow": 100,
+    "initialPageSize": 30,
+    "bech32PrefixAccAddr": "enigma",
+    "bech32PrefixAccPub": "enigmapub",
+    "bech32PrefixValAddr": "enigmavaloper",
+    "bech32PrefixValPub": "enigmavaloperpub",
+    "bech32PrefixConsAddr": "enigmavalcons",
+    "bech32PrefixConsPub": "enigmavalconspub",
+    "bondDenom": "uscrt",
+    "powerReduction": 1000000,
+    "coins": [
+      {
+        "denom": "uscrt",
+        "displayName": "SCRT",
+        "displayNamePlural": "SCRTS",
+        "fraction": 1000000
+      },
+    ],
+    "gasPrice": 0.02,
+    "coingeckoId": "enigma"
+  },
+  "genesisFile": "https://raw.githubusercontent.com/enigmampc/enigmachain/master/enigma-1-genesis.json",
+  "remote":{
+    "rpc":"https://127.0.0.1:26558",
+    "lcd":"https://127.0.0.1:1317"
+  },
+  "debug": {
+    "startTimer": true,
+    "readGenesis": true
+  },
+  "params":{
+    "startHeight": 0,
+    "defaultBlockTime": 5000,
+    "blockInterval": 15000,
+    "consensusInterval": 1000,
+    "statusInterval":7500,
+    "signingInfoInterval": 1800000,
+    "proposalInterval": 5000,
+    "missedBlocksInterval": 60000,
+    "delegationInterval": 900000
+  }
+}
+
+
