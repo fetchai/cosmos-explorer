@@ -197,7 +197,7 @@ Meteor.methods({
                         blockData.lastBlockHash = block.block.header.last_block_id.hash;
                         blockData.proposerAddress = block.block.header.proposer_address;
                         blockData.validators = [];
-                        let precommits = block.block.last_commit.precommits;
+                        let precommits = block.block.last_commit.signatures;
                         if (precommits != null){
                             // console.log(precommits.length);
                             for (let i=0; i<precommits.length; i++){
@@ -267,13 +267,14 @@ Meteor.methods({
                                     exists: false,
                                     voting_power: parseInt(validators.result.validators[i].voting_power)//getValidatorVotingPower(existingValidators, address)
                                 }
-
-                                for (j in precommits){
-                                    if (precommits[j] != null){
-                                        if (address == precommits[j].validator_address){
-                                            record.exists = true;
-                                            precommits.splice(j,1);
-                                            break;
+                                if (precommits != null) {
+                                    for (j in precommits) {
+                                        if (precommits[j] != null) {
+                                            if (address == precommits[j].validator_address) {
+                                                record.exists = true;
+                                                precommits.splice(j, 1);
+                                                break;
+                                            }
                                         }
                                     }
                                 }
@@ -287,6 +288,7 @@ Meteor.methods({
                                     let uptime = 0;
                                     // let endAggTime = new Date();
                                     // console.log("Get aggregated uptime for "+existingValidators[i].address+": "+((endAggTime-startAggTime)/1000)+"seconds.");
+                                    console.log(`uptime: ${JSON.stringify(numBlocks[0])} ${numBlocks.length}}`)
                                     if ((numBlocks[0] != null) && (numBlocks[0].uptime != null)){
                                         uptime = numBlocks[0].uptime;
                                     }
@@ -418,6 +420,8 @@ Meteor.methods({
                                     // });
                                 }
                                 else{
+                                    console.log(`Testing for val: ${validator.address}, pubkey: ${valExist.consensus_pubkey}`);
+
                                     let validatorData = validatorSet[valExist.consensus_pubkey]
                                     if (validatorData){
                                         if (validatorData.description && (!valExist.description || validatorData.description.identity !== valExist.description.identity))
@@ -432,14 +436,15 @@ Meteor.methods({
                                         validator.unbonding_height = validatorData.unbonding_height;
                                         validator.unbonding_time = validatorData.unbonding_time;
                                         validator.commission = validatorData.commission;
-
+                                        validator.operator_address = validatorData.operator_address;
                                         // calculate self delegation percentage every 30 blocks
+                                        validator.delegator_address = Meteor.call('getDelegator', validatorData.operator_address);
 
-                                        if (height % 30 == 1){
+                                        if (height % 30 === 1){
                                             try{
-                                                let response = HTTP.get(LCD + '/staking/delegators/'+valExist.delegator_address+'/delegations/'+valExist.operator_address);
+                                                let response = HTTP.get(LCD + '/staking/delegators/'+validator.delegator_address+'/delegations/'+validator.operator_address);
 
-                                                if (response.statusCode == 200){
+                                                if (response.statusCode === 200){
                                                     let selfDelegation = JSON.parse(response.content).result;
                                                     if (selfDelegation.shares){
                                                         validator.self_delegation = parseFloat(selfDelegation.shares)/parseFloat(validator.delegator_shares);
@@ -527,10 +532,10 @@ Meteor.methods({
                                             "value": Meteor.call('bech32ToPubkey', conPubKey)
                                         }
                                         validatorData.address = getAddress(validatorData.pub_key);
-                                        validatorData.delegator_address = Meteor.call('getDelegator', validatorData.operator_address);
 
                                         validatorData.accpub = Meteor.call('pubkeyToBech32', validatorData.pub_key, Meteor.settings.public.bech32PrefixAccPub);
                                         validatorData.operator_pubkey = Meteor.call('pubkeyToBech32', validatorData.pub_key, Meteor.settings.public.bech32PrefixValPub);
+
                                         console.log(JSON.stringify(validatorData))
                                         bulkValidators.find({consensus_pubkey: conPubKey}).upsert().updateOne({$set:validatorData});
                                     } else if (dbValidators[conPubKey] == 2) {
