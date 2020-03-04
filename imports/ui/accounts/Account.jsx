@@ -75,7 +75,7 @@ export default class AccountDetails extends Component{
                     loading:false
                 })
             }
-
+            console.log(`${JSON.stringify(result)}`)
             if (result){
 
                 if (result.available){
@@ -92,6 +92,7 @@ export default class AccountDetails extends Component{
                 if (result.delegations && result.delegations.length > 0){
                     result.delegations.forEach((delegation, i) => {
                         const amount = delegation.balance.amount || delegation.balance;
+                        console.log(`${this.state.delegated+parseFloat(amount)}`)
                         this.setState({
                             delegated: this.state.delegated+parseFloat(amount),
                         })

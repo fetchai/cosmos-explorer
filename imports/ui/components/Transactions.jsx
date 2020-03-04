@@ -14,13 +14,13 @@ export default class ValidatorTransactions extends Component{
             distributionTxs: {},
             governanceTxs: {},
             slashingTxs: {},
-        };  
+        };
     }
 
     componentDidUpdate(prevProps){
         if (this.props != prevProps){
             if (this.props.transactionsExist){
-                // console.log("have txs.");
+                //console.log(`have txs. ${JSON.stringify(this.props.transferTxs)}`);
                 this.setState({
                     transferTxs: this.props.transferTxs,
                     stakingTxs: this.props.stakingTxs,
@@ -37,7 +37,7 @@ export default class ValidatorTransactions extends Component{
             return <Spinner color="primary" type="glow" />
         }
         else if (this.props.transactionsExist){
-            return <TransactionTabs 
+            return <TransactionTabs
                 transferTxs={this.state.transferTxs}
                 stakingTxs={this.state.stakingTxs}
                 distributionTxs={this.state.distributionTxs}
