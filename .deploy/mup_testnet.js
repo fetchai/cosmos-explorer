@@ -1,7 +1,7 @@
 module.exports = {
     servers: {
         one: {
-            host: '35.192.10.29',
+            host: '104.196.173.167',
             username: 'itzygro',
         }
     },
@@ -18,7 +18,7 @@ module.exports = {
             serverOnly: true
         },
         env: {
-            ROOT_URL: 'https://explorer.scrt.cashmaney.com',
+            ROOT_URL: 'https://testnet.scrt.cashmaney.com',
             MONGO_URL: 'mongodb://localhost/meteor'
         }
     },
@@ -29,7 +29,7 @@ module.exports = {
         }
     },
     proxy: {
-        domains: 'explorer.scrt.cashmaney.com',
+        domains: 'testnet.scrt.cashmaney.com',
         ssl: {
             // Enable let's encrypt to create free certificates.
             // The email is used by Let's Encrypt to notify you when the

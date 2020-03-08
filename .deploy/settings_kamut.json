@@ -1,0 +1,52 @@
+{
+  "public":{
+    "chainName": "Enigma Kamut Testnet",
+    "chainId": "kamut-testnet-1",
+    "gtm": "GTM-MBG89SR",
+    "slashingWindow": 100,
+    "uptimeWindow": 100,
+    "initialPageSize": 30,
+    "bech32PrefixAccAddr": "enigma",
+    "bech32PrefixAccPub": "enigmapub",
+    "bech32PrefixValAddr": "enigmavaloper",
+    "bech32PrefixValPub": "enigmavaloperpub",
+    "bech32PrefixConsAddr": "enigmavalcons",
+    "bech32PrefixConsPub": "enigmavalconspub",
+    "bondDenom": "uscrt",
+    "powerReduction": 1000000,
+    "coins": [
+      {
+        "denom": "uscrt",
+        "displayName": "SCRT",
+        "displayNamePlural": "SCRTS",
+        "fraction": 1000000
+      }
+    ],
+    "gasPrice": 0.02,
+    "coingeckoId": "enigma",
+    "networks": "https://us-central1-avian-branch-269222.cloudfunctions.net/explorer-list"
+  },
+
+  "genesisFile": "https://raw.githubusercontent.com/chainofsecrets/kamut-testnet/master/genesis.json",
+  "remote":{
+    "rpc":"http://198.74.53.44:26657",
+    "lcd":"http://198.74.53.44"
+  },
+  "debug": {
+    "startTimer": true,
+    "readGenesis": true
+  },
+  "params":{
+    "startHeight": 0,
+    "defaultBlockTime": 5000,
+    "blockInterval": 15000,
+    "consensusInterval": 1000,
+    "statusInterval":7500,
+    "signingInfoInterval": 1800000,
+    "proposalInterval": 5000,
+    "missedBlocksInterval": 60000,
+    "delegationInterval": 900000
+  }
+}
+
+

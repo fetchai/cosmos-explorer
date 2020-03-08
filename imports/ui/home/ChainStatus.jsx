@@ -26,7 +26,7 @@ export default class ChainStatus extends React.Component {
     }
 
     componentDidUpdate(prevProps){
-        if (prevProps != this.props){
+        if (prevProps !== this.props){
             this.setState({
                 blockHeight: numbro(this.props.status.latestBlockHeight).format({thousandSeparated: true}),
                 blockTime: <TimeStamp time={this.props.status.latestBlockTime}/>,

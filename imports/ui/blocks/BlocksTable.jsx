@@ -17,7 +17,7 @@ export default class BlocksTable extends Component {
         super(props);
         this.state = {
             limit: Meteor.settings.public.initialPageSize,
-            sidebarOpen: (props.location.pathname.split("/blocks/").length == 2)
+            sidebarOpen: (props.location.pathname.split("/blocks/").length === 2)
         };
 
         this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
@@ -26,15 +26,15 @@ export default class BlocksTable extends Component {
     isBottom(el) {
         return el.getBoundingClientRect().bottom <= window.innerHeight;
     }
-      
+
     componentDidMount() {
         document.addEventListener('scroll', this.trackScrolling);
     }
-    
+
     componentWillUnmount() {
         document.removeEventListener('scroll', this.trackScrolling);
     }
-    
+
     trackScrolling = () => {
         const wrappedElement = document.getElementById('block-table');
         if (this.isBottom(wrappedElement)) {
@@ -55,9 +55,9 @@ export default class BlocksTable extends Component {
     };
 
     componentDidUpdate(prevProps){
-        if (this.props.location.pathname != prevProps.location.pathname){
+        if (this.props.location.pathname !== prevProps.location.pathname){
             this.setState({
-                sidebarOpen: (this.props.location.pathname.split("/blocks/").length == 2)
+                sidebarOpen: (this.props.location.pathname.split("/blocks/").length === 2)
             })
         }
     }
@@ -71,7 +71,7 @@ export default class BlocksTable extends Component {
                 }
                 Meteor.clearTimeout(timer);
             },500)
-        }); 
+        });
     }
 
     render(){
@@ -85,12 +85,12 @@ export default class BlocksTable extends Component {
                 <Col md={9} xs={12} className="text-md-right"><ChainStates /></Col>
             </Row>
             <Switch>
-                <Route path="/blocks/:blockId" render={(props)=> <Sidebar 
+                <Route path="/blocks/:blockId" render={(props)=> <Sidebar
                     sidebar={<Block {...props} />}
                     open={this.state.sidebarOpen}
                     onSetOpen={this.onSetSidebarOpen}
-                    styles={{ sidebar: { 
-                        background: "white", 
+                    styles={{ sidebar: {
+                        background: "white",
                         position: "fixed",
                         width: '85%',
                         zIndex: 4

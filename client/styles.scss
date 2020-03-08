@@ -1,6 +1,12 @@
 $forbole-red: #bd081c;
-$enigma-blue: #660eff;
+$enigma-blue: #4d88ff; // kamut
+//$enigma-blue: #660eff; //mainnet
 $primary: $enigma-blue !default;
+
+
+//@import "~bootswatch/dist/materia/variables";
+//@import "~bootstrap/scss/bootstrap";
+//@import "~bootswatch/dist/materia/bootswatch";
 
 @import "materia/variables";
 @import "bootstrap";

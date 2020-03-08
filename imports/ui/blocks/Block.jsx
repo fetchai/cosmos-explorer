@@ -24,7 +24,7 @@ export default class Block extends Component{
     }
 
     componentDidUpdate(prevProps){
-        if (this.props != prevProps){
+        if (this.props !== prevProps){
             if (this.props.transactionsExist){
                 // console.log("have txs.");
                 this.setState({

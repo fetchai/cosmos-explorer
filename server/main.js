@@ -19,8 +19,6 @@ timerMissedBlock = 0;
 timerDelegation = 0;
 timerAggregate = 0;
 
-const DEFAULTSETTINGS = '/default_settings.json';
-
 updateChainStatus = () => {
     Meteor.call('chain.updateStatus', (error, result) => {
         if (error){
@@ -44,7 +42,7 @@ updateBlock = () => {
 }
 
 getConsensusState = () => {
-    Meteor.call('chain.getConsensusState', (error, result) => {
+    Meteor.call('chain.getConsensusState', (error, _) => {
         if (error){
             console.log("get consensus: "+error)
         }
@@ -166,12 +164,12 @@ Meteor.startup(function(){
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
         import DEFAULTSETTINGSJSON from '../default_settings.json'
         Object.keys(DEFAULTSETTINGSJSON).forEach((key) => {
-            if (Meteor.settings[key] == undefined) {
+            if (Meteor.settings[key] === undefined) {
                 console.warn(`CHECK SETTINGS JSON: ${key} is missing from settings`)
                 Meteor.settings[key] = {};
             }
             Object.keys(DEFAULTSETTINGSJSON[key]).forEach((param) => {
-                if (Meteor.settings[key][param] == undefined){
+                if (Meteor.settings[key][param] === undefined){
                     console.warn(`CHECK SETTINGS JSON: ${key}.${param} is missing from settings`)
                     Meteor.settings[key][param] = DEFAULTSETTINGSJSON[key][param]
                 }
@@ -199,11 +197,11 @@ Meteor.startup(function(){
 
                 if (Meteor.settings.params.proposalInterval >= 0) {
                     timerProposal = Meteor.setInterval(function () {
-                      getProposals();
+                        getProposals();
                     }, Meteor.settings.params.proposalInterval);
 
                     timerProposalsResults = Meteor.setInterval(function () {
-                      getProposalsResults();
+                        getProposalsResults();
                     }, Meteor.settings.params.proposalInterval);
                 }
 
@@ -217,15 +215,15 @@ Meteor.startup(function(){
 
                 timerAggregate = Meteor.setInterval(function(){
                     let now = new Date();
-                    if ((now.getUTCSeconds() == 0)){
+                    if ((now.getUTCSeconds() === 0)){
                         aggregateMinutely();
                     }
 
-                    if ((now.getUTCMinutes() == 0) && (now.getUTCSeconds() == 0)){
+                    if ((now.getUTCMinutes() === 0) && (now.getUTCSeconds() === 0)){
                         aggregateHourly();
                     }
 
-                    if ((now.getUTCHours() == 0) && (now.getUTCMinutes() == 0) && (now.getUTCSeconds() == 0)){
+                    if ((now.getUTCHours() === 0) && (now.getUTCMinutes() === 0) && (now.getUTCSeconds() === 0)){
                         aggregateDaily();
                     }
                 }, 1000)

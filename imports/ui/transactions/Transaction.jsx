@@ -21,8 +21,8 @@ export default class Transaction extends Component{
     }
 
     render(){
-        
-        
+
+
         if (this.props.loading){
             return <Container id="transaction">
                 <Spinner type="grow" color="primary" />
@@ -41,7 +41,7 @@ export default class Transaction extends Component{
                         <Alert color="danger">
                             <CosmosErrors
                                 code={tx.code}
-                                logs={tx.logs}
+                                logs={tx}
                                 gasWanted={tx.gas_wanted}
                                 gasUses={tx.gas_used}
                             />
@@ -66,7 +66,7 @@ export default class Transaction extends Component{
                                 <Col md={8} className="value">{numbro(tx.gas_used).format("0,0")} / {numbro(tx.gas_wanted).format("0,0")}</Col>
                                 <Col md={4} className="label"><T>transactions.memo</T></Col>
                                 <Col md={8} className="value"><Markdown markup={ tx.tx.value.memo } /></Col>
-                              
+
                             </Row>
                         </CardBody>
                     </Card>

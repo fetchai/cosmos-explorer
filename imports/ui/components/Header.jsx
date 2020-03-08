@@ -85,7 +85,7 @@ export default class Header extends Component {
                                     return <span key={i}>
                                         <DropdownItem header><img src={network.logo} /> {network.name}</DropdownItem>
                                         {network.links.map((link, k) => {
-                                            return <DropdownItem key={k} disabled={link.chain_id == Meteor.settings.public.chainId}>
+                                            return <DropdownItem key={k} disabled={link.chain_id === Meteor.settings.public.chainId}>
                                                 <a href={link.url} target="_blank">{link.chain_id} <Badge size="xs" color="secondary">{link.name}</Badge></a>
                                             </DropdownItem>})}
                                         {(i < networks.length - 1)?<DropdownItem divider />:''}
@@ -196,7 +196,7 @@ export default class Header extends Component {
                                         <i className="material-icons large">account_circle</i>
                                         <UncontrolledPopover className="d-none d-lg-block" trigger="legacy" placement="bottom" target="user-acconut-icon">
                                             <PopoverBody>
-                                                <div className="text-center"> 
+                                                <div className="text-center">
                                                 <p><T>accounts.signInText</T></p>
                                                 <p><Link className="text-nowrap" to={`/account/${signedInAddress}`}>{signedInAddress}</Link></p>
                                                 <Button className="float-right" color="link" onClick={this.signOut.bind(this)}><i className="material-icons">exit_to_app</i><span> <T>accounts.signOut</T></span></Button>

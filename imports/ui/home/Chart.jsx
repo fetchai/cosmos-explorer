@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {Line} from 'react-chartjs-2';
-import { Row, Col, Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Progress, Spinner } from 'reactstrap';
+import {Card, CardBody, Spinner} from 'reactstrap';
 import moment from 'moment';
 import i18n from 'meteor/universe:i18n';
-import TimeStamp from '../components/TimeStamp.jsx';
 import SentryBoundary from '../components/SentryBoundary.jsx';
 
 
@@ -21,7 +19,7 @@ export default class Chart extends Component{
     }
 
     componentDidUpdate(prevProps){
-        if (prevProps.history != this.props.history){
+        if (prevProps.history !== this.props.history){
             let dates = [];
             let heights = [];
             let blockTime = [];
@@ -80,7 +78,7 @@ export default class Chart extends Component{
                             tooltips: {
                                 callbacks: {
                                     label: function(tooltipItem, data) {
-                                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                                        let label = data.datasets[tooltipItem.datasetIndex].label || '';
 
                                         if (label) {
                                             label += ': ';
@@ -104,7 +102,7 @@ export default class Chart extends Component{
                             tooltips: {
                                 callbacks: {
                                     label: function(tooltipItem, data) {
-                                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                                        let label = data.datasets[tooltipItem.datasetIndex].label || '';
 
                                         if (label) {
                                             label += ': ';
@@ -172,7 +170,7 @@ export default class Chart extends Component{
                             position: 'left',
                             ticks: {
                             // Include a dollar sign in the ticks
-                                callback: function(value, index, values) {
+                                callback: function(value, _, __) {
                                     return value+'s';
                                 }
                             }

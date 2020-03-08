@@ -67,33 +67,25 @@ export default class CosmosErrors extends Component {
             error: errors.sdk[1],
             message: ""
         }
-        if (props.logs){
-            if (props.logs.length > 0){
-                for (let i in props.logs){
-                    if (!props.logs[i].success){
-                        let error = {};
-                        try {
-                            error = JSON.parse(props.logs[i].log);
-                        }
-                        catch (e){
-                            // debug(e);
-                            error = {
-                                code: 1,
-                                message: "Unknown error"
-                            }
-                        }
-                        
-                        this.state = {
-
-                            error: (error.codespace && error.code && errors[error.codespace] && errors[error.codespace][error.code]) || "Unknown error",
-                            message: error.message || ""
-                        }
-                    }
+        // console.log(`logs: ${JSON.stringify(props.logs)}`)
+        if (props.logs.raw_log) {
+            let error = {};
+            try {
+                error.code = props.code
+                error.message = props.logs.raw_log;
+            } catch (e) {
+                // debug(e);
+                error = {
+                    code: 1,
+                    message: "Unknown error"
                 }
             }
-        }
-        else{
-            if (props.code == 12){
+            this.state = {
+                error: (error.codespace && error.code && errors[error.codespace] && errors[error.codespace][error.code]) || "Unknown error",
+                message: error.message || ""
+            }
+        } else {
+            if (props.code === 12){
                 this.state = {
                     error: errors.sdk[12],
                     message: "gas uses ("+numbro(props.gasUses).format("0,0")+") > gas wanted ("+numbro(props.gasWanted).format("0,0")+")"

@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Row, Col, Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Progress, Spinner } from 'reactstrap';
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
+import {Card, CardBody, CardSubtitle, Col, Progress, Row, Spinner} from 'reactstrap';
 import Avatar from '../components/Avatar.jsx';
 import CountDown from '../components/CountDown.jsx';
 import moment from 'moment';
@@ -18,7 +17,7 @@ export default class Consensus extends Component{
     }
 
     componentDidUpdate(prevProps){
-        if (prevProps.consensus != this.props.consensus){
+        if (prevProps.consensus !== this.props.consensus){
             if (this.props.consensus.latestBlockTime){
                 // console.log()
                 let lastSync = moment(this.props.consensus.latestBlockTime);

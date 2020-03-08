@@ -84,7 +84,6 @@ export default class AccountDetails extends Component{
                         available: cloneDeep(result.available),
                         denom: Coin.StakingCoin.denom,
                         total: cloneDeep(result.available)
-
                     })
                 }
 
@@ -135,6 +134,7 @@ export default class AccountDetails extends Component{
                     const totalRewards  = cloneDeep(result.total_rewards);
 
                     totalRewards.forEach((rewardNum, i) => {
+                        console.log(`${JSON.stringify(rewardNum)}`)
                         if(rewardNum.denom === this.state.total[i].denom)
                             this.state.total[i].amount = parseFloat(this.state.total[i].amount) + parseFloat(rewardNum.amount);
                     }, this)
