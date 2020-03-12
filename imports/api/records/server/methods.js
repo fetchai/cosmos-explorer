@@ -33,6 +33,7 @@ const getBlockStats = (startHeight, latestHeight) => {
             blockStats[block.height] = { height: block.height };
             console.log(`block ${block.height} does not have an entry`);
         }
+        console.log(`*********** ${JSON.stringify(block)}`)
         _.assign(blockStats[block.height], {
             precommits: block.precommits,
             averageBlockTime: block.averageBlockTime,

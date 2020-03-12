@@ -5,6 +5,7 @@ import { Card, CardHeader, Row, Col } from 'reactstrap';
 import numbro from 'numbro';
 import i18n from 'meteor/universe:i18n';
 import Coin from '/both/utils/coins.js'
+import {Clock} from "./Clock";
 
 const T = i18n.createComponent();
 
@@ -21,12 +22,12 @@ export default class ChainStates extends Component{
 
 
         if (Meteor.isServer){
-                         
+
             if (this.props.chainStates.communityPool){
                 let commPool = []
                 this.props.chainStates.communityPool.forEach((pool, i) => {
                     commPool[i] = pool;
-                },)   
+                },)
                         this.setState({
                             communityPool: [... commPool],
                             inflation: numbro(this.props.chainStates.inflation).format("0.00%")
@@ -50,7 +51,7 @@ export default class ChainStates extends Component{
             if (this.props.chainStates.communityPool){
                 this.props.chainStates.communityPool.forEach((pool, i) => {
                     communityPools[i] = pool;
-                },)   
+                },)
                         this.setState({
                             communityPool: [... communityPools],
                             inflation: numbro(this.props.chainStates.inflation).format("0.00%")
@@ -67,16 +68,16 @@ export default class ChainStates extends Component{
             }
         }
     }
- 
+
 
     renderValues(propsValue){
             let poolValues = [];
             propsValue.map((pool,i) => {
-                poolValues[i] = new Coin(pool.amount, pool.denom).toString(4)  
+                poolValues[i] = new Coin(pool.amount, pool.denom).toString(4)
                     })
 
             return poolValues.join(', ')
-           
+
     }
     render(){
 
@@ -86,6 +87,7 @@ export default class ChainStates extends Component{
                 <Row className="text-nowrap">
                     <Col xs={4} md="auto"><small><span><T>chainStates.inflation</T>:</span> <strong>{this.state.inflation}</strong></small></Col>
                     <Col xs={8} md="auto"><small><span><T>chainStates.communityPool</T>:</span> <strong>{(this.renderValues(this.state.communityPool))}</strong></small></Col>
+                    <Col xs={8} md="auto"><small><strong><Clock /></strong></small></Col>
                 </Row>
             </CardHeader>
         </Card>

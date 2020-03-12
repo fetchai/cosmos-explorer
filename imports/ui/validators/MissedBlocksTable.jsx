@@ -44,14 +44,14 @@ const aggregateData = (missedRecords) => {
         let length = aggregatedMissedRecords.length;
         if (isChainOngoing) {
             let chain = aggregatedMissedRecords[length - 1];
-            if (chain.blocks[chain.blocks.length - 1].blockHeight - record.blockHeight == 1) {
+            if (chain.blocks[chain.blocks.length - 1].blockHeight - record.blockHeight === 1) {
                 chain.blocks.push(record);
             } else {
                 aggregatedMissedRecords.push(record);
                 isChainOngoing = false;
             }
 
-        } else if (length >= DOWNTIMECHUCK && (aggregatedMissedRecords[length - DOWNTIMECHUCK].blockHeight - record.blockHeight) == DOWNTIMECHUCK) {
+        } else if (length >= DOWNTIMECHUCK && (aggregatedMissedRecords[length - DOWNTIMECHUCK].blockHeight - record.blockHeight) === DOWNTIMECHUCK) {
             let chain = {
                 blocks: aggregatedMissedRecords.splice(length - DOWNTIMECHUCK)
             }
@@ -144,7 +144,7 @@ export default class MissedBlocksTable extends Component{
         return <Table className="missed-records-table">
             <thead><tr>
                 <th colSpan='2'>Block Height</th>
-                {grouped?null:<th className='text-capitalize'>{this.props.type}</th>}
+                {grouped ? null : <th className='text-capitalize'>{this.props.type}</th>}
                 <th>Commit Time</th>
                 <th>Block Time</th>
                 <th>Missed Count</th>

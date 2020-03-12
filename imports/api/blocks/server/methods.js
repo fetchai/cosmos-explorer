@@ -465,7 +465,7 @@ Meteor.methods({
                                     let prevVotingPower = VotingPowerHistory.findOne({address:validator.address}, {height:-1, limit:1});
 
                                     if (prevVotingPower){
-                                        if (prevVotingPower.voting_power != validator.voting_power){
+                                        if (prevVotingPower.voting_power !== validator.voting_power){
                                             let changeType = (prevVotingPower.voting_power > validator.voting_power)?'down':'up';
                                             let changeData = {
                                                 address: validator.address,
