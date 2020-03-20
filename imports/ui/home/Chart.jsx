@@ -7,8 +7,17 @@ import i18n from 'meteor/universe:i18n';
 import TimeStamp from '../components/TimeStamp.jsx';
 import SentryBoundary from '../components/SentryBoundary.jsx';
 
-
 const T = i18n.createComponent();
+
+const lightPurpleColor = '#b57ba9';
+const darkPurpleColor = '#b57ba9';
+
+const lightBlueColor = '#9bb7e9';
+const darkBlueColor = '#5887da';
+
+const lightGreenColor = '#80d2c6';
+const darkGreenColor = '#2bb5a2';
+
 export default class Chart extends Component{
     constructor(props){
         super(props);
@@ -46,9 +55,9 @@ export default class Chart extends Component{
                             lineTension: 0,
                             yAxisID: 'VotingPower',
                             pointRadius: 1,
-                            borderColor: 'rgba(255,152,0,0.5)',
+                            borderColor: darkBlueColor,
                             borderJoinStyle: 'round',
-                            backgroundColor: 'rgba(255,193,101,0.5)',
+                            backgroundColor: lightBlueColor,
                             data: votingPower
                         },
                         {
@@ -57,9 +66,9 @@ export default class Chart extends Component{
                             lineTension: 0,
                             yAxisID: 'Validators',
                             pointRadius: 1,
-                            borderColor: 'rgba(189,28,8,0.5)',
+                            borderColor: darkGreenColor,
                             borderJoinStyle: 'round',
-                            backgroundColor: 'rgba(255,103,109,0.5)',
+                            backgroundColor: lightGreenColor,
                             data: validators,
                         }
                     ]
@@ -73,9 +82,9 @@ export default class Chart extends Component{
                             lineTension: 0,
                             yAxisID: 'Time',
                             pointRadius: 1,
-                            borderColor: 'rgba(156,39,176,0.5)',
+                            borderColor: darkPurpleColor,
                             borderJoinStyle: 'round',
-                            backgroundColor: 'rgba(229,112,249,0.5)',
+                            backgroundColor: lightPurpleColor,
                             data: blockTime,
                             tooltips: {
                                 callbacks: {
@@ -97,9 +106,9 @@ export default class Chart extends Component{
                             lineTension: 0,
                             yAxisID: 'Time',
                             pointRadius: 1,
-                            borderColor: 'rgba(189,28,8,0.5)',
+                            borderColor: darkBlueColor,
                             borderJoinStyle: 'round',
-                            backgroundColor: 'rgba(255,103,109,0.5)',
+                            backgroundColor: lightBlueColor,
                             data: timeDiff,
                             tooltips: {
                                 callbacks: {
@@ -121,9 +130,9 @@ export default class Chart extends Component{
                             lineTension: 0,
                             yAxisID: 'Validators',
                             pointRadius: 1,
-                            borderColor: 'rgba(255,152,0,0.5)',
+                            borderColor: darkGreenColor,
                             borderJoinStyle: 'round',
-                            backgroundColor: 'rgba(255,193,101,0.5)',
+                            backgroundColor: lightGreenColor,
                             data: validators
                         }
                     ]
@@ -171,7 +180,7 @@ export default class Chart extends Component{
                             type: 'linear',
                             position: 'left',
                             ticks: {
-                            // Include a dollar sign in the ticks
+                                // Include a dollar sign in the ticks
                                 callback: function(value, index, values) {
                                     return value+'s';
                                 }
@@ -207,7 +216,7 @@ export default class Chart extends Component{
                 );
             }
             else{
-                return <div></div>
+                return <div/>
             }
         }
     }

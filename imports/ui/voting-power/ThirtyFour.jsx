@@ -7,6 +7,9 @@ import i18n from 'meteor/universe:i18n';
 import SentryBoundary from '../components/SentryBoundary.jsx';
 
 const T = i18n.createComponent();
+const lightPurpleColor = '#b57ba9';
+const lightBlueColor = '#9bb7e9';
+
 export default class ThirtyFour extends Component{
     constructor(props){
         super(props);
@@ -37,12 +40,12 @@ export default class ThirtyFour extends Component{
                                 this.props.stats.numBottomSixtySix
                             ],
                             backgroundColor: [
-                                '#bd081c',
-                                '#ff63c0'
+                                lightPurpleColor,
+                                lightBlueColor
                             ],
                             hoverBackgroundColor: [
-                                '#bd081c',
-                                '#ff63c0'
+                                lightPurpleColor,
+                                lightBlueColor
                             ]
                         }
                     ]
@@ -55,7 +58,7 @@ export default class ThirtyFour extends Component{
                                 // label += numbro(data.datasets[0].data[tooltipItem.index]).format("0.00%");
                                 if (tooltipItem.index == 0)
                                     return data.datasets[0].data[tooltipItem.index] + " validators hold "+numbro(self.props.stats.topThirtyFourPercent).format("0.00%")+" voting power";
-                                else 
+                                else
                                     return data.datasets[0].data[tooltipItem.index] + " validators hold "+numbro(self.props.stats.bottomSixtySixPercent).format("0.00%")+" voting power";
                             }
                         }
@@ -71,17 +74,17 @@ export default class ThirtyFour extends Component{
         }
         else{
             if (this.props.statsExist && this.props.stats){
-                return (                    
+                return (
                     <Card>
                         <div className="card-header"><T>votingPower.minValidators34</T></div>
                         <CardBody>
                             <SentryBoundary><Pie data={this.state.data} options={this.state.options} /></SentryBoundary>
                         </CardBody>
                     </Card>
-                );   
+                );
             }
             else{
-                return <div></div>
+                return <div/>
             }
         }
     }
