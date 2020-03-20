@@ -7,10 +7,6 @@ import i18n from 'meteor/universe:i18n';
 import SentryBoundary from '../components/SentryBoundary.jsx';
 
 const T = i18n.createComponent();
-
-const fetchColor01 = '#b57ba9';
-const fetchColor02 = '#9bb7e9';
-
 export default class ThirtyFour extends Component{
     constructor(props){
         super(props);
@@ -41,12 +37,12 @@ export default class ThirtyFour extends Component{
                                 this.props.stats.numBottomSixtySix
                             ],
                             backgroundColor: [
-                                fetchColor01,
-                                fetchColor02
+                                '#bd081c',
+                                '#ff63c0'
                             ],
                             hoverBackgroundColor: [
-                                fetchColor01,
-                                fetchColor02
+                                '#bd081c',
+                                '#ff63c0'
                             ]
                         }
                     ]

@@ -1,19 +1,9 @@
+$forbole-red: #bd081c;
+$primary: $forbole-red !default;
+
 @import "materia/variables";
 @import "bootstrap";
 @import "materia/bootswatch";
-
-$forbole-red: #bd081c;
-
-$primary: #1e2844;
-$mainGreen: #59b1a1;
-$colorLightGrey: #d1dbdf;
-$gray-700: $colorLightGrey;
-$colorBlue: #3863cb;
-$purpleColor: #a45a95;
-$colorTableGrey: #ebebeb;
-$colorWarning: #f6923a;
-$colorSuccess: #78cb75;
-
 
 body {
     font-size: inherit !important;
@@ -351,7 +341,7 @@ body {
   .progress {
     height: inherit !important;
     font-size: inherit !important;
-    border: 1px solid $colorLightGrey !important;
+    border: 1px solid #ddd !important;
   }
   
   .tally-result .progress-bar {
@@ -408,15 +398,15 @@ body {
     .card-header-tabs .nav-link {
       margin: -0.5em 0.5em 0 0.5em;
       padding: 0.5rem 1.5rem;
-      box-shadow: none;
+      box-shadow: initial;
       color: $primary;
       cursor: pointer;
   
       &.active {
         &:not(:hover), &:focus:not(:hover) {
           border: none;
-          -webkit-box-shadow: none;
-          box-shadow: none;
+          -webkit-box-shadow: initial;
+          box-shadow: initial;
           color: $primary;
         }
   
@@ -609,7 +599,9 @@ body {
       display: inline-block;
       margin-right: 0.2em;
       border: 0.1em solid $primary;
-      box-shadow: none;
+      -webkit-box-shadow: 1px 1px 3px 0px rgba(163, 163, 163, 1);
+      -moz-box-shadow: 1px 1px 3px 0px rgba(163, 163, 163, 1);
+      box-shadow: 1px 1px 3px 0px rgba(163, 163, 163, 1);
       border-radius: 3px;
   
       .full {
@@ -1035,87 +1027,3 @@ body {
     cursor: help;
     opacity: 0.7;
   }
-
-  // FETCH COLORS
-
-.text-primary {
-  color: $mainGreen !important;
-}
-
-.card-header {
-  background: #d1dbdf !important;
-}
-
-.card {
-  box-shadow: none;
-  border: 1px solid #d1dbdf;
-}
-
-.progress-bar {
-  background-color: $mainGreen !important;
-  background-image: none;
-}
-
-.navbar.bg-primary {
-  background: $primary !important;
-}
-
-.bg-danger {
-  background-color: $primary !important;
-}
-
-.card a, button a, #footer a, .title a, .text-truncate a, .block-info a, .transactions-list a {
-  color: $mainGreen !important;
-}
-.card-header {
-  color: #33383e !important;
-}
-
-.nav-pills .nav-link.active, .btn-primary {
-  background: $primary;
-}
-
-.nav-pills .nav-link.active:hover, .btn-primary:hover {
-  background: #37497d;
-}
-
-.nav-pills .nav-link {
-  background: #c4cad2;
-  color: #fff;
-  margin: 0 5px 0 0;
-}
-
-.text-info {
-  color: $colorBlue !important;
-}
-
-.text-warning {
-  color: $colorWarning !important;
-}
-
-.badge-warning {
-  background-color: $colorWarning;
-}
-
-.text-success {
-  color: $colorSuccess !important;
-}
-
-.badge-success {
-  background-color: $colorSuccess;
-}
-.table th {
-  border-bottom: 1px solid $colorLightGrey !important;
-}
-
-tr:nth-of-type(odd) {
-  background: $colorTableGrey !important;
-}
-
-.validator-list .card {
-  border: none;
-}
-
-.modal-footer, .modal-header {
-  border-color: $colorLightGrey !important;
-}
