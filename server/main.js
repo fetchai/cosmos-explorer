@@ -176,7 +176,6 @@ Meteor.startup(function(){
             })
         })
     }
-
     Meteor.call('chain.genesis', (err, result) => {
         if (err){
             console.log(err);
