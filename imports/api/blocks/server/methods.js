@@ -420,7 +420,7 @@ Meteor.methods({
                                     // });
                                 }
                                 else{
-                                    console.log(`Testing for val: ${validator.address}, pubkey: ${valExist.consensus_pubkey}`);
+                                    // console.log(`Testing for val: ${validator.address}, pubkey: ${valExist.consensus_pubkey}`);
 
                                     let validatorData = validatorSet[valExist.consensus_pubkey]
                                     if (validatorData){

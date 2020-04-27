@@ -35,9 +35,11 @@ export default class Coin {
             coin.denom.toLowerCase() === lowerDenom || coin.displayName.toLowerCase() === lowerDenom
         );
         if (lowerDenom === this._coin.denom.toLowerCase()) {
-            this._amount = Number(amount);
+            // Make sure we don't get NaN
+            this._amount = Number(amount) || 0;
         } else if (lowerDenom === this._coin.displayName.toLowerCase()) {
-            this._amount = Number(amount) * this._coin.fraction;
+            // Make sure we don't get NaN
+            this._amount = (Number(amount) * this._coin.fraction ) || 0;
         }
     }
 

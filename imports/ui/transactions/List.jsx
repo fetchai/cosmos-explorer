@@ -23,13 +23,13 @@ export default class Transactions extends Component{
             if (this.props.transactions.length > 0){
                 this.setState({
                     txs: this.props.transactions.map((tx, i) => {
-                        return <TransactionRow 
-                            key={i} 
-                            index={i} 
-                            tx={tx} 
+                        return <TransactionRow
+                            key={i}
+                            index={i}
+                            tx={tx}
                         />
                     })
-                })    
+                })
             }
         }
     }
