@@ -1,20 +1,20 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 // import $ from 'jquery';
 // import '/node_modules/flipclock/dist/flipclock.js';
 
 export default class CountDown extends Component {
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    componentDidMount(){
-        $('#countdown').FlipClock(this.props.genesisTime,{
-            clockFace: 'DailyCounter',
-            countdown: true
-        });
-    }
+  componentDidMount() {
+    $('#countdown').FlipClock(this.props.genesisTime, {
+      clockFace: 'DailyCounter',
+      countdown: true,
+    });
+  }
 
-    render(){
-        return <div id="countdown">Countdown</div>
-    }
+  render() {
+    return <div id="countdown">Countdown</div>;
+  }
 }
