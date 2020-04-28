@@ -394,10 +394,9 @@ export default class AccountDetails extends Component {
                                 <Col xs={12}>
                                   <WithdrawButton
                                     history={this.props.history}
-                                    rewards={this.findValue(this.state.rewards) / currentCoinTotal * 100}
-                                    commission={this.findValue(this.state.commission) / currentCoinTotal * 100}
+                                    rewards={this.findCoin(this.state.rewards)}
+                                    commission={this.findCoin(this.state.commission)}
                                     address={this.state.operator_address}
-                                    denom={this.state.denom}
                                   />
                                 </Col>
                               )

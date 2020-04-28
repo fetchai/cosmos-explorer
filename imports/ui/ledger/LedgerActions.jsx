@@ -943,13 +943,15 @@ class WithdrawButton extends LedgerButton {
         {this.props.rewards ? (
           <div>
             Your current rewards amount is:
-            <CoinAmount amount={this.props.rewards} denom={this.props.denom} />
+            {' '}
+            {this.props.rewards}
           </div>
         ) : ''}
         {this.props.commission ? (
           <div>
             Your current commission amount is:
-            <CoinAmount amount={this.props.commission} denom={this.props.denom} />
+            {' '}
+            {this.props.commission}
           </div>
         ) : ''}
       </TabPane>
