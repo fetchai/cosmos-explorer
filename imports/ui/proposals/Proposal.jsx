@@ -94,8 +94,8 @@ export default class Proposal extends Component {
           if (now.diff(endVotingTime) < 0) {
             // not reach end voting time yet
             let totalVotes = 0;
-            for (const tallyRes of this.props.proposal.final_tally_result) {
-              totalVotes += parseInt(tallyRes, 10);
+            for (const i in this.props.proposal.tally) {
+              totalVotes += parseInt(this.props.proposal.tally[i], 10);
             }
 
             this.setState({
