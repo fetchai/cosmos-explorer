@@ -24,12 +24,12 @@ Meteor.methods({
         const bulkProposals = Proposals.rawCollection().initializeUnorderedBulkOp();
         for (const i in proposals) {
           const proposal = proposals[i];
-          proposal.proposalId = parseInt(proposal.id);
+          proposal.proposalId = parseInt(proposal.id, 10);
           if (proposal.proposalId > 0 && !finishedProposalIds.has(proposal.proposalId)) {
             try {
               const url = `${LCD}/gov/proposals/${proposal.proposalId}/proposer`;
               const response = HTTP.get(url);
-              if (response.statusCode == 200) {
+              if (response.statusCode === 200) {
                 const proposer = JSON.parse(response.content).result;
                 if (proposer.proposal_id && (proposer.proposal_id == proposal.id)) {
                   proposal.proposer = proposer.proposer;
@@ -65,21 +65,21 @@ Meteor.methods({
             let url = `${LCD}/gov/proposals/${proposals[i].proposalId}/deposits`;
             let response = HTTP.get(url);
             const proposal = { proposalId: proposals[i].proposalId };
-            if (response.statusCode == 200) {
+            if (response.statusCode === 200) {
               const deposits = JSON.parse(response.content).result;
               proposal.deposits = deposits;
             }
 
             url = `${LCD}/gov/proposals/${proposals[i].proposalId}/votes`;
             response = HTTP.get(url);
-            if (response.statusCode == 200) {
+            if (response.statusCode === 200) {
               const votes = JSON.parse(response.content).result;
               proposal.votes = getVoteDetail(votes);
             }
 
             url = `${LCD}/gov/proposals/${proposals[i].proposalId}/tally`;
             response = HTTP.get(url);
-            if (response.statusCode == 200) {
+            if (response.statusCode === 200) {
               const tally = JSON.parse(response.content).result;
               proposal.tally = tally;
             }

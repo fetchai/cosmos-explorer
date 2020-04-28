@@ -94,8 +94,8 @@ export default class Proposal extends Component {
           if (now.diff(endVotingTime) < 0) {
             // not reach end voting time yet
             let totalVotes = 0;
-            for (const proposalTally of this.props.proposal.tally) {
-              totalVotes += parseInt(proposalTally);
+            for (const tallyRes of this.props.proposal.final_tally_result) {
+              totalVotes += parseInt(tallyRes, 10);
             }
 
             this.setState({
@@ -105,23 +105,23 @@ export default class Proposal extends Component {
               voteEnded: false,
               totalVotes,
               yesPercent: (totalVotes > 0)
-                ? parseInt(this.props.proposal.tally.yes) / totalVotes * 100
+                ? (parseInt(this.props.proposal.tally.yes, 10) / totalVotes) * 100
                 : 0,
               abstainPercent: (totalVotes > 0)
-                ? parseInt(this.props.proposal.tally.abstain) / totalVotes * 100
+                ? (parseInt(this.props.proposal.tally.abstain, 10) / totalVotes) * 100
                 : 0,
               noPercent: (totalVotes > 0)
-                ? parseInt(this.props.proposal.tally.no) / totalVotes * 100
+                ? (parseInt(this.props.proposal.tally.no, 10) / totalVotes) * 100
                 : 0,
               noWithVetoPercent: (totalVotes > 0)
-                ? parseInt(this.props.proposal.tally.no_with_veto) / totalVotes * 100
+                ? (parseInt(this.props.proposal.tally.no_with_veto, 10) / totalVotes) * 100
                 : 0,
               proposalValid: (this.state.totalVotes / totalVotingPower > parseFloat(this.props.chain.gov.tallyParams.quorum)),
             });
           } else {
             let totalVotes = 0;
             for (const i in this.props.proposal.final_tally_result) {
-              totalVotes += parseInt(this.props.proposal.final_tally_result[i]);
+              totalVotes += parseInt(this.props.proposal.final_tally_result[i], 10);
             }
 
             this.setState({
