@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+
 import {
   AccAddress
 } from "@everett-protocol/cosmosjs/common/address";
-import i18n from 'meteor/universe:i18n';
 
+import i18n from 'meteor/universe:i18n';
+import Modal from "react-bootstrap/Modal";
 
 async function postData(url = '', data = {}) {
-  // Default options are marked with *
   const response = await fetch(url, {
     method: 'POST',
     mode: 'cors',
@@ -20,26 +20,38 @@ async function postData(url = '', data = {}) {
     referrerPolicy: 'no-referrer',
     body: JSON.stringify(data)
   });
-  return response.json(); // parses JSON response into native JavaScript objects
+
+  if(response.status !== 200) throw new Error()
+
+  const json = response.json().catch(err => throw new Error());
+
+  return json;
+
 }
 
 const T = i18n.createComponent();
-export default class Consensus extends Component{
+
+
+export default class tokenTapModal extends Component{
     constructor(props){
         super(props);
         this.addressChange = this.addressChange.bind(this)
-        this.validAddress = this.validAddress.bind(this)
-
+        this.validCosmosAddress = this.validCosmosAddress.bind(this)
+        this.hide = this.hide.bind(this)
+        this.submit = this.submit.bind(this)
 
         this.state = {
             showModal: false,
-            address: ""
+            address: "",
+            error: ""
         }
     }
 
+hide = () => {
+     this.setState({showModal: false, error: ""})
+}
 
-
-validAddress = (address) => {
+validCosmosAddress = (address) => {
 try {
   AccAddress.fromBech32(address);
 } catch (e) {
@@ -52,55 +64,60 @@ addressChange = (event) => {
     this.setState({address: event.target.value})
 }
 
-submit = (event) => {
+submit = async (event) => {
     event.preventDefault();
 
-    if(!validAddress(this.state.address)){
+    if(!this.validCosmosAddress(this.state.address)){
          return this.setState({error: <T>common.invalidAddress</T>})
     }
 
-const url = Meteor.settings.public.lcd + "/claim";
-    postData(url, {address: this.state.address})
+    const url = Meteor.settings.public.lcd + "/claim";
 
+    let error = false;
 
+    try {
+        await postData(url, {address: this.state.address})
+    } catch(err) {
+           error = true;
+    }
 
-}
+    if(error){
+         return this.setState({error: <T>common.error</T>})
+    } else {
+         return this.setState({showModal: false})
+    }
 
-
-
-
-
-
+    }
 
     componentDidUpdate(prevProps){
         if (prevProps.showModal != this.props.showModal){
                     this.setState({
-                        showModal:this.props.showModal
+                        showModal:this.props.showModal,
+                        error: ""
                     })
             }
         }
 
     render(){
-        <Modal animation={false} style={{ opacity: 1 }} show={this.state.showModal} onHide={this.handleClose}>
+       return  <Modal animation={false} style={{ opacity: 1 }} show={this.state.showModal} onHide={this.hide}>
     <Modal.Header closeButton>
-        <Modal.Title>Create New Address</Modal.Title>
+        <Modal.Title>Add funds to Fetch Account</Modal.Title>
     </Modal.Header>
     <Modal.Body>
         <form id="form">
             <p>
-                <label htmlFor="pending_address_name">Name:</label>
+                <label htmlFor="pending_address_name">Address</label>
                 <input id="pending_address_name" className={'modal-form-input'} name="pending_address_name" type="text"
                     value={this.state.address}
                     onChange={this.addressChange} />
-                <br></br><span className={'modal_error'}> {this.state.modal_error}</span>
+                <br></br><span className="modal_error"> {this.state.error}</span>
             </p>
         </form>
-        <p>These Test Addresses get Wealth Automatically assigned<Download/p>
     </Modal.Body>
     <Modal.Footer>
-        <Button onClick={this.submit}>
-            Add New Address
-    </Button>
+        <button onClick={this.submit}>
+            Add Funds
+    </button>
     </Modal.Footer>
 </Modal>
     }

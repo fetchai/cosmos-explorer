@@ -7,6 +7,7 @@ common:
     votingPower: 'Voting Power'
     tokenTap: 'Token Tap'
     invalidAddress: 'Invalid Address'
+    error: 'error'
     getFunds: 'Get Funds'
     addresses: 'Addresses'
     amounts: 'Amounts'
