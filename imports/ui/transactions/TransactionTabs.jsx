@@ -5,11 +5,13 @@ import classnames from 'classnames';
 import numbro from 'numbro';
 import { TransactionRow } from './TransactionRow.jsx';
 import i18n from 'meteor/universe:i18n';
+import DKGTab from "./dkgTab";
 
 const T = i18n.createComponent();
 export default class TransactionTabs extends Component{
     constructor(props){
         super(props);
+           debugger;
         this.state ={
             activeTab: 'tx-transfer',
             transferTxs: {},
@@ -17,7 +19,7 @@ export default class TransactionTabs extends Component{
             distributionTxs: {},
             governanceTxs: {},
             slashingTxs: {},
-            DKG: {}
+            DKG: this.props.DKG ? this.props.DKG : null,
         }
     }
 
@@ -30,6 +32,7 @@ export default class TransactionTabs extends Component{
     }
 
     componentDidUpdate(prevProps){
+        debugger;
         if (this.props != prevProps){
             this.setState({
                 transferTxs: this.props.transferTxs,
@@ -170,14 +173,7 @@ export default class TransactionTabs extends Component{
                     <TabPane tabId="dkg">
                         <Row>
                             <Col>
-                                {(this.state.DKG.txIds.length > 0)?this.state.DKG.txIds.map((id, i) => {
-                                    return <TransactionRow
-                                        key={i}
-                                        index={i}
-                                        tx={id}
-                                        blockList
-                                    />
-                                }):''}
+                                {this.state.DKG? <DKGTab DKG={this.state.DKG} ></DKGTab> :''}
                             </Col>
                         </Row>
                     </TabPane>

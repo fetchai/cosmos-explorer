@@ -205,7 +205,7 @@ Meteor.methods({
                         blockData.dkg.round = response.data.result.block.header.entropy.round
                         blockData.dkg.startBlock = response.data.result.block.header.entropy.dkg_id
                         blockData.dkg.groupSignature = response.data.result.block.header.entropy.group_signature
-                        blockData.dkg.EndBlock = response.data.result.block.header.entropy.dkg_id + response.data.result.block.header.entropy.aeon_length
+                        blockData.dkg.endBlock = response.data.result.block.header.entropy.dkg_id + response.data.result.block.header.entropy.aeon_length
                         blockData.dkg.txIds = hasTransactionIds(block)? block.block.data.txs : [];
 
                         let precommits = block.block.last_commit.precommits;
