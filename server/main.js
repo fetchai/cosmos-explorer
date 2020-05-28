@@ -214,7 +214,6 @@ Meteor.startup(function(){
                 timerDelegation = Meteor.setInterval(function(){
                     getDelegations();
                 }, Meteor.settings.params.delegationInterval);
-
                 timerAggregate = Meteor.setInterval(function(){
                     let now = new Date();
                     if ((now.getUTCSeconds() == 0)){

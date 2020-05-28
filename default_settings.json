@@ -1,8 +1,8 @@
 {
     "public":{
-        "chainName": "Cosmos Testnet",
-        "chainId": "{Chain ID}",
-        "gtm": "{Add your Google Tag Manager ID here}",
+        "chainName": "Gaia sandbox",
+        "chainId": "gaia-sandbox",
+        "gtm": "",
         "slashingWindow": 10000,
         "uptimeWindow": 250,
         "initialPageSize": 30,
@@ -12,26 +12,20 @@
         "bech32PrefixValPub": "cosmosvaloperpub",
         "bech32PrefixConsAddr": "cosmosvalcons",
         "bech32PrefixConsPub": "cosmosvalconspub",
-        "bondDenom": "uatom",
+        "bondDenom": "ufet",
         "powerReduction": 1000000,
         "coins": [
             {
-                "denom": "uatom",
-                "displayName": "ATOM",
-                "displayNamePlural": "ATOMS",
+                "denom": "ufet",
+                "displayName": "FET",
+                "displayNamePlural": "FET",
                 "fraction": 1000000
-            }, 
-            {
-                "denom": "umuon",
-                "displayName": "MUON",
-                "displayNamePlural": "MUONS",
-                "fraction": 1000000
-            } 
+            }
         ],
         "gasPrice": 0.02,
-        "coingeckoId": "cosmos"
+        "coingeckoId": "fetch-ai"
     },
-    "genesisFile": "{Replace the address of the genesis file of the chain}",
+    "genesisFile": "http://localhost/genesis.json",
     "remote":{
         "rpc":"https://gaia-seeds.interblock.io",
         "lcd":"https://gaia-seeds.interblock.io:1317"
@@ -52,5 +46,4 @@
         "delegationInterval": 900000
     }
 }
-
 

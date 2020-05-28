@@ -16,7 +16,8 @@ export default class TransactionTabs extends Component{
             stakingTxs: {},
             distributionTxs: {},
             governanceTxs: {},
-            slashingTxs: {}
+            slashingTxs: {},
+            DKG: {}
         }
     }
 
@@ -35,8 +36,9 @@ export default class TransactionTabs extends Component{
                 stakingTxs: this.props.stakingTxs,
                 distributionTxs: this.props.distributionTxs,
                 governanceTxs: this.props.governanceTxs,
-                slashingTxs: this.props.slashingTxs
-            })    
+                slashingTxs: this.props.slashingTxs,
+                DKG: this.props.DKG ? this.props.DKG : null,
+            })
         }
     }
 
@@ -83,6 +85,14 @@ export default class TransactionTabs extends Component{
                             onClick={() => { this.toggle('tx-slashing'); }}
                         >
                             <T>transactions.slashing</T> ({numbro(this.state.slashingTxs.length).format("0,0")})
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink
+                            className={classnames({ active: this.state.activeTab === 'dkg' })}
+                            onClick={() => { this.toggle('dkg'); }}
+                        >
+                            <span> DKG </span>
                         </NavLink>
                     </NavItem>
                 </Nav>
@@ -151,6 +161,20 @@ export default class TransactionTabs extends Component{
                                         key={i} 
                                         index={i} 
                                         tx={tx} 
+                                        blockList
+                                    />
+                                }):''}
+                            </Col>
+                        </Row>
+                    </TabPane>
+                    <TabPane tabId="dkg">
+                        <Row>
+                            <Col>
+                                {(this.state.DKG.txIds.length > 0)?this.state.DKG.txIds.map((id, i) => {
+                                    return <TransactionRow
+                                        key={i}
+                                        index={i}
+                                        tx={id}
                                         blockList
                                     />
                                 }):''}
