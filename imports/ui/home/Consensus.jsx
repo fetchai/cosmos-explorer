@@ -14,8 +14,10 @@ export default class Consensus extends Component{
         super(props);
         this.state = {
             chainStopped: false,
+            showModal: false
         }
     }
+
 
     componentDidUpdate(prevProps){
         if (prevProps.consensus != this.props.consensus){
@@ -84,7 +86,13 @@ export default class Consensus extends Component{
                                             </Col>
                                         </Row>
                                     </Col>
+                                    {Meteor.settings.public.tokenTap?
+                                    <>
+                                        <Col md={2} lg={3}><CardSubtitle><T>common.votingPower</T></CardSubtitle><Progress animated value={this.props.consensus.votedPower} className="value">{this.props.consensus.votedPower}%</Progress></Col>
+                                    <Col md={2} lg={3}><CardSubtitle><T>common.tokenTap</T></CardSubtitle><Button color="primary"  onClick={() => this.setState({showModal: true})}><T>common.getFunds</T></Button></Col>
+                                    </>:
                                     <Col md={4} lg={6}><CardSubtitle><T>common.votingPower</T></CardSubtitle><Progress animated value={this.props.consensus.votedPower} className="value">{this.props.consensus.votedPower}%</Progress></Col>
+                                    }
                                 </Row>
                             </CardBody>
                         </Card>
