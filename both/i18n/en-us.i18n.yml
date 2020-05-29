@@ -8,6 +8,7 @@ common:
     tokenTap: 'Token Tap'
     invalidAddress: 'Invalid Address'
     error: 'error'
+    success: 'success'
     getFunds: 'Get Funds'
     addresses: 'Addresses'
     amounts: 'Amounts'

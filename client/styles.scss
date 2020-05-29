@@ -354,6 +354,21 @@ div#countdown {
   border: 1px solid $colorLightGrey !important;
 }
 
+.token-tap-container {
+  text-align: center;
+}
+
+.token-tap-button {
+  width: 80%;
+  height: 26px;
+  padding: unset;
+  max-width: 120px;
+}
+
+.modal_error {
+  color: red;
+}
+
 .tally-result .progress-bar {
   height: 4em;
 }
