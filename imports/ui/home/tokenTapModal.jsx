@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 
 import {
-  AccAddress
+  AccAddress, useBech32Config
 } from "@everett-protocol/cosmosjs/common/address";
+
+
+import {
+    defaultBech32Config
+} from "@everett-protocol/cosmosjs/core/bech32Config";
 
 import i18n from 'meteor/universe:i18n';
 import Modal from "react-bootstrap/Modal";
 
 async function postData(url = '', data = {}) {
+    console.log("post data")
   const response = await fetch(url, {
     method: 'POST',
     mode: 'cors',
@@ -20,11 +26,14 @@ async function postData(url = '', data = {}) {
     referrerPolicy: 'no-referrer',
     body: JSON.stringify(data)
   });
-
+  console.log("2222222222222222")
   if(response.status !== 200) throw new Error()
 
-  const json = response.json().catch(err => throw new Error());
+      console.log("3333333333333")
 
+  // const json = response.json().catch(err => throw new Error());
+const json = response.json();
+  console.log("444444444444444444")
   return json;
 
 }
@@ -32,7 +41,7 @@ async function postData(url = '', data = {}) {
 const T = i18n.createComponent();
 
 
-export default class tokenTapModal extends Component{
+export default class TokenTapModal extends Component{
     constructor(props){
         super(props);
         this.addressChange = this.addressChange.bind(this)
@@ -52,13 +61,16 @@ hide = () => {
 }
 
 validCosmosAddress = (address) => {
-try {
-  AccAddress.fromBech32(address);
-} catch (e) {
+
+   return useBech32Config(defaultBech32Config("cosmos"), () =>{
+        try {
+             AccAddress.fromBech32(address);
+    } catch(e) {
  return false
 }
-return true
-}
+   return true;
+   })
+    }
 
 addressChange = (event) => {
     this.setState({address: event.target.value})
@@ -90,7 +102,7 @@ submit = async (event) => {
     }
 
     componentDidUpdate(prevProps){
-        if (prevProps.showModal != this.props.showModal){
+        if (prevProps.showModal != this.props.showModal && !this.state.showModal){
                     this.setState({
                         showModal:this.props.showModal,
                         error: ""
@@ -106,8 +118,8 @@ submit = async (event) => {
     <Modal.Body>
         <form id="form">
             <p>
-                <label htmlFor="pending_address_name">Address</label>
-                <input id="pending_address_name" className={'modal-form-input'} name="pending_address_name" type="text"
+                <p >Address</p>
+                <input id="pending_address_name" className="modal-form-input" name="pending_address_name" type="text"
                     value={this.state.address}
                     onChange={this.addressChange} />
                 <br></br><span className="modal_error"> {this.state.error}</span>

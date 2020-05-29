@@ -7,6 +7,7 @@ import CountDown from '../components/CountDown.jsx';
 import moment from 'moment';
 import numbro from 'numbro';
 import i18n from 'meteor/universe:i18n';
+import TokenTapModal from "./tokenTapModal";
 
 const T = i18n.createComponent();
 export default class Consensus extends Component{
@@ -96,6 +97,7 @@ export default class Consensus extends Component{
                                 </Row>
                             </CardBody>
                         </Card>
+                        <TokenTapModal showModal={this.state.showModal}></TokenTapModal>
                     </div>);
             }
             else{
