@@ -82,9 +82,10 @@ submit = async (event) => {
     const url = Meteor.settings.public.lcd + "/claim";
 
     let error = false;
+    let response;
 
     try {
-        let response = await postData(url, {address: this.state.address})
+         response = await postData(url, {address: this.state.address})
     } catch(err) {
            error = true;
     }

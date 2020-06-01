@@ -10,6 +10,11 @@ common:
     error: 'error'
     success: 'success'
     getFunds: 'Get Funds'
+    successModalTitle: 'Funds Successfully Added'
+    successModalBody: '100 Fet added to '
+    successModalClose: 'Close'
+    tokenTapModalTitle: "Add funds to Fetch Account"
+    tokenTapModalButton: "Add Funds"
     addresses: 'Addresses'
     amounts: 'Amounts'
     delegators: 'delegators'

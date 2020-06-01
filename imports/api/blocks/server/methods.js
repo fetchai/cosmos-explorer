@@ -224,6 +224,7 @@ Meteor.methods({
 
                         // save txs in database
                         if (hasTransactionIds(block)){
+                            debugger;
                             for (t in block.block.data.txs){
                                 Meteor.call('Transactions.index', sha256(Buffer.from(block.block.data.txs[t], 'base64')), blockData.time, (err, result) => {
                                     if (err){
