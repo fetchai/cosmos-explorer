@@ -7,14 +7,14 @@ import i18n from 'meteor/universe:i18n';
 const T = i18n.createComponent();
 
 /**
- * first modal to access token tap
+ * first modal to (of two) in token tap dialog
  */
 export class TokenTapModal extends Component {
 
 
     render() {
         return <Modal animation={false} style={{opacity: 1}} show={this.props.show}
-                      onHide={this.props.modalState.bind(null, false)}>
+                      onHide={this.props.hide}>
             <Modal.Header closeButton>
                 <Modal.Title><T>common.tokenTapModalTitle</T></Modal.Title>
             </Modal.Header>
@@ -40,7 +40,7 @@ export class TokenTapModal extends Component {
 
 TokenTapModal.propTypes = {
     show: PropTypes.any,
-    modalState: PropTypes.any,
+    hide: PropTypes.any,
     value: PropTypes.any,
     onChange: PropTypes.func,
     error: PropTypes.any,

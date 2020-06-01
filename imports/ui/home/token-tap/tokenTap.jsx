@@ -25,11 +25,9 @@ async function postData(url = '', data = {}) {
   });
 
   return response
-
 }
 
 const T = i18n.createComponent();
-
 
 export default class TokenTap extends Component{
     constructor(props){
@@ -38,17 +36,23 @@ export default class TokenTap extends Component{
         this.validCosmosAddress = this.validCosmosAddress.bind(this)
         this.submit = this.submit.bind(this)
         this.hideSuccessModal = this.hideSuccessModal.bind(this)
+        this.hide = this.hide.bind(this)
 
         // set visibility state of main token tap modal
         this.setModalState = props.setModalState
 
         this.state = {
+            success: false,
             showModal: false,
             address: "",
             error: ""
         }
     }
 
+   hide(){
+        this.setModalState(false)
+        this.setState({error: ""})
+   }
 
 validCosmosAddress = (address) => {
 
@@ -111,7 +115,7 @@ submit = async (event) => {
         }
 
     render(){
-       return  <><TokenTapModal show={this.state.showModal} modalState={this.setModalState} value={this.state.address}
+       return  <><TokenTapModal show={this.state.showModal} hide={this.hide} value={this.state.address}
                                 onChange={this.addressChange} error={this.state.error} success={this.state.success}
                                 onClick={this.submit}/>
            <SuccessModal show={this.state.success} onHide={this.hideSuccessModal} address={this.state.address}/>
