@@ -52,7 +52,7 @@ export default class Block extends Component{
                 // console.log(this.props.block);
                 let block = this.props.block;
                 let proposer = block.proposer();
-                let moniker = proposer?proposer.description.moniker:'';
+                let moniker = proposer && typeof proposer.description !== "undefined" ? proposer.description.moniker:'';
                 let profileUrl = proposer?proposer.profile_url:'';
 
                 return <Container id="block">

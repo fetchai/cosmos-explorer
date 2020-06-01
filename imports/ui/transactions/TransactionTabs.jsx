@@ -90,14 +90,18 @@ export default class TransactionTabs extends Component{
                             <T>transactions.slashing</T> ({numbro(this.state.slashingTxs.length).format("0,0")})
                         </NavLink>
                     </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: this.state.activeTab === 'dkg' })}
-                            onClick={() => { this.toggle('dkg'); }}
-                        >
-                            <span> DKG </span>
-                        </NavLink>
-                    </NavItem>
+                    {Meteor.settings.public.DKGTab ?
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === 'dkg'})}
+                                onClick={() => {
+                                    this.toggle('dkg');
+                                }}
+                            >
+                                <span> DKG </span>
+                            </NavLink>
+                        </NavItem>
+                    : ""}
                 </Nav>
                 <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="tx-transfer">
@@ -170,13 +174,15 @@ export default class TransactionTabs extends Component{
                             </Col>
                         </Row>
                     </TabPane>
-                    <TabPane tabId="dkg">
-                        <Row>
-                            <Col>
-                                {this.state.DKG? <DKGTab DKG={this.state.DKG} ></DKGTab> :''}
-                            </Col>
-                        </Row>
-                    </TabPane>
+                    {Meteor.settings.public.DKGTab ?
+                        <TabPane tabId="dkg">
+                            <Row>
+                                <Col>
+                                    {this.state.DKG ? <DKGTab DKG={this.state.DKG}></DKGTab> : ''}
+                                </Col>
+                            </Row>
+                        </TabPane>
+                   : "" }
                 </TabContent>
             </CardBody>
         </Card>

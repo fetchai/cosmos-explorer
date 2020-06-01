@@ -1134,3 +1134,39 @@ tr:nth-of-type(odd) {
 .modal-footer, .modal-header {
   border-color: $colorLightGrey !important;
 }
+
+.DKG-list {
+
+  padding-left: 2rem;
+
+  .signature
+  { cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  }
+
+
+   > li {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid #dee2e6;
+    list-style: none;
+
+    nth-child(odd) {
+      background: rgba(0, 0, 0, 0.05);
+    }
+}
+
+
+}
+
+.DKG-title {
+   padding-left: 1rem;
+  font-size: 0.9em;
+}
+
+.toolTip {
+  font-size: 15px;
+  padding:5px;
+}

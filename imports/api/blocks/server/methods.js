@@ -12,6 +12,8 @@ import { Evidences } from '../../evidences/evidences.js';
 import { sha256 } from 'js-sha256';
 import { getAddress } from 'tendermint/lib/pubkey';
 import * as cheerio from 'cheerio';
+import {TabContent} from "reactstrap";
+import React from "react";
 
 function hasTransactionIds(block){
     return Boolean(block.block.data.txs && block.block.data.txs.length > 0)
@@ -201,12 +203,16 @@ Meteor.methods({
                         blockData.lastBlockHash = block.block.header.last_block_id.hash;
                         blockData.proposerAddress = block.block.header.proposer_address;
                         blockData.validators = [];
-                        blockData.dkg = {};
-                        blockData.dkg.round = response.data.result.block.header.entropy.round
-                        blockData.dkg.startBlock = response.data.result.block.header.entropy.dkg_id
-                        blockData.dkg.groupSignature = response.data.result.block.header.entropy.group_signature
-                        blockData.dkg.endBlock = response.data.result.block.header.entropy.dkg_id + response.data.result.block.header.entropy.aeon_length
-                        blockData.dkg.txIds = hasTransactionIds(block)? block.block.data.txs : [];
+
+                        if(Meteor.settings.public.DKGTab){
+                            blockData.dkg = {};
+                            blockData.dkg.round = response.data.result.block.header.entropy.round
+                            blockData.dkg.startBlock = response.data.result.block.header.entropy.dkg_id
+                            blockData.dkg.groupSignature = response.data.result.block.header.entropy.group_signature
+                            blockData.dkg.endBlock = response.data.result.block.header.entropy.dkg_id + response.data.result.block.header.entropy.aeon_length
+                            blockData.dkg.txIds = hasTransactionIds(block)? block.block.data.txs : [];
+                        }
+
 
                         let precommits = block.block.last_commit.precommits;
                         if (precommits != null){
