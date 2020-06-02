@@ -355,6 +355,22 @@ body {
     font-size: inherit !important;
     border: 1px solid #ddd !important;
   }
+
+
+  .token-tap-container {
+  text-align: center;
+}
+.token-tap-button {
+  width: 80%;
+  height: 26px;
+  padding: unset;
+  max-width: 120px;
+}
+.modal_error {
+  color: red;
+  margin-top: 4px;
+    display: block;
+}
   
   .tally-result .progress-bar {
     height: 4em;

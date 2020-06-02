@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:feature" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:networks" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d16b111b-def6-497d-99c5-0fcf7783bd8c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/imports/ui/home/token-tap/successModal.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imports/ui/home/token-tap/tokenTap.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imports/ui/home/token-tap/tokenTapModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/both/i18n/en-us.i18n.yml" beforeDir="false" afterPath="$PROJECT_DIR$/both/i18n/en-us.i18n.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imports/ui/home/Consensus.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/imports/ui/home/Consensus.jsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1cGUXc1D7s4SvLoz3ghBTdEtiUs" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="HgIgnore" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/imports/ui/home" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/imports/ui/home" />
+      <recent name="$APPLICATION_CONFIG_DIR$/scratches" />
+    </key>
+    <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/imports/ui/home/token-tap/tokenTapModal.jsx" />
+      <recent name="$PROJECT_DIR$/imports/ui/home/token-tap/successModal.jsx" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/imports/ui/home/token-tap" />
+      <recent name="$PROJECT_DIR$/imports/ui/home" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d16b111b-def6-497d-99c5-0fcf7783bd8c" name="Default Changelist" comment="" />
+      <created>1590154463260</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1590154463260</updated>
+      <workItem from="1590154464650" duration="4084000" />
+      <workItem from="1590225372280" duration="625000" />
+      <workItem from="1590269145371" duration="2271000" />
+      <workItem from="1590272577771" duration="3000000" />
+      <workItem from="1590324915113" duration="2555000" />
+      <workItem from="1590327671099" duration="1460000" />
+      <workItem from="1590350296744" duration="1534000" />
+      <workItem from="1590351854166" duration="1174000" />
+      <workItem from="1590358477755" duration="1873000" />
+      <workItem from="1590403011955" duration="20213000" />
+      <workItem from="1590571386207" duration="4896000" />
+      <workItem from="1590657291553" duration="5196000" />
+      <workItem from="1590663990724" duration="8779000" />
+      <workItem from="1590673537535" duration="18743000" />
+      <workItem from="1590697296390" duration="43637000" />
+      <workItem from="1591088270638" duration="12300000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="594" y="198" width="800" height="724" key="#Plugins" timestamp="1590358902134">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="594" y="198" width="800" height="724" key="#Plugins/72.27.1848.1053@72.27.1848.1053" timestamp="1590358902134" />
+    <state x="376" y="109" width="524" height="514" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1591098968811">
+      <screen x="0" y="27" width="1280" height="693" />
+    </state>
+    <state x="376" y="109" width="524" height="514" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1280.0.1920.1080/0.27.1280.693@0.27.1280.693" timestamp="1591098968811" />
+    <state x="100" y="65" width="1080" height="525" maximized="true" key="DiffContextDialog" timestamp="1591102212376">
+      <screen x="0" y="27" width="1280" height="693" />
+    </state>
+    <state x="100" y="65" width="1080" height="525" maximized="true" key="DiffContextDialog/1280.0.1920.1080/0.27.1280.693@0.27.1280.693" timestamp="1591102212376" />
+    <state x="426" y="113" width="424" height="496" key="FileChooserDialogImpl" timestamp="1591101695208">
+      <screen x="0" y="27" width="1280" height="693" />
+    </state>
+    <state x="426" y="113" width="424" height="496" key="FileChooserDialogImpl/1280.0.1920.1080/0.27.1280.693@0.27.1280.693" timestamp="1591101695208" />
+    <state x="4" y="2" width="1276" height="693" key="MergeDialog" timestamp="1591039720648">
+      <screen x="0" y="27" width="1280" height="693" />
+    </state>
+    <state x="4" y="2" width="1276" height="693" key="MergeDialog/1280.0.1920.1080/0.27.1280.693@0.27.1280.693" timestamp="1591039720648" />
+    <state x="273" y="118" width="729" height="487" key="MultipleFileMergeDialog" timestamp="1591039720649">
+      <screen x="0" y="27" width="1280" height="693" />
+    </state>
+    <state x="273" y="118" width="729" height="487" key="MultipleFileMergeDialog/1280.0.1920.1080/0.27.1280.693@0.27.1280.693" timestamp="1591039720649" />
+    <state x="430" y="39" width="416" height="655" key="VCS.ChangeListViewerDialog" timestamp="1590694190842">
+      <screen x="0" y="27" width="1280" height="693" />
+    </state>
+    <state x="430" y="39" width="416" height="655" key="VCS.ChangeListViewerDialog/1280.0.1920.1080/0.27.1280.693@0.27.1280.693" timestamp="1590694190842" />
+    <state x="100" y="90" width="1080" height="525" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1590691288027">
+      <screen x="0" y="27" width="1280" height="693" />
+    </state>
+    <state x="100" y="90" width="1080" height="525" key="com.intellij.history.integration.ui.views.FileHistoryDialog/1280.0.1920.1080/0.27.1280.693@0.27.1280.693" timestamp="1590691288027" />
+    <state x="632" y="25" width="593" height="622" key="find.popup" timestamp="1591101863454">
+      <screen x="0" y="27" width="1280" height="693" />
+    </state>
+    <state x="465" y="131" width="1838" height="794" key="find.popup/0.27.3200.1053@0.27.3200.1053" timestamp="1590599488688" />
+    <state x="632" y="25" width="593" height="622" key="find.popup/1280.0.1920.1080/0.27.1280.693@0.27.1280.693" timestamp="1591101863454" />
+    <state x="685" y="159" width="1060" height="783" key="find.popup/72.27.1848.1053@72.27.1848.1053" timestamp="1590358584109" />
+    <state x="20" y="56" width="672" height="447" key="search.everywhere.popup" timestamp="1591101428056">
+      <screen x="0" y="27" width="1280" height="693" />
+    </state>
+    <state x="51" y="71" width="1164" height="678" key="search.everywhere.popup/0.27.3200.1053@0.27.3200.1053" timestamp="1590598839933" />
+    <state x="20" y="56" width="672" height="447" key="search.everywhere.popup/1280.0.1920.1080/0.27.1280.693@0.27.1280.693" timestamp="1591101428056" />
+    <state x="659" y="255" width="672" height="678" key="search.everywhere.popup/72.27.1848.1053@72.27.1848.1053" timestamp="1590358803660" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/imports/ui/blocks/BlocksTable.jsx</url>
+          <line>105</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/imports/ui/home/token-tap/tokenTap.jsx</url>
+          <line>98</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
