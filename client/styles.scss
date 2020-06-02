@@ -1053,3 +1053,88 @@ body {
     cursor: help;
     opacity: 0.7;
   }
+
+
+// FETCH COLORS
+
+.text-primary {
+  color: $mainGreen !important;
+}
+
+.card-header {
+  background: #d1dbdf !important;
+}
+
+.card {
+  box-shadow: none;
+  border: 1px solid #d1dbdf;
+}
+
+.progress-bar {
+  background-color: $mainGreen !important;
+  background-image: none;
+}
+
+.navbar.bg-primary {
+  background: $primary !important;
+}
+
+.bg-danger {
+  background-color: $primary !important;
+}
+
+.card a, button a, #footer a, .title a, .text-truncate a, .block-info a, .transactions-list a {
+  color: $mainGreen !important;
+}
+.card-header {
+  color: #33383e !important;
+}
+
+.nav-pills .nav-link.active, .btn-primary {
+  background: $primary;
+}
+
+.nav-pills .nav-link.active:hover, .btn-primary:hover {
+  background: #37497d;
+}
+
+.nav-pills .nav-link {
+  background: #c4cad2;
+  color: #fff;
+  margin: 0 5px 0 0;
+}
+
+.text-info {
+  color: $colorBlue !important;
+}
+
+.text-warning {
+  color: $colorWarning !important;
+}
+
+.badge-warning {
+  background-color: $colorWarning;
+}
+
+.text-success {
+  color: $colorSuccess !important;
+}
+
+.badge-success {
+  background-color: $colorSuccess;
+}
+.table th {
+  border-bottom: 1px solid $colorLightGrey !important;
+}
+
+tr:nth-of-type(odd) {
+  background: $colorTableGrey !important;
+}
+
+.validator-list .card {
+  border: none;
+}
+
+.modal-footer, .modal-header {
+  border-color: $colorLightGrey !important;
+}
