@@ -8,7 +8,7 @@
         "initialPageSize": 30,
 	"validatorStatus0": 1,
         "tokenTap" : true,
-        "tokenTapURL" : "http://aea-testnet.sandbox.fetch-ai.com:8888/claim",
+        "tokenTapURL" : "https://faucet-aea-testnet.sandbox.fetch-ai.com:8888/claim",
         "bech32PrefixAccAddr": "cosmos",
         "bech32PrefixAccPub": "cosmospub",
         "bech32PrefixValAddr": "cosmosvaloper",
