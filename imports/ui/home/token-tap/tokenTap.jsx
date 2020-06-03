@@ -90,7 +90,7 @@ submit = async (event) => {
     let response;
 
     try {
-         response = await postData(url, {address: this.state.address})
+         response = await postData(url, {Address: this.state.address})
     } catch(err) {
            error = true;
     }
