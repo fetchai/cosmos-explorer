@@ -8,7 +8,7 @@
         "initialPageSize": 30,
 	"validatorStatus0": 1,
         "tokenTap" : true,
-        "tokenTapURL" : "http://aea-testnet.sandbox.fetch-ai.com:1317/claim",
+        "tokenTapURL" : "http://aea-testnet.sandbox.fetch-ai.com:8888/claim",
         "bech32PrefixAccAddr": "cosmos",
         "bech32PrefixAccPub": "cosmospub",
         "bech32PrefixValAddr": "cosmosvaloper",
@@ -28,10 +28,10 @@
         "gasPrice": 0.02,
         "coingeckoId": "fetch-ai"
     },
-    "genesisFile": "http://localhost/genesis2.json",
+    "genesisFile": "http://localhost:8888/genesis.json",
     "remote":{
-        "rpc":"http://aea-testnet.sandbox.fetch-ai.com:36657/",
-        "lcd":"http://aea-testnet.sandbox.fetch-ai.com:1317/"
+        "rpc":"http://aea-testnet.sandbox.fetch-ai.com:36657",
+        "lcd":"http://aea-testnet.sandbox.fetch-ai.com:1317"
     },
     "debug": {
         "startTimer": true,
