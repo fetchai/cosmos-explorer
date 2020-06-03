@@ -12,7 +12,8 @@
         "bech32PrefixValPub": "cosmosvaloperpub",
         "bech32PrefixConsAddr": "cosmosvalcons",
         "bech32PrefixConsPub": "cosmosvalconspub",
-            "tokenTap" : true,
+        "tokenTap" : true,
+        "tokenTapURL" : "http://aea-testnet.sandbox.fetch-ai.com:1317/claim",
         "bondDenom": "uatom",
         "powerReduction": 1000000,
         "coins": [
