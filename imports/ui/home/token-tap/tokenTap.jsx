@@ -17,9 +17,13 @@ import {TokenTapModal} from "./tokenTapModal";
 async function postData(url = '', data = {}) {
 
   const response = await fetch(url, {
-    method: 'POST',
+   method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
     headers: {
       'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: JSON.stringify(data)
   });
@@ -89,15 +93,17 @@ submit = async (event) => {
     let error = false;
     let response;
 
+
     try {
-         response = await postData(url, {address: this.state.address})
+         response = await postData(url, {Address: this.state.address})
     } catch(err) {
            error = true;
     }
-
-     if(response.status !== 200) error = true;
+    debugger;
+     if(typeof response !== "undefined" && response.status !== 200) error = true;
 
     if(error){
+        debugger;
         this.setState({error: <T>common.error</T>, success: false})
     } else {
          this.setModalState(false)
