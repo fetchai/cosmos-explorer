@@ -83,7 +83,7 @@ submit = async (event) => {
          return this.setState({error: <T>common.invalidAddress</T>, success: ""})
     }
 
-    const url = Meteor.settings.public.lcd + "/claim";
+    const url = Meteor.settings.public.tokenTapURL;
 
     let error = false;
     let response;

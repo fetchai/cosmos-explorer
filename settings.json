@@ -14,6 +14,7 @@
         "bech32PrefixConsPub": "cosmosvalconspub",
         "bondDenom": "ufet",
         "tokenTap": true,
+        "tokenTapURL": true,
         "DKGTab": true,
         "rpc":"http://pre-mainnet-explorer.sandbox.fetch-ai.com:12000",
         "lcd":"https://pre-mainnet-explorer.sandbox.fetch-ai.com:12201",
