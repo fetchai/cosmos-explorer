@@ -8,6 +8,8 @@ import SentryBoundary from '../components/SentryBoundary.jsx';
 
 const T = i18n.createComponent();
 
+const darkBlueRGBPart = '88, 135, 218';
+
 export default class VotingPower extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +42,7 @@ export default class VotingPower extends Component {
         labels.push(this.props.stats[v].description ? this.props.stats[v].description.moniker : '');
         data.push(this.props.stats[v].voting_power);
         const alpha = (this.props.stats.length + 1 - v) / this.props.stats.length * 0.8 + 0.2;
-        backgroundColors.push(`rgba(189, 8, 28,${alpha})`);
+        backgroundColors.push(`rgba(${darkBlueRGBPart}, ${alpha})`);
       }
       this.setState({
         data: {

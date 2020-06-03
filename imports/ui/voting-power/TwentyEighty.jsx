@@ -5,6 +5,11 @@ import numbro from 'numbro';
 import i18n from 'meteor/universe:i18n';
 import SentryBoundary from '../components/SentryBoundary.jsx';
 
+
+const lightPurpleColor = '#b57ba9';
+const lightBlueColor = '#9bb7e9';
+
+
 const T = i18n.createComponent();
 export default class TwentyEighty extends Component {
   constructor(props) {
@@ -34,12 +39,12 @@ export default class TwentyEighty extends Component {
                 bottomPercent,
               ],
               backgroundColor: [
-                '#bd081c',
-                '#ff63c0',
+               lightPurpleColor,
+                                lightBlueColor,
               ],
               hoverBackgroundColor: [
-                '#bd081c',
-                '#ff63c0',
+                 lightPurpleColor,
+                                lightBlueColor,
               ],
             },
           ],

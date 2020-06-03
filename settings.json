@@ -1,42 +1,37 @@
 {
     "public":{
-        "chainName": "Cosmos Testnet",
-        "chainId": "{Chain ID}",
-        "gtm": "{Add your Google Tag Manager ID here}",
+        "chainName": "AEA testnet",
+        "chainId": "aea-testnet",
+        "gtm": "",
         "slashingWindow": 10000,
         "uptimeWindow": 250,
         "initialPageSize": 30,
+	"validatorStatus0": 1,
+        "tokenTap" : true,
+        "tokenTapURL" : "https://faucet-aea-testnet.sandbox.fetch-ai.com:8888/claim",
         "bech32PrefixAccAddr": "cosmos",
         "bech32PrefixAccPub": "cosmospub",
         "bech32PrefixValAddr": "cosmosvaloper",
         "bech32PrefixValPub": "cosmosvaloperpub",
         "bech32PrefixConsAddr": "cosmosvalcons",
         "bech32PrefixConsPub": "cosmosvalconspub",
-        "tokenTap" : true,
-        "tokenTapURL" : "http://aea-testnet.sandbox.fetch-ai.com:1317/claim",
-        "bondDenom": "uatom",
+        "bondDenom": "testfet",
         "powerReduction": 1000000,
         "coins": [
             {
-                "denom": "uatom",
-                "displayName": "ATOM",
-                "displayNamePlural": "ATOMS",
+                "denom": "testfet",
+                "displayName": "TESTFET",
+                "displayNamePlural": "TESTFET",
                 "fraction": 1000000
-            }, 
-            {
-                "denom": "umuon",
-                "displayName": "MUON",
-                "displayNamePlural": "MUONS",
-                "fraction": 1000000
-            } 
+            }
         ],
         "gasPrice": 0.02,
-        "coingeckoId": "cosmos"
+        "coingeckoId": "fetch-ai"
     },
-    "genesisFile": "{Replace the address of the genesis file of the chain}",
+    "genesisFile": "http://localhost:8888/genesis.json",
     "remote":{
-        "rpc":"https://gaia-seeds.interblock.io",
-        "lcd":"https://gaia-seeds.interblock.io:1317"
+        "rpc":"http://aea-testnet.sandbox.fetch-ai.com:36657",
+        "lcd":"http://aea-testnet.sandbox.fetch-ai.com:1317"
     },
     "debug": {
         "startTimer": true,
@@ -54,5 +49,3 @@
         "delegationInterval": 900000
     }
 }
-
-
