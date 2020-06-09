@@ -75,6 +75,7 @@ export default class BlocksTable extends Component {
     }
 
     render(){
+        debugger;
         return <div>
             <Helmet>
                 <title>Latest Blocks on Cosmos Hub | The Big Dipper</title>

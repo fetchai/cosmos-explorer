@@ -9,23 +9,19 @@ const AddressLength = 40;
 Meteor.methods({
     'Transactions.index': function(hash, blockTime){
         this.unblock();
-        hash = hash.toUpperCase();
+        // hash = hash.toUpperCase();
         console.log("Get tx: "+hash)
         try {
             let url = LCD+ '/txs/'+hash;
             let response = HTTP.get(url);
             let tx = JSON.parse(response.content);
-    
             console.log(hash);
-    
             tx.height = parseInt(tx.height);
-    
             let txId = Transactions.insert(tx);
             if (txId){
                 return txId;
             }
             else return false;
-    
         }
         catch(e) {
             console.log(e)

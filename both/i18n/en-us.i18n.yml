@@ -5,6 +5,16 @@ common:
     height: 'Height'
     voter: 'Voter'
     votingPower: 'Voting Power'
+    tokenTap: 'Token Tap'
+    invalidAddress: 'Invalid Address'
+    error: 'error'
+    success: 'success'
+    getFunds: 'Get Funds'
+    successModalTitle: 'Funds Successfully Added'
+    successModalBody: 'Funds added to '
+    successModalClose: 'Close'
+    tokenTapModalTitle: "Add funds to Fetch Account"
+    tokenTapModalButton: "Add Funds"
     addresses: 'Addresses'
     amounts: 'Amounts'
     delegators: 'delegators'
@@ -235,3 +245,10 @@ messageTypes:
     unjail: 'Unjail'
     IBCTransfer: 'IBC Transfer'
     IBCReceive: 'IBC Receive'
+DKG:
+    groupSignature: 'Group Signature: '
+    round: 'DKG Round: '
+    startBlock: 'DKG Start Block: '
+    endBlock: 'DKG End Block: '
+    txIds: 'Table of DKG Transactions'
+    copied: "Copied!"

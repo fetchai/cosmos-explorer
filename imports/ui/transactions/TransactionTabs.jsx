@@ -5,18 +5,21 @@ import classnames from 'classnames';
 import numbro from 'numbro';
 import { TransactionRow } from './TransactionRow.jsx';
 import i18n from 'meteor/universe:i18n';
+import DKGTab from "./dkgTab";
 
 const T = i18n.createComponent();
 export default class TransactionTabs extends Component{
     constructor(props){
         super(props);
+           debugger;
         this.state ={
             activeTab: 'tx-transfer',
             transferTxs: {},
             stakingTxs: {},
             distributionTxs: {},
             governanceTxs: {},
-            slashingTxs: {}
+            slashingTxs: {},
+            DKG: this.props.DKG ? this.props.DKG : null,
         }
     }
 
@@ -29,14 +32,16 @@ export default class TransactionTabs extends Component{
     }
 
     componentDidUpdate(prevProps){
+        debugger;
         if (this.props != prevProps){
             this.setState({
                 transferTxs: this.props.transferTxs,
                 stakingTxs: this.props.stakingTxs,
                 distributionTxs: this.props.distributionTxs,
                 governanceTxs: this.props.governanceTxs,
-                slashingTxs: this.props.slashingTxs
-            })    
+                slashingTxs: this.props.slashingTxs,
+                DKG: this.props.DKG ? this.props.DKG : null,
+            })
         }
     }
 
@@ -85,6 +90,18 @@ export default class TransactionTabs extends Component{
                             <T>transactions.slashing</T> ({numbro(this.state.slashingTxs.length).format("0,0")})
                         </NavLink>
                     </NavItem>
+                    {Meteor.settings.public.DKGTab ?
+                        <NavItem>
+                            <NavLink
+                                className={classnames({active: this.state.activeTab === 'dkg'})}
+                                onClick={() => {
+                                    this.toggle('dkg');
+                                }}
+                            >
+                                <span> DKG </span>
+                            </NavLink>
+                        </NavItem>
+                    : ""}
                 </Nav>
                 <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="tx-transfer">
@@ -157,6 +174,15 @@ export default class TransactionTabs extends Component{
                             </Col>
                         </Row>
                     </TabPane>
+                    {Meteor.settings.public.DKGTab ?
+                        <TabPane tabId="dkg">
+                            <Row>
+                                <Col>
+                                    {this.state.DKG ? <DKGTab DKG={this.state.DKG}></DKGTab> : ''}
+                                </Col>
+                            </Row>
+                        </TabPane>
+                   : "" }
                 </TabContent>
             </CardBody>
         </Card>

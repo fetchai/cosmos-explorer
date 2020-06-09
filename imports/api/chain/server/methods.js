@@ -218,7 +218,7 @@ Meteor.methods({
                     let msg = genesis.app_state.genutil.gentxs[i].value.msg;
                     // console.log(msg.type);
                     for (m in msg){
-                        if (msg[m].type == "cosmos-sdk/MsgCreateValidator"){
+                        if (msg[m].type == "cosmos-sdk/MsgCreateVlidator"){
                             console.log(msg[m].value);
                             // let command = Meteor.settings.bin.gaiadebug+" pubkey "+msg[m].value.pubkey;
                             let validator = {

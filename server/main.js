@@ -8,8 +8,8 @@ import '/imports/startup/both';
 SYNCING = false;
 COUNTMISSEDBLOCKS = false;
 COUNTMISSEDBLOCKSSTATS = false;
-RPC = Meteor.settings.remote.rpc;
-LCD = Meteor.settings.remote.lcd;
+RPC = Meteor.settings.public.rpc;
+LCD = Meteor.settings.public.lcd;
 timerBlocks = 0;
 timerChain = 0;
 timerConsensus = 0;
@@ -214,7 +214,6 @@ Meteor.startup(function(){
                 timerDelegation = Meteor.setInterval(function(){
                     getDelegations();
                 }, Meteor.settings.params.delegationInterval);
-
                 timerAggregate = Meteor.setInterval(function(){
                     let now = new Date();
                     if ((now.getUTCSeconds() == 0)){

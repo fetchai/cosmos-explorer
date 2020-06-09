@@ -7,14 +7,28 @@ import CountDown from '../components/CountDown.jsx';
 import moment from 'moment';
 import numbro from 'numbro';
 import i18n from 'meteor/universe:i18n';
+import TokenTap from "./token-tap/tokenTap";
 
 const T = i18n.createComponent();
 export default class Consensus extends Component{
     constructor(props){
         super(props);
+
+        this.setModalState = this.setModalState.bind(this)
+
         this.state = {
             chainStopped: false,
+            showModal: false
         }
+    }
+
+    /**
+     * show or hide token tap modal
+     *
+     * @param show
+     */
+    setModalState(show){
+        this.setState({showModal:show})
     }
 
     componentDidUpdate(prevProps){
@@ -84,10 +98,17 @@ export default class Consensus extends Component{
                                             </Col>
                                         </Row>
                                     </Col>
+                                    {Meteor.settings.public.tokenTap?
+                                    <>
+                                        <Col md={2} lg={3}><CardSubtitle><T>common.votingPower</T></CardSubtitle><Progress animated value={this.props.consensus.votedPower} className="value">{this.props.consensus.votedPower}%</Progress></Col>
+                                    <Col md={2} lg={3}><CardSubtitle><T>common.tokenTap</T></CardSubtitle><div className="token-tap-container"><Button color="primary" className="token-tap-button" onClick={() => this.setState({showModal: true})}><T>common.getFunds</T></Button></div></Col>
+                                    </>:
                                     <Col md={4} lg={6}><CardSubtitle><T>common.votingPower</T></CardSubtitle><Progress animated value={this.props.consensus.votedPower} className="value">{this.props.consensus.votedPower}%</Progress></Col>
+                                    }
                                 </Row>
                             </CardBody>
                         </Card>
+                        <TokenTap showModal={this.state.showModal} setModalState={this.setModalState}></TokenTap>
                     </div>);
             }
             else{

@@ -13,19 +13,21 @@ const T = i18n.createComponent();
 export default class Block extends Component{
     constructor(props){
         super(props);
-
+  debugger;
         this.state = {
             transferTxs: {},
             stakingTxs: {},
             distributionTxs: {},
             governanceTxs: {},
-            slashingTxs: {},
+            slashingTxs: {}
         };
     }
 
     componentDidUpdate(prevProps){
         if (this.props != prevProps){
+              debugger;
             if (this.props.transactionsExist){
+
                 // console.log("have txs.");
                 this.setState({
                     transferTxs: this.props.transferTxs,
@@ -46,10 +48,11 @@ export default class Block extends Component{
         }
         else{
             if (this.props.blockExist){
+                debugger;
                 // console.log(this.props.block);
                 let block = this.props.block;
                 let proposer = block.proposer();
-                let moniker = proposer?proposer.description.moniker:'';
+                let moniker = proposer && typeof proposer.description !== "undefined" ? proposer.description.moniker:'';
                 let profileUrl = proposer?proposer.profile_url:'';
 
                 return <Container id="block">
@@ -79,6 +82,7 @@ export default class Block extends Component{
                         distributionTxs={this.state.distributionTxs}
                         governanceTxs={this.state.governanceTxs}
                         slashingTxs={this.state.slashingTxs}
+                        DKG={block.dkg}
                     />
                 </Container>
             }
