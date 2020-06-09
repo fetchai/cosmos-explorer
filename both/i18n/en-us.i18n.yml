@@ -11,7 +11,7 @@ common:
     success: 'success'
     getFunds: 'Get Funds'
     successModalTitle: 'Funds Successfully Added'
-    successModalBody: '100 funds added to '
+    successModalBody: 'Funds added to '
     successModalClose: 'Close'
     tokenTapModalTitle: "Add funds to Fetch Account"
     tokenTapModalButton: "Add Funds"
