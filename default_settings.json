@@ -4,6 +4,7 @@
         "chainId": "{Chain ID}",
         "gtm": "{Add your Google Tag Manager ID here}",
         "slashingWindow": 10000,
+        "genesisTime": "2025-10-20",
         "uptimeWindow": 250,
         "initialPageSize": 30,
         "bech32PrefixAccAddr": "cosmos",
@@ -22,13 +23,13 @@
                 "displayName": "ATOM",
                 "displayNamePlural": "ATOMS",
                 "fraction": 1000000
-            }, 
+            },
             {
                 "denom": "umuon",
                 "displayName": "MUON",
                 "displayNamePlural": "MUONS",
                 "fraction": 1000000
-            } 
+            }
         ],
         "gasPrice": 0.02,
         "coingeckoId": "cosmos"
