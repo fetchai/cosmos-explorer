@@ -23,12 +23,10 @@ export default class Transactions extends Component{
 
             if (this.props.transactions.length > 0){
                 this.setState({
-                    txs: this.props.transactions.map((tx, i) => {
-
-                        // initially we don't list DKG transactions in the transactions tab since it doesn't
-                        // have sort of info that would fit the table
-                        if(typeof tx.info !== "undefined" && tx.info.includes("DKG")) return;
-
+                    // return a row for each transaction with DKG transcations filtered out
+                    txs: this.props.transactions
+                      .filter(tx =>  !(typeof tx.info !== "undefined" && tx.info.includes("DKG")))
+                      .map((tx, i) => {
                         return <TransactionRow
                             key={i}
                             index={i}
