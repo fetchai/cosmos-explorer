@@ -13,8 +13,12 @@
         "bech32PrefixConsAddr": "cosmosvalcons",
         "bech32PrefixConsPub": "cosmosvalconspub",
         "bondDenom": "ufet",
-         "rpc": "http://sentries-pre-mainnet.sandbox.fetch-ai.com:12000",
-        "lcd": "http://rest-pre-mainnet.sandbox.fetch-ai.com:12200",
+        "tokenTap": true,
+        "tokenTapURL": true,
+        "DKGTab": true,
+        "rpc":"http://pre-mainnet-explorer.sandbox.fetch-ai.com:12000",
+        "lcd":"https://pre-mainnet-explorer.sandbox.fetch-ai.com:12201",
+        "github": "https://github.com/forbole/big_dipper/",
         "powerReduction": 1000000,
         "coins": [
             {
@@ -27,11 +31,8 @@
         "gasPrice": 0.02,
         "coingeckoId": "fetch-ai"
     },
-    "genesisFile": "http://localhost/genesis-premainnet.json",
-    "remote":{
-        "rpc": "http://sentries-pre-mainnet.sandbox.fetch-ai.com:12000",
-        "lcd": "http://rest-pre-mainnet.sandbox.fetch-ai.com:12200"
-    },
+    "genesisFile": "http://localhost/genesis2.json",
+
     "debug": {
         "startTimer": true,
         "readGenesis": true
