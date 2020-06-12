@@ -20,16 +20,20 @@ export default class Transactions extends Component{
 
     componentDidUpdate(prevProps){
         if (this.props != prevProps){
+
             if (this.props.transactions.length > 0){
                 this.setState({
-                    txs: this.props.transactions.map((tx, i) => {
-                        return <TransactionRow 
-                            key={i} 
-                            index={i} 
-                            tx={tx} 
+                    // return a row for each transaction with DKG transcations filtered out
+                    txs: this.props.transactions
+                      .filter(tx =>  !(typeof tx.info !== "undefined" && tx.info.includes("DKG")))
+                      .map((tx, i) => {
+                        return <TransactionRow
+                            key={i}
+                            index={i}
+                            tx={tx}
                         />
                     })
-                })    
+                })
             }
         }
     }
