@@ -3,6 +3,7 @@
 import './util.js';
 import './register-api.js';
 import './create-indexes.js';
+import './rest-api.js';
 import { onPageLoad } from 'meteor/server-render';
 import { Helmet } from 'react-helmet';
 
