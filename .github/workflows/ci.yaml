@@ -25,7 +25,7 @@ jobs:
           node-version: "12"
       - name: Run the install
         run: |
-          meteor npm install --save
+          npm install meteor && meteor npm install --save
       - name: Run the production build
         run: |
           ./build.sh
