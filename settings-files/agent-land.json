@@ -1,0 +1,52 @@
+{
+  "public":{
+      "chainName": "Agent land",
+      "chainId": "agent-land",
+      "genesisTime": "2020-07-02T11:15:00.007Z",
+      "gtm": "",
+      "slashingWindow": 10000,
+      "uptimeWindow": 250,
+      "initialPageSize": 30,
+      "validatorStatus0": 1,
+      "tokenTap" : true,
+      "tokenTapURL" : "https://faucet-agent-land.fetch.ai/claim",
+      "bech32PrefixAccAddr": "cosmos",
+      "bech32PrefixAccPub": "cosmospub",
+      "bech32PrefixValAddr": "cosmosvaloper",
+      "bech32PrefixValPub": "cosmosvaloperpub",
+      "bech32PrefixConsAddr": "cosmosvalcons",
+      "bech32PrefixConsPub": "cosmosvalconspub",
+      "bondDenom": "atestfet",
+      "powerReduction": 1000000000000000000,
+      "coins": [
+          {
+              "denom": "atestfet",
+              "displayName": "TESTFET",
+              "displayNamePlural": "TESTFET",
+              "fraction": 1000000000000000000
+          }
+      ],
+      "gasPrice": 0.02,
+      "coingeckoId": "fetch-ai"
+  },
+  "genesisFile": "https://raw.githubusercontent.com/fetchai/cosmos-networks/master/aland/genesis-files/agent-land.json?token=ABNUHWBQGXBBXSFGVIEWMFK7CSS3Q",
+  "remote":{
+      "rpc":"https://rpc-agent-land.fetch.ai",
+      "lcd":"https://rest-agent-land.fetch.ai"
+  },
+  "debug": {
+      "startTimer": true,
+      "readGenesis": true
+  },
+  "params":{
+      "startHeight": 0,
+      "defaultBlockTime": 5000,
+      "blockInterval": 15000,
+      "consensusInterval": 1000,
+      "statusInterval":7500,
+      "signingInfoInterval": 1800000,
+      "proposalInterval": 5000,
+      "missedBlocksInterval": 60000,
+      "delegationInterval": 900000
+  }
+}
