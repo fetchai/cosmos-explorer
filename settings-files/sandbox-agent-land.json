@@ -1,7 +1,7 @@
 {
   "public":{
-      "chainName": "Agent land",
-      "chainId": "agent-land",
+      "chainName": "Sandbox Agent land",
+      "chainId": "sandbox-agent-land",
       "genesisTime": "2020-07-02T11:15:00.007Z",
       "gtm": "",
       "slashingWindow": 10000,
@@ -9,7 +9,7 @@
       "initialPageSize": 30,
       "validatorStatus0": 1,
       "tokenTap" : true,
-      "tokenTapURL" : "https://faucet-agent-land.fetch.ai/claim",
+      "tokenTapURL" : "https://faucet-agent-land.sandbox.fetch-ai.com/claim",
       "bech32PrefixAccAddr": "cosmos",
       "bech32PrefixAccPub": "cosmospub",
       "bech32PrefixValAddr": "cosmosvaloper",
@@ -31,8 +31,8 @@
   },
   "genesisFile": "http://localhost:8080/genesis.json",
   "remote":{
-      "rpc":"https://rpc-agent-land.fetch.ai",
-      "lcd":"https://rest-agent-land.fetch.ai"
+      "rpc":"https://rpc-agent-land.sandbox.fetch-ai.com",
+      "lcd":"https://rest-agent-land.sandbox.fetch-ai.com"
   },
   "debug": {
       "startTimer": true,
