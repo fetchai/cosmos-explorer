@@ -152,9 +152,9 @@ body {
   }
 
   a.navbar-brand .logo {
-    overflow: visible;
-    height: 98px;
-    padding-bottom: 5px;
+    height: 45px;
+    margin-right: 5px;
+    padding-bottom: 2px;
 
      @media only screen and (max-width:  800px){
     height: 50px;
@@ -166,6 +166,10 @@ body {
     padding-bottom: 0px;
     }
   }
+
+  .img-fluid, .img-thumbnail {
+    max-width: unset !important;
+}
 
   .navbar-brand {
     font-size: 22px !important;
