@@ -29,7 +29,7 @@
       "gasPrice": 0.02,
       "coingeckoId": "fetch-ai"
   },
-  "genesisFile": "http://localhost:8080/genesis.json",
+  "genesisFile": "http://localhost/genesis.json",
   "remote":{
       "rpc":"https://rpc-agent-land.fetch.ai",
       "lcd":"https://rest-agent-land.fetch.ai"
