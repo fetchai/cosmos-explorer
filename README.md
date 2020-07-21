@@ -35,7 +35,8 @@ Block Explorer for Cosmos
 1. Copy `default_settings.json` to `settings.json`.
 2. Update the RPC and LCD URLs.
 3. Update Bech32 address prefixes.
-4. Update genesis file location.
+4. set coingeckoId settings field to an empty string to not show dollar price. 
+5. Update genesis file location.
 
 ### Requirements
 
