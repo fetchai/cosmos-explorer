@@ -146,11 +146,35 @@ body {
   div#loadmore {
     margin: 0.5rem auto;
   }
-  
-  a.navbar-brand .logo {
-    max-height: 40px;
-    max-width: 40px;
+
+  .navbar {
+        padding: 1rem 1rem 0.3rem 0.25rem !important;
   }
+
+  a.navbar-brand .logo {
+    overflow: visible;
+    height: 98px;
+    padding-bottom: 5px;
+
+     @media only screen and (max-width:  800px){
+    height: 50px;
+    padding-bottom: 2px;
+    }
+
+    @media only screen and (max-width:  600px){
+    height: 35px;
+    padding-bottom: 0px;
+    }
+  }
+
+  .navbar-brand {
+    font-size: 22px !important;
+
+    .site-name {
+      margin-right: 5px;
+    }
+  }
+
   
   #header-search {
     margin-left: 1rem;
@@ -849,7 +873,12 @@ body {
     }
   
     span#network-nav {
-      margin-left: 2.5em;
+      margin-left: 4.25em;
+
+           @media only screen and (max-width:  800px){
+     margin-left: 2em;
+    }
+
     }
   }
   

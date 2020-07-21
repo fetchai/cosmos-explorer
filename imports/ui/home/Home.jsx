@@ -16,7 +16,7 @@ export default class Home extends Component {
     return (
       <div id="home">
         <Helmet>
-          <title>The Big Dipper | Cosmos Explorer by Forbole</title>
+          <title>The Big Dipper | Cosmos Explorer by Fetch.ai</title>
           <meta name="description" content="Cosmos is a decentralized network of independent parallel blockchains, each powered by BFT consensus algorithms like Tendermint consensus." />
         </Helmet>
         <ChainInfo />
