@@ -411,16 +411,19 @@ export default class AccountDetails extends Component {
                           <Col xs={8} className="value text-right">
                             {this.findCoin(this.state.total)}
                           </Col>
-                          <Col xs={12} className="dollar-value text-right text-secondary">
-                            ~
-                            {numbro((this.findValue(this.state.total)) / Coin.StakingCoin.fraction * this.state.price).format('$0,0.0000a')}
-                            {' '}
-                            (
-                            {numbro(this.state.price).format('$0,0.00')}
-                            /
-                            {Coin.StakingCoin.displayName}
-                            )
-                          </Col>
+                          {this.state.price
+                            ? (
+                              <Col xs={12} className="dollar-value text-right text-secondary">
+                                ~
+                                {numbro((this.findValue(this.state.total)) / Coin.StakingCoin.fraction * this.state.price).format('$0,0.0000a')}
+                                {' '}
+                                (
+                                {numbro(this.state.price).format('$0,0.00')}
+                                /
+                                {Coin.StakingCoin.displayName}
+                                )
+                              </Col>
+                            ) : '' }
                         </Row>
                       </Col>
                     </Row>
