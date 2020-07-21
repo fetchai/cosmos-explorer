@@ -19,7 +19,7 @@ export default class Footer extends React.Component {
       <div>
         <Navbar color="light" light expand="md" fixed="bottom" id="footer" className="d-none d-md-flex">
           <span className="text-muted">
-            <a href="https://raw.githubusercontent.com/forbole/big_dipper/master/LICENSE" target="_blank">
+            <a href="https://raw.githubusercontent.com/fetchai/big-dipper-block-explorer/master/LICENSE" target="_blank">
               <T>navbar.license</T>
             </a>
             {' '}
@@ -30,7 +30,7 @@ export default class Footer extends React.Component {
           </span>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink href="https://www.github.com/Cashmaney/big_dipper" target="_blank">
+              <NavLink href="https://www.github.com/fetchai/big-dipper-block-explorer" target="_blank">
                 <i className="fab fa-github" />
                 {' '}
                 <T>navbar.forkMe</T>
