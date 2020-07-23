@@ -1,4 +1,4 @@
-# Fetch Cosmos Network Explorer
+# Fetch.ai Cosmos Network Explorer
 
 This project is a fork from the excellent [Big Dipper](https://github.com/forbole/big-dipper) block explorer. It has been customised for the requirements of the Fetch.ai testnets.
 
