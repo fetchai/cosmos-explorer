@@ -30,7 +30,7 @@ export default class Footer extends React.Component {
           </span>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink href="https://www.github.com/fetchai/big-dipper-block-explorer" target="_blank">
+              <NavLink href="https://github.com/fetchai/cosmos-explorer" target="_blank">
                 <i className="fab fa-github" />
                 {' '}
                 <T>navbar.forkMe</T>

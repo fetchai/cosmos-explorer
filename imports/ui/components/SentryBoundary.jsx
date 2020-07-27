@@ -24,7 +24,7 @@ export default class SentryBoundary extends Component {
               Please try to refresh the page and see if the problem is gone.
               If the problem keeps happening, please consider filing a
               {' '}
-              <a target="_blank" href="https://github.com/fetchai/big-dipper-block-explorer/issues/new/choose">Github issue</a>
+              <a target="_blank" href="https://github.com/fetchai/cosmos-explorer/issues/new/choose">Github issue</a>
               .
             </p>
             {/* <p>{JSON.stringify(this.state.error)}</p>

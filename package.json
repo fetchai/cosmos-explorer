@@ -1,5 +1,5 @@
 {
-  "name": "TheBigDipper",
+  "name": "FetchaiNetworkExplorer",
   "private": true,
   "scripts": {
     "start": "meteor run",
