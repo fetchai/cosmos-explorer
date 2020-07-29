@@ -40,7 +40,7 @@ export default class Transaction extends Component {
               Transaction
               {tx.txhash}
               {' '}
-              on Cosmos Hub | The Big Dipper
+              on the Network Explorer
             </title>
             <meta name="description" content={`Details of transaction ${tx.txhash}`} />
           </Helmet>

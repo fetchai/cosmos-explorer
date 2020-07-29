@@ -63,7 +63,7 @@ export default class Block extends Component {
               Block
               {numbro(block.height).format('0,0')}
               {' '}
-              on Cosmos Hub | The Big Dipper
+              The Fetch.ai Network Explorer
             </title>
             <meta name="description" content={`Block details of height ${numbro(block.height).format('0,0')}`} />
           </Helmet>

@@ -191,7 +191,7 @@ export default class Validator extends Component {
             <title>
               { moniker }
               {' '}
-              - Cosmos Validator | The Big Dipper
+              - The Fetch.ai Network Explorer
             </title>
             <meta name="description" content={details} />
           </Helmet>
