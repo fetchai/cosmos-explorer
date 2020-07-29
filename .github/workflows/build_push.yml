@@ -7,8 +7,6 @@ on:
     branches:
       - '*'
 
-  
-
 env:
   REGISTRY: gcr.io/fetch-ai-images
 
@@ -25,3 +23,31 @@ jobs:
           echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
           echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
           echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
+      - name: Login to Docker hub, build and push
+        run: |
+          SOURCE_TAG="v0.1.1"
+          SHORTVERSION=${SOURCE_TAG%.*}
+          docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
+          docker build -t fetchai/cosmos-explorer:$SOURCE_TAG .
+          docker push fetchai/cosmos-explorer:$SOURCE_TAG
+          docker tag fetchai/cosmos-explorer:$SOURCE_TAG fetchai/cosmos-explorer:$SHORTVERSION
+          docker push fetchai/cosmos-explorer:$SHORTVERSION
+        # env:
+        #   SOURCE_TAG: ${{ steps.tag_name.outputs.SOURCE_TAG }} 
+      - name: Setup GCloud
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GCLOUD_KEY_IMAGES }}
+      - name: Configure Docker
+        run: |
+          gcloud auth configure-docker
+      - name: Build and push to GCR
+        run: |
+          SOURCE_TAG="v0.1.1"
+          SHORTVERSION=${SOURCE_TAG%.*}
+          docker build -t $REGISTRY/cosmos-explorer:$SOURCE_TAG -f Dockerfile.gcr . --build-arg VERSION=$SOURCE_TAG
+          docker push $REGISTRY/cosmos-explorer:$SOURCE_TAG
+          docker tag $REGISTRY/cosmos-explorer:$SOURCE_TAG $REGISTRY/cosmos-explorer:$SHORTVERSION
+          docker push $REGISTRY/cosmos-explorer:$SHORTVERSION
+        # env:
+        #   SOURCE_TAG: ${{ steps.tag_name.outputs.SOURCE_TAG }}
