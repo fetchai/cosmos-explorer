@@ -3,7 +3,7 @@ on:
   push:
     tags:
       - '*'
-  pull_requst:
+  pull_request:
     branches:
       - '*'
 
