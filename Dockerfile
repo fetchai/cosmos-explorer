@@ -13,10 +13,11 @@ WORKDIR /source/big-dipper
 
 COPY . .
 
-# Check for updates to the packages of big-dipper 
-RUN meteor npm update
+
 # Install the updates
 RUN meteor npm install --save -f
+# Check for updates to the packages of big-dipper 
+RUN meteor npm update
 # Compile app, and Create tarball with the copmiled app
 RUN meteor build --allow-superuser ../output/ --architecture os.linux.x86_64 --server-only
 
