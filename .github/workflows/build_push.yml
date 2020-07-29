@@ -1,0 +1,27 @@
+name: Build and push images
+on:
+  push:
+    tags:
+      - '*'
+  pull_requst:
+    branches:
+      - '*'
+
+  
+
+env:
+  REGISTRY: gcr.io/fetch-ai-images
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get tag name
+        id: tag_name
+        run: |
+          echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
+          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
+          echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
