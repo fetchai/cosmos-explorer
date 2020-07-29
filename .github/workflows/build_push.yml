@@ -8,8 +8,8 @@ env:
   REGISTRY: gcr.io/fetch-ai-images
 
 jobs:
-  timeout-minutes: 30
   build-and-push:
+    timeout-minutes: 30
     runs-on: ubuntu-20.04
 
     steps:
