@@ -45,9 +45,9 @@ jobs:
         run: |
           SOURCE_TAG="v0.1.1"
           SHORTVERSION=${SOURCE_TAG%.*}
-          docker build -t $REGISTRY/cosmos-explorer:$SOURCE_TAG -f Dockerfile.gcr . --build-arg VERSION=$SOURCE_TAG
-          docker push $REGISTRY/cosmos-explorer:$SOURCE_TAG
+          docker tag fetchai/cosmos-explorer:$SOURCE_TAG $REGISTRY/cosmos-explorer:$SOURCE_TAG
           docker tag $REGISTRY/cosmos-explorer:$SOURCE_TAG $REGISTRY/cosmos-explorer:$SHORTVERSION
+          docker push $REGISTRY/cosmos-explorer:$SOURCE_TAG
           docker push $REGISTRY/cosmos-explorer:$SHORTVERSION
         # env:
         #   SOURCE_TAG: ${{ steps.tag_name.outputs.SOURCE_TAG }}
