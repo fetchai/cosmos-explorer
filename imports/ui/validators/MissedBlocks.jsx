@@ -27,7 +27,7 @@ export default class MissedBlocks extends Component {
             <title>
               { this.props.validator.description.moniker }
               {' '}
-              - Missed Blocks | The Big Dipper
+              - Missed Blocks | The Fetch.ai Network Explorer
             </title>
             <meta name="description" content={`The missed blocks and signatures of ${this.props.validator.description.moniker}`} />
           </Helmet>

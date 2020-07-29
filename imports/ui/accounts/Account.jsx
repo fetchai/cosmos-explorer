@@ -281,7 +281,7 @@ export default class AccountDetails extends Component {
                 Account Details of
                 {this.state.address}
                 {' '}
-                on Cosmos Hub | The Big Dipper
+               on the Fetch.ai Network Explorer
               </title>
               <meta name="description" content={`Account Details of ${this.state.address} on Cosmos Hub`} />
             </Helmet>

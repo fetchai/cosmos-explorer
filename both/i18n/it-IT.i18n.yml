@@ -24,7 +24,7 @@ common:
     retry: 'Riprova'
     rewards: 'Reward'
 navbar:
-    siteName: 'The Big Dipper'
+    siteName: 'The Fetch.ai Network Explorer'
     version: 'beta'
     validators: 'Validatori'
     blocks: 'Blocchi'
