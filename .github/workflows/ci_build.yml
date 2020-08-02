@@ -32,3 +32,6 @@ jobs:
       - name: Run the production build
         run: |
           ./build.sh
+      - name: Test docker image building
+        run: |
+          docker build .
