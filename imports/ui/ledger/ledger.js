@@ -1,6 +1,7 @@
 // https://github.com/zondax/cosmos-delegation-js/
 // https://github.com/cosmos/ledger-cosmos-js/blob/master/src/index.js
 import 'babel-polyfill';
+import { Meteor } from 'meteor/meteor';
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import CosmosApp from 'ledger-cosmos-js';
 import { signatureImport } from 'secp256k1';
@@ -16,7 +17,7 @@ const REQUIRED_COSMOS_APP_VERSION = '1.5.0';
 const DEFAULT_DENOM = 'uatom';
 const DEFAULT_GAS = 200000;
 export const DEFAULT_GAS_PRICE = 0.025;
-export const DEFAULT_MEMO = 'Sent via The Fetch.ai Network Explorer';
+export const DEFAULT_MEMO = `Sent via The ${Meteor.settings.public.networkDisplayName} Explorer`;
 
 /*
 HD wallet derivation path (BIP44)

@@ -1,5 +1,6 @@
 {
   "public":{
+       "networkDisplayName": "Agent Land",
       "chainName": "Agent land",
       "chainId": "agent-land",
       "genesisTime": "2020-07-02T11:15:00.007Z",

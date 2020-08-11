@@ -191,7 +191,7 @@ export default class Validator extends Component {
             <title>
               { moniker }
               {' '}
-              - The Fetch.ai Network Explorer
+              - The {Meteor.settings.public.networkDisplayName} Explorer by Fetch.ai
             </title>
             <meta name="description" content={details} />
           </Helmet>

@@ -4,6 +4,7 @@ import {
   CardDeck, Nav, NavItem, NavLink, Spinner,
 } from 'reactstrap';
 import { Helmet } from 'react-helmet';
+import { Meteor } from 'meteor/meteor';
 import i18n from 'meteor/universe:i18n';
 import MissedBlocksTable from './MissedBlocksTable.jsx';
 import TimeDistubtionChart from './TimeDistubtionChart.jsx';
@@ -27,7 +28,7 @@ export default class MissedBlocks extends Component {
             <title>
               { this.props.validator.description.moniker }
               {' '}
-              - Missed Blocks | The Fetch.ai Network Explorer
+              - Missed Blocks | The {Meteor.settings.public.networkDisplayName} Explorer
             </title>
             <meta name="description" content={`The missed blocks and signatures of ${this.props.validator.description.moniker}`} />
           </Helmet>
