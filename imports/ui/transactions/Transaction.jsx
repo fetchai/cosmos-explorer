@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Markdown } from 'react-showdown';
 import numbro from 'numbro';
 import { Helmet } from 'react-helmet';
+import { Meteor } from 'meteor/meteor';
 import i18n from 'meteor/universe:i18n';
 import CosmosErrors from '../components/CosmosErrors.jsx';
 import Activities from '../components/Activities.jsx';
@@ -40,7 +41,7 @@ export default class Transaction extends Component {
               Transaction
               {tx.txhash}
               {' '}
-              on the Network Explorer
+              on the {Meteor.settings.public.networkDisplayName} Explorer
             </title>
             <meta name="description" content={`Details of transaction ${tx.txhash}`} />
           </Helmet>

@@ -14,6 +14,7 @@ import {
 } from 'reactstrap';
 import numbro from 'numbro';
 import { Helmet } from 'react-helmet';
+import { Meteor } from 'meteor/meteor';
 import i18n from 'meteor/universe:i18n';
 import AccountCopy from '../components/AccountCopy.jsx';
 import LinkIcon from '../components/LinkIcon.jsx';
@@ -281,7 +282,7 @@ export default class AccountDetails extends Component {
                 Account Details of
                 {this.state.address}
                 {' '}
-               on the Fetch.ai Network Explorer
+               on the {Meteor.settings.public.networkDisplayName} Explorer by Fetch.ai
               </title>
               <meta name="description" content={`Account Details of ${this.state.address} on Cosmos Hub`} />
             </Helmet>

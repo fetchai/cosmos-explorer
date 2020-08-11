@@ -85,7 +85,7 @@ export default class Transactions extends Component {
       return (
         <div id="transactions">
           <Helmet>
-            <title>Latest Transactions on the Fetch.ai Network Explorer</title>
+            <title>Latest Transactions on the {Meteor.settings.public.networkDisplayName} Explorer by Fetch.ai</title>
             <meta name="description" content="See what is happening on Cosmos Hub" />
           </Helmet>
           <Row>

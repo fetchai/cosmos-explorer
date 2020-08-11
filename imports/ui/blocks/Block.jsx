@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Card, CardBody, Col, Container, Row, Spinner,
 } from 'reactstrap';
+import { Meteor } from 'meteor/meteor';
 import { Link } from 'react-router-dom';
 import numbro from 'numbro';
 import moment from 'moment';
@@ -63,7 +64,7 @@ export default class Block extends Component {
               Block
               {numbro(block.height).format('0,0')}
               {' '}
-              The Fetch.ai Network Explorer
+              {Meteor.settings.public.networkDisplayName} Explorer
             </title>
             <meta name="description" content={`Block details of height ${numbro(block.height).format('0,0')}`} />
           </Helmet>
