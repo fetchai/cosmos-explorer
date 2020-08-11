@@ -242,3 +242,10 @@ messageTypes:
     unjail: 'Unjail'
     IBCTransfer: 'IBC Transfer'
     IBCReceive: 'IBC Receive'
+DKG:
+    groupSignature: 'Group Signature: '
+    round: 'DKG Round: '
+    startBlock: 'DKG Start Block: '
+    endBlock: 'DKG End Block: '
+    txIds: 'Table of DKG Transactions'
+    copied: "Copied!"
