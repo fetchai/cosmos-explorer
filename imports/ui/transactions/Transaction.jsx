@@ -41,7 +41,7 @@ export default class Transaction extends Component {
               Transaction
               {tx.txhash}
               {' '}
-              on the {Meteor.settings.public.networkDisplayName} Explorer
+              on The {Meteor.settings.public.networkDisplayName} Explorer
             </title>
             <meta name="description" content={`Details of transaction ${tx.txhash}`} />
           </Helmet>

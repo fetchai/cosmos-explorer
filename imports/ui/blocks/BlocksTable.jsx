@@ -78,7 +78,7 @@ export default class BlocksTable extends Component {
       return (
         <div>
           <Helmet>
-            <title>Latest Blocks on the {Meteor.settings.public.networkDisplayName} Explorer</title>
+            <title>Latest Blocks on The {Meteor.settings.public.networkDisplayName} Explorer</title>
             <meta name="description" content="Latest blocks committed by validators on Cosmos Hub" />
           </Helmet>
           <Row>

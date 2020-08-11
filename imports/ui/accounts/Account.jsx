@@ -282,7 +282,7 @@ export default class AccountDetails extends Component {
                 Account Details of
                 {this.state.address}
                 {' '}
-               on the {Meteor.settings.public.networkDisplayName} Explorer by Fetch.ai
+               on The {Meteor.settings.public.networkDisplayName} Explorer by Fetch.ai
               </title>
               <meta name="description" content={`Account Details of ${this.state.address} on Cosmos Hub`} />
             </Helmet>
