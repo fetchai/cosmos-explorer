@@ -114,7 +114,6 @@ export default class Block extends Component {
               </Row>
             </CardBody>
           </Card>
-          //todo put dkg as state for consistency
           <TranactionTabs
             transferTxs={this.state.transferTxs}
             stakingTxs={this.state.stakingTxs}
