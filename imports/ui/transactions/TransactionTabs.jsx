@@ -13,6 +13,10 @@ const T = i18n.createComponent();
 export default class TransactionTabs extends Component {
   constructor(props) {
     super(props);
+
+
+    debugger;
+
     this.state = {
       activeTab: 'tx-transfer',
       transferTxs: {},

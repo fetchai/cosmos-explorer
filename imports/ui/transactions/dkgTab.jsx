@@ -20,6 +20,8 @@ export default class DKGTab extends Component{
         super(props);
         this.getGroupSignatureDisplayString = this.getGroupSignatureDisplayString.bind(this)
         this.copy = this.copy.bind(this)
+      debugger;
+        console.log("got to here");
         this.state = {
            DKG: this.props.DKG,
             copied: false
