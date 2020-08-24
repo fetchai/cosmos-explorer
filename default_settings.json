@@ -1,5 +1,6 @@
 {
     "public":{
+        "networkDisplayName": "AEA Testnet",
         "chainName": "Cosmos Testnet",
         "chainId": "{Chain ID}",
         "gtm": "{Add your Google Tag Manager ID here}",

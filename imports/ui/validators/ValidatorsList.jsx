@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   Card, Col, Nav, NavItem, NavLink, Row,
 } from 'reactstrap';
+import { Meteor } from 'meteor/meteor';
 import { Helmet } from 'react-helmet';
 import i18n from 'meteor/universe:i18n';
 import qs from 'querystring';
@@ -83,7 +84,7 @@ export default class Validators extends Component {
     return (
       <div id="validator-list">
         <Helmet>
-          <title>The Fetch.ai Network Explorer</title>
+          <title>The {Meteor.settings.public.networkDisplayName} Exploere by Fetch.ai</title>
           <meta name="description" content="Here is a list of Cosmos Validators" />
         </Helmet>
         <Row>

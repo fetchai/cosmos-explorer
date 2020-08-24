@@ -27,7 +27,7 @@ export default class MissedBlocks extends Component {
             <title>
               { this.props.validator.description.moniker }
               {' '}
-              - Missed Blocks | The Fetch.ai Network Explorer
+              - Missed Blocks | The {Meteor.settings.public.networkDisplayName} Explorer
             </title>
             <meta name="description" content={`The missed blocks and signatures of ${this.props.validator.description.moniker}`} />
           </Helmet>

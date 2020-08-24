@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
 import { Route, Switch } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { Meteor } from 'meteor/meteor';
 import i18n from 'meteor/universe:i18n';
 import List from './ListContainer.js';
 import Proposal from './ProposalContainer.js';
@@ -30,8 +31,8 @@ export default class Proposals extends Component {
     return (
       <div>
         <Helmet>
-          <title>Governance Proposals on The Fetch.ai Network Explorer</title>
-          <meta name="description" content="The Fetch.ai Network Explorer incorporates on-chain governance. Come to see how on-chain governance can be achieved on The Network Explorer." />
+          <title>Governance Proposals on The {Meteor.settings.public.networkDisplayName} Explorer by Fetch.ai</title>
+          <meta name="description" content={`The ${Meteor.settings.public.networkDisplayName} Explorer by Fetch.ai incorporates on-chain governance. Come to see how on-chain governance can be achieved on The Network Explorer.`} />
         </Helmet>
         <Row>
           <Col md={3} xs={12}>
