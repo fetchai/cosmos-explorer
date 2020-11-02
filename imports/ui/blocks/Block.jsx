@@ -120,6 +120,7 @@ export default class Block extends Component {
             distributionTxs={this.state.distributionTxs}
             governanceTxs={this.state.governanceTxs}
             slashingTxs={this.state.slashingTxs}
+            DKG={block.dkg}
           />
         </Container>
       );

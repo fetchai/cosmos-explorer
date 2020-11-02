@@ -13,8 +13,12 @@ import * as cheerio from 'cheerio';
 import { Evidences } from '../../evidences/evidences.js';
 import { Transactions } from '../../transactions/transactions.js';
 import { LCD, RPC } from '../../../../server/main';
-
+import React from "react";
 let SYNCING = false;
+
+function hasTransactionIds(block){
+    return Boolean(block.block.data.txs && block.block.data.txs.length > 0)
+}
 
 // import Block from '../../../ui/components/Block';
 
@@ -197,6 +201,18 @@ Meteor.methods({
             blockData.lastBlockHash = block.block.header.last_block_id.hash;
             blockData.proposerAddress = block.block.header.proposer_address;
             blockData.validators = [];
+             debugger;
+           if(Meteor.settings.public.DKGTab){
+                          debugger;
+
+                blockData.dkg = {};
+                blockData.dkg.round = response.data.result.block.header.entropy.round
+                blockData.dkg.startBlock = response.data.result.block.header.entropy.dkg_id
+                blockData.dkg.groupSignature = response.data.result.block.header.entropy.group_signature
+                blockData.dkg.endBlock = response.data.result.block.header.entropy.dkg_id + response.data.result.block.header.entropy.aeon_length
+                blockData.dkg.txIds = hasTransactionIds(block)? block.block.data.txs : [];
+            }
+
             const precommits = block.block.last_commit.signatures;
             if (precommits != null) {
               // console.log(precommits.length);
