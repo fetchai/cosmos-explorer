@@ -35,7 +35,7 @@ common:
     rewards: 'Rewards'
 navbar:
     siteName: 'BIG DIPPER'
-    version: '-'
+    version: 'beta'
     validators: 'Validators'
     blocks: 'Blocks'
     transactions: 'Transactions'
