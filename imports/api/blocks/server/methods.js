@@ -201,10 +201,7 @@ Meteor.methods({
             blockData.lastBlockHash = block.block.header.last_block_id.hash;
             blockData.proposerAddress = block.block.header.proposer_address;
             blockData.validators = [];
-             debugger;
            if(Meteor.settings.public.DKGTab){
-                          debugger;
-
                 blockData.dkg = {};
                 blockData.dkg.round = response.data.result.block.header.entropy.round
                 blockData.dkg.startBlock = response.data.result.block.header.entropy.dkg_id

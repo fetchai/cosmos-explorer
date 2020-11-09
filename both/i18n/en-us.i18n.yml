@@ -34,7 +34,8 @@ common:
     retry: 'Retry'
     rewards: 'Rewards'
 navbar:
-    version: 'beta'
+    siteName: 'BIG DIPPER'
+    version: '-'
     validators: 'Validators'
     blocks: 'Blocks'
     transactions: 'Transactions'
@@ -45,8 +46,10 @@ navbar:
     spanish: "Español"
     italian: "Italiano"
     polish: "Polski"
+    russian: "Русский"
     chinese: "中文（繁）"
     simChinese: "中文（简）"
+    portuguese: "Português"
     license: 'LICENSE'
     forkMe: 'Fork me!'
 consensus:
@@ -140,7 +143,7 @@ transactions:
     txHash: 'Tx Hash'
     valid: 'Valid'
     fee: 'Fee'
-    noFee: 'No fee' 
+    noFee: 'No fee'
     gasUsedWanted: 'Gas (used / wanted)'
     noTxFound: 'No such transaction found.'
     noValidatorTxsFound: 'No transaction related to this validator was found.'
@@ -178,7 +181,7 @@ proposals:
     percentageVoted: '<span class="text-info">{$percent}</span> of online voting power has been voted.'
     validMessage: 'This proposal is {$tentative}<strong>valid</strong>.'
     invalidMessage: 'Less than {$quorum} of voting power is voted. This proposal is <strong>invalid</strong>.'
-    moreVoteMessage: 'It will be a valid proposal once <span class="text-info">{$moreVotes}</span> more votes are casted.'
+    moreVoteMessage: 'It will be a valid proposal once <span class="text-info">{$moreVotes}</span> more votes are cast.'
     key: 'Key'
     value: 'Value'
     amount: 'Amount'
@@ -225,6 +228,7 @@ activities:
     withMoniker: 'with moniker'
     withTitle: 'with title'
     withA: 'with a'
+    withAmount: 'with <span class="text-info">{$amount}</span>'
 messageTypes:
     send: 'Send'
     multiSend: 'Multi Send'

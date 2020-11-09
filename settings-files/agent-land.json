@@ -33,8 +33,8 @@
   },
   "genesisFile": "http://localhost/genesis.json",
   "remote":{
-      "rpc":"https://rpc-beacon-land.sandbox.fetch-ai.com/",
-      "lcd":"https://rest-beacon-land.sandbox.fetch-ai.com/"
+      "rpc":"https://rpc-agent-land.fetch.ai",
+      "lcd":"https://rest-agent-land.fetch.ai"
   },
   "debug": {
       "startTimer": true,
