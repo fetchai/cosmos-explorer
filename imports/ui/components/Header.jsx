@@ -165,13 +165,15 @@ export default class Header extends Component {
         this.props.history.push(redirectUrl + query)
     }
 
+
+
     render() {
         let signedInAddress = getUser();
         return (
             <Navbar color="primary" dark expand="lg" fixed="top" id="header">
                 <NavbarBrand tag={Link} to="/">
                   <img src="/img/fetch-logo.svg" className="img-fluid logo"/>
-                <span className="d-none d-xl-inline-block"><T>navbar.siteName</T>&nbsp;</span>
+                  <span className="d-none d-xl-inline-block"><T>navbar.siteName</T>&nbsp;</span>
                   <Badge color="secondary">{this.state.version}</Badge>
                 </NavbarBrand>
               <UncontrolledDropdown className="d-inline text-nowrap">
