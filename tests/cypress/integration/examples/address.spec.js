@@ -22,5 +22,4 @@ context('Address', () => {
      })
    })
 
-
 })

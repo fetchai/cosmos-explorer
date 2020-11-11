@@ -14,7 +14,7 @@ context('Validators', () => {
      })
    })
 
-  it("Check a known validatir is displayed on the page", () => {
+  it("Check a known validator is displayed on the page", () => {
     const knownValidator = "Bond"
     cy.get(".moniker").parent().contains(knownValidator)
   })
