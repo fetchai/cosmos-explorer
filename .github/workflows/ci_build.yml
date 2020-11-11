@@ -35,3 +35,7 @@ jobs:
       - name: Test docker image building
         run: |
           docker build .
+      - name: Cypress run
+          uses: cypress-io/github-action@v2
+        run: |
+          npm run cypress:gui
