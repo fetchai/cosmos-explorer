@@ -21,6 +21,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
+      - uses: cypress-io/github-action@v2
         with:
           node-version: "12"
       - uses: meteorengineer/setup-meteor@v1
@@ -36,6 +37,5 @@ jobs:
         run: |
           docker build .
       - name: Cypress run
-        uses: cypress-io/github-action@v2
         run: |
           npm run cypress:gui
