@@ -3,15 +3,15 @@ context('Hash', () => {
     cy.visit('https://explore-agent-land.sandbox.fetch-ai.com/transactions/CAFBD485E5C876C04464F2FE8A9CCC7E20703F386DCEA5D19BF864A9139FBF32')
   })
 
-  // it("Check that at height displayed on page is exepected", () => {
-  //    const expectedHeight = "109,000"
-  //    cy.get("#transaction").contains("Height").parent().next().find('a').then(($span) => {
-  //  // $span is the object that the previous command yielded
-  //  const total = $span.text();
-  //  cy.log("Total " + total);
-  //  expect(total).to.eq(expectedHeight);
-  // })
-  //  })
+  it("Check that at height displayed on page is exepected", () => {
+     const expectedHeight = "109,000"
+     cy.get("#transaction").contains("Height").parent().next().find('a').then(($span) => {
+   // $span is the object that the previous command yielded
+   const total = $span.text();
+   cy.log("Total " + total);
+   expect(total).to.eq(expectedHeight);
+  })
+   })
 
   it("Check that at Fee displayed on page is exepected", () => {
      const expectedFee = "1000 atestfet"
