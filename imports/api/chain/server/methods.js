@@ -21,6 +21,7 @@ Meteor.methods({
     this.unblock();
     const url = `${RPC}/dump_consensus_state`;
     try {
+      console.log("dump_consensus_statedump_consensus_statedump_consensus_state")
       const response = HTTP.get(url);
       let consensus = JSON.parse(response.content);
       consensus = consensus.result;
@@ -41,6 +42,7 @@ Meteor.methods({
         },
       });
     } catch (e) {
+            console.log("ERROR IN DUNP");
       console.log(e);
     }
   },
