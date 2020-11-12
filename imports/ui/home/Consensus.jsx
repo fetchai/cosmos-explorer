@@ -57,6 +57,10 @@ export default class Consensus extends Component{
       return <Spinner type="grow" color="primary" />;
     }
 
+    // window.alert("this.props.consensusExist && this.props.consensus.prevotes")
+    // window.alert(this.props.consensusExist)
+    // window.alert( this.props.consensus.prevotes)
+
     if (this.props.consensusExist && this.props.consensus.prevotes) {
       const proposer = this.props.consensus.proposer();
       const moniker = (proposer && proposer.description && proposer.description.moniker) ? proposer.description.moniker : this.props.consensus.proposerAddress;

@@ -3,6 +3,7 @@ import { HTTP } from 'meteor/http';
 import { Transactions } from '../../transactions/transactions.js';
 import { Validators } from '../../validators/validators.js';
 import { VotingPowerHistory } from '../../voting-power/history.js';
+import { LCD } from '../../../../server/main';
 
 const AddressLength = 40;
 
@@ -11,8 +12,9 @@ Meteor.methods({
         this.unblock();
         hash = hash.toUpperCase();
         console.log("Get tx: "+hash)
+        let url = LCD+ '/txs/'+hash;
         try {
-            let url = LCD+ '/txs/'+hash;
+            console.log(url)
             let response = HTTP.get(url);
             let tx = JSON.parse(response.content);
     

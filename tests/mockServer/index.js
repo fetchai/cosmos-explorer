@@ -7,15 +7,15 @@ const port = 4000;
 const dumpConsensusState = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/dump_consensus_state");
 const status = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/status");
 const proposals = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/proposals");
-const validators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/validators");
+const validators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/validators/validators");
 const stakingPool = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/staking-pool");
 const supply = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/supply");
 const communityPool = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/community-pool");
 const inflation = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/inflation");
 const stakingValidators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/staking-validators");
 const annualProvisions = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/annual-provisions");
-const bondedValidators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/bonded-validators");
-const unbondedValidators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/unbonded-validators");
+const bondedValidators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/validators/bonded-validators");
+const unbondedValidators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/validators/unbonding-validators");
 
 
 function loadJSON(file) {
@@ -48,27 +48,56 @@ app.get('/lcd/staking/pool', (req, res) => {
     res.end(JSON.stringify(stakingPool))
 })
 
+app.get('/lcd/txs/:hash', (req, res) => {
+  console.log("/lcd/txs/:hash  22222", JSON.stringify(req.originalUrl))
+
+  let response
+
+  if(typeof req.param === "undefined"){
+    console.log("ERROR AS UNDEFINED PARAM")
+  } else {
+        console.log("PARMAS IS", req.params.hash)
+       response = loadJSON(`/home/douglas/big-dipper-block-explorer/tests/mockServer/public/transactions/${req.params.hash}`);
+  }
+      res.end(JSON.stringify(response))
+})
+
 app.get('/rpc/validators', (req, res) => {
   console.log("/rpc/validators  22222", JSON.stringify(req.originalUrl))
+  const queryKeys = Object.keys(req.query)
 
-
-  if(typeof req.query.status === "undefined"){
-    console.log("no query string")
-    res.end(JSON.stringify(validators))
-  } else if(req.query.status === "bonded"){
-        console.log("query string bonded")
-        res.end(JSON.stringify(bondedValidators))
-  } else if(req.query.status === "unbonded") {
-            console.log("query string unbonded")
-            res.end(JSON.stringify(unbondedValidators))
-  } else {
-            console.log("query string not matches")
-
+  if(!queryKeys.length){
+        return res.end(JSON.stringify(validators))
   }
+
+  let result;
+
+  if(queryKeys.includes("status")){
+    if (req.query.status === "bonded") {
+      console.log("bonded")
+      result = JSON.stringify(bondedValidators)
+    } else if(req.query.status === "unbonding"){
+            console.log("unbonding")
+      result = JSON.stringify(unbondedValidators)
+    }
+  }
+
+  if(queryKeys.includes("height")){
+          console.log("height")
+
+      console.log("/rpc/validators  with height ", JSON.stringify(req.originalUrl))
+       result = loadJSON(`/home/douglas/big-dipper-block-explorer/tests/mockServer/public/validators/height${req.query.height}`);
+  }
+
+  if(typeof result === "undefined"){
+     console.log("unmatched url params")
+  }
+
+  return res.end(JSON.stringify(result))
 })
 
 app.get('/lcd/staking/validators', (req, res) => {
-  console.log("/lcd/staking/validators  22222", JSON.stringify(req.originalUrl))
+  console.log("/lcd/staking/validators  77777", JSON.stringify(req.originalUrl))
     res.end(JSON.stringify(stakingValidators))
 })
 
@@ -96,7 +125,7 @@ app.get('/rpc/block', (req, res) => {
   console.log("block  22222", JSON.stringify(req.originalUrl))
   const {height} = req.query
 
-  let response
+  let response;
 try {
     console.log("and height to search for is ", height)
    response = loadJSON(`/home/douglas/big-dipper-block-explorer/tests/mockServer/public/blocks/block${height}`);

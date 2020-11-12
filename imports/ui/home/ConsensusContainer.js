@@ -14,9 +14,11 @@ export default ConsensusContainer = withTracker((curr) => {
   }
 
   let consensusExist;
-
+    console.log("before consensus and loading", loading)
   if (Meteor.isServer || !loading) {
+    console.log("HERE consensus" , Meteor.settings.public.chainId)
     consensus = Chain.findOne({ chainId: Meteor.settings.public.chainId });
+    console.log("HERE consensus", consensus)
 
     if (Meteor.isServer) {
       // loading = false;
