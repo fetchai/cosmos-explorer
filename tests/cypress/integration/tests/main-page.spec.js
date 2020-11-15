@@ -1,10 +1,13 @@
+import { explorerUrl } from './constants'
+
+
 context('Main Page', () => {
   beforeEach(() => {
-    cy.visit('https://explore-agent-land.sandbox.fetch-ai.com')
+    cy.visit(explorerUrl)
   })
 
   it("Check Latest Block Height has expected value", () => {
-     const expectedBlockHeight = "787,719"
+     const expectedBlockHeight = "6"
      cy.contains("Latest Block Height").parentsUntil('.card-body').parent().find('.text-primary').then(($span) => {
 
    const actualBlockHeight = $span.text();
@@ -14,7 +17,7 @@ context('Main Page', () => {
 })
 
   it("Check Average Block Time has expected value", () => {
-     const expectedAverageBlockTime = "8.53"
+     const expectedAverageBlockTime = "102,904.15"
      cy.contains("Average Block Time").parentsUntil('.card-body').parent().find('.text-primary').then(($span) => {
 
    const actualAverageBlockTime = $span.text();

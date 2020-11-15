@@ -2,7 +2,7 @@
   "public":{
        "networkDisplayName": "Agent Land",
       "chainName": "Agent land",
-      "chainId": "agent-land",
+      "chainId": "sandbox-agent-land",
       "DKGTab": false,
       "genesisTime": "2020-07-02T11:15:00.007Z",
       "gtm": "",

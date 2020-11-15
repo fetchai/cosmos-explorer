@@ -1,10 +1,14 @@
+import { explorerUrl } from './constants'
+
+
 context('Hash', () => {
   beforeEach(() => {
-    cy.visit('https://explore-agent-land.sandbox.fetch-ai.com/transactions/CAFBD485E5C876C04464F2FE8A9CCC7E20703F386DCEA5D19BF864A9139FBF32')
+    cy.visit(`${explorerUrl}/transactions/E27F373D818DA25629CEADE9C6D2FEA3218D59D27246F383693CA0C257CDA1F7`)
+    cy.wait(3000);
   })
 
   it("Check that at height displayed on page is exepected", () => {
-     const expectedHeight = "109,000"
+     const expectedHeight = "108,786"
      cy.get("#transaction").contains("Height").parent().next().find('a').then(($span) => {
    // $span is the object that the previous command yielded
    const total = $span.text();

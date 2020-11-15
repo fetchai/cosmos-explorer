@@ -15,7 +15,7 @@
           "block": "10",
           "app": "0"
         },
-        "chain_id": "agent-land",
+        "chain_id": "sandbox-agent-land",
         "height": "1",
         "time": "2020-09-01T18:30:00Z",
         "last_block_id": {

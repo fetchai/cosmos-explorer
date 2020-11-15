@@ -1,6 +1,9 @@
-context('Transactions', () => {
+import { explorerUrl } from './constants'
+
+
+context('Individual Blocks', () => {
   beforeEach(() => {
-    cy.visit('https://explore-agent-land.sandbox.fetch-ai.com')
+    cy.visit(`${explorerUrl}blocks/1`)
   })
 
   it("Check inflation rate is displayed correctly", () => {

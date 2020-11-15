@@ -1,6 +1,8 @@
+import { explorerUrl } from './constants'
+
 context('Blocks', () => {
   beforeEach(() => {
-    cy.visit('https://explore-agent-land.sandbox.fetch-ai.com/blocks')
+    cy.visit(`${explorerUrl}/blocks`)
   })
 
   it("Check there are many blocks being displayed on the page", () => {

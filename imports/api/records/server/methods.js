@@ -13,6 +13,7 @@ import { ValidatorSets } from '/imports/api/validator-sets/validator-sets.js';
 import { Status } from '../../status/status.js';
 import { Blockscon } from '../../blocks/blocks.js';
 import { Chain } from '../../chain/chain.js';
+import { COUNTMISSEDBLOCKS } from '../../../../server/main';
 
 const BULKUPDATEMAXSIZE = 1000;
 

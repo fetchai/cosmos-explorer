@@ -1,6 +1,8 @@
+import { explorerUrl } from './constants'
+
 context('Address', () => {
   beforeEach(() => {
-    cy.visit('https://explore-agent-land.sandbox.fetch-ai.com/account/fetch193vvag846gz3pt3q0mdjuxn0s5jrt39fsjrays')
+    cy.visit(`${explorerUrl}/account/fetch193vvag846gz3pt3q0mdjuxn0s5jrt39fsjrays`)
   })
 
   it("Check that at least one transaction is displayed in tabled relating to this address", () => {

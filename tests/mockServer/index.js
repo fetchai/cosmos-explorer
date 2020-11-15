@@ -4,7 +4,7 @@ const fs = require('fs')
 const app = express()
 const port = 4000;
 
-const dumpConsensusState = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/dump_consensus_state");
+const dumpConsensusState = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/dump-consensus-state");
 const status = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/status");
 const proposals = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/proposals");
 const validators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/validators/validators");
@@ -86,7 +86,11 @@ app.get('/rpc/validators', (req, res) => {
           console.log("height")
 
       console.log("/rpc/validators  with height ", JSON.stringify(req.originalUrl))
+
        result = loadJSON(`/home/douglas/big-dipper-block-explorer/tests/mockServer/public/validators/height${req.query.height}`);
+
+
+
   }
 
   if(typeof result === "undefined"){
@@ -138,7 +142,6 @@ try {
 })
 
 app.get('/*', (req, res) => {
-  debugger;
   console.log("reqqqqqq", JSON.stringify(req.originalUrl))
 })
 
