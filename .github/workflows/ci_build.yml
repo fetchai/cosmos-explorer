@@ -43,8 +43,6 @@ jobs:
           uses: jakejarvis/wait-action@master
           with:
             time: '30s'
-        run: |
-          ./build.sh
       - name: Test docker image building
         run: |
           docker build .
