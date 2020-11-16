@@ -1,3 +1,5 @@
+//
+//
 // import { explorerUrl } from './constants'
 //
 // const testAddress = "fetch193vvag846gz3pt3q0mdjuxn0s5jrt39fsjrays"
@@ -12,7 +14,6 @@
 //   it("Check the address is found", () => {
 //      cy.contains(testAddress)
 //    })
-//
 //
 //   it("Check there are many blocks being displayed on the page", () => {
 //      cy.get("#block-table").find(".block-info").then(($val) => {
