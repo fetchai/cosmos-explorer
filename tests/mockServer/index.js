@@ -4,18 +4,21 @@ const fs = require('fs')
 const app = express()
 const port = 4000;
 
-const dumpConsensusState = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/dump-consensus-state");
-const status = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/status");
-const proposals = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/proposals");
-const validators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/validators/validators");
-const stakingPool = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/staking-pool");
-const supply = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/supply");
-const communityPool = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/community-pool");
-const inflation = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/inflation");
-const stakingValidators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/staking-validators");
-const annualProvisions = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/annual-provisions");
-const bondedValidators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/validators/bonded-validators");
-const unbondedValidators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/validators/unbonding-validators");
+
+const PWD = process.env.PWD;
+
+const dumpConsensusState = loadJSON(`${PWD}/public/dump-consensus-state`);
+const status = loadJSON(`${PWD}/public/status`);
+const proposals = loadJSON(`${PWD}/public/proposals`);
+const validators = loadJSON(`${PWD}/public/validators/validators`);
+const stakingPool = loadJSON(`${PWD}/public/staking-pool`);
+const supply = loadJSON(`${PWD}/public/supply`);
+const communityPool = loadJSON(`${PWD}/public/community-pool`);
+const inflation = loadJSON(`${PWD}/public/inflation`);
+const stakingValidators = loadJSON(`${PWD}/public/staking-validators`);
+const annualProvisions = loadJSON(`${PWD}/public/annual-provisions`);
+const bondedValidators = loadJSON(`${PWD}/public/validators/bonded-validators`);
+const unbondedValidators = loadJSON(`${PWD}/public/validators/unbonding-validators`);
 
 
 
