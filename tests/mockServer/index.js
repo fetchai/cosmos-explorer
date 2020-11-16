@@ -22,8 +22,6 @@ const annualProvisions = loadJSON(`${PWD}/public/annual-provisions`);
 const bondedValidators = loadJSON(`${PWD}/public/validators/bonded-validators`);
 const unbondedValidators = loadJSON(`${PWD}/public/validators/unbonding-validators`);
 
-
-
 const testAddress = "fetch193vvag846gz3pt3q0mdjuxn0s5jrt39fsjrays"
 // account files relate to this single address
 const bankBalances = loadJSON(`${PWD}/public/account/bank-balances`);

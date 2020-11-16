@@ -20,6 +20,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '12'
@@ -34,7 +35,7 @@ jobs:
           cd tests/mockServer && npm install && cd ../../
       - name: start the mock server
         run: |
-          node tests/mockServer/index.js
+          node tests/mockServer/index.js && timeout 10 python ./sleep.py || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
       - name: Run the production build
         run: |
           ./build.sh
