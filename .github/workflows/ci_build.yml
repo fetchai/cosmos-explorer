@@ -30,6 +30,12 @@ jobs:
       - name: Run the install
         run: |
           meteor npm install --save
+      - name: install mock server
+        run: |
+          cd tests/mockServer && npm install && cd ../../
+      - name: start the mock server
+        run: |
+          node tests/mockServer/index.js
       - name: Run the production build
         run: |
           ./build.sh

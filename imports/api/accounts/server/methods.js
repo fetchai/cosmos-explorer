@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { Validators } from '/imports/api/validators/validators.js';
+import { LCD } from '../../../../server/main'
 const fetchFromUrl = (url) => {
     try{
         let res = HTTP.get(LCD + url);
@@ -40,7 +41,8 @@ Meteor.methods({
     'accounts.getBalance': function(address){
         this.unblock();
         let balance = {}
-
+           console.log("GET BALANCE CALLED")
+        // process.exit("here exited")
         // get available atoms
         let url = LCD + '/bank/balances/'+ address;
         try{

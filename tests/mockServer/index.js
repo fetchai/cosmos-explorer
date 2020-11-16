@@ -18,13 +18,22 @@ const bondedValidators = loadJSON("/home/douglas/big-dipper-block-explorer/tests
 const unbondedValidators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/validators/unbonding-validators");
 
 
+
+const testAddress = "fetch193vvag846gz3pt3q0mdjuxn0s5jrt39fsjrays"
+// account files relate to this single address
+const bankBalances = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/account/bank-balances");
+const authAccount = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/account/auth-account");
+const stakingDelegators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/account/staking-delegators");
+const distributionDelegators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/account/distribution-delegators");
+const distributionDelegatorsUnbonding = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/account/staking-delegator-unbonding-delegations");
+
+
 function loadJSON(file) {
     var data = fs.readFileSync(file);
     return JSON.parse(data);
 }
 
-console.log("fff", dumpConsensusState)
-debugger;
+
 
 app.use(express.static(path.join(__dirname, './public')));
 
@@ -34,22 +43,47 @@ app.get('/rpc/dump_consensus_state', (req, res) => {
 })
 
 app.get('/rpc/status', (req, res) => {
-  console.log(" /rpc/status 22222", JSON.stringify(req.originalUrl))
-    res.end(JSON.stringify(status))
+  console.log(" /rpc/status", JSON.stringify(req.originalUrl))
+  res.end(JSON.stringify(status))
+})
+
+app.get(`/lcd/bank/balances/${testAddress}`, (req, res) => {
+  console.log("lcd/bank/balances", JSON.stringify(req.originalUrl))
+    res.end(JSON.stringify(bankBalances))
+})
+
+app.get(`/lcd/auth/accounts/${testAddress}`, (req, res) => {
+  console.log("lcd/auth/accounts", JSON.stringify(req.originalUrl))
+    res.end(JSON.stringify(authAccount))
+})
+
+app.get(`/lcd/staking/delegators/${testAddress}/delegations`, (req, res) => {
+  console.log("lcdstaking/delegators", JSON.stringify(req.originalUrl))
+    res.end(JSON.stringify(stakingDelegators))
+})
+
+app.get(`/lcd/distribution/delegators/${testAddress}/rewards`, (req, res) => {
+  console.log("lcd distribution/delegators", JSON.stringify(req.originalUrl))
+    res.end(JSON.stringify(distributionDelegators))
+})
+
+app.get(`/lcd/staking/delegators/${testAddress}/unbonding_delegations`, (req, res) => {
+  console.log("lcd delegators/delegators", JSON.stringify(req.originalUrl))
+    res.end(JSON.stringify(distributionDelegatorsUnbonding))
 })
 
 app.get('/lcd/gov/proposals', (req, res) => {
-  console.log("/lcd/gov/proposals  22222", JSON.stringify(req.originalUrl))
+  console.log("/lcd/gov/proposals", JSON.stringify(req.originalUrl))
     res.end(JSON.stringify(proposals))
 })
 
 app.get('/lcd/staking/pool', (req, res) => {
-  console.log("/lcd/staking/pool  22222", JSON.stringify(req.originalUrl))
+  console.log("/lcd/staking/pool", JSON.stringify(req.originalUrl))
     res.end(JSON.stringify(stakingPool))
 })
 
 app.get('/lcd/txs/:hash', (req, res) => {
-  console.log("/lcd/txs/:hash  22222", JSON.stringify(req.originalUrl))
+  console.log("/lcd/txs/:hash", JSON.stringify(req.originalUrl))
 
   let response
 
@@ -142,7 +176,7 @@ try {
 })
 
 app.get('/*', (req, res) => {
-  console.log("reqqqqqq", JSON.stringify(req.originalUrl))
+  proccess.exit("URL BLOCK EXPLORER REQUESTED NOT FOUND BY MOCK SERVER : " + req.originalUrl)
 })
 
 app.listen(port, function () {

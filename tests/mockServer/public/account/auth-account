@@ -1,0 +1,18 @@
+{
+  "height": "4",
+  "result": {
+    "type": "cosmos-sdk/Account",
+    "value": {
+      "address": "fetch193vvag846gz3pt3q0mdjuxn0s5jrt39fsjrays",
+      "coins": [
+        {
+          "denom": "atestfet",
+          "amount": "95409999999999541000"
+        }
+      ],
+      "public_key": "fetchpub1addwnpepqvcus4nh2zrhgs3s2frgewmxt6hz8m4nq756vzejs4x0zlym42f92ewz9yv",
+      "account_number": 11,
+      "sequence": 459
+    }
+  }
+}
