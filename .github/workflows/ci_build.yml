@@ -20,7 +20,9 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
       - uses: meteorengineer/setup-meteor@v1
         with:
           meteor-release: '1.8.1'
@@ -28,8 +30,6 @@ jobs:
         run: |
           meteor npm install --save
       - name: install mock server
-        uses:
-          node-version: "12"
         run: |
           cd tests/mockServer && npm install && cd ../../
       - name: start the mock server
