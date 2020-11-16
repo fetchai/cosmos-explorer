@@ -38,7 +38,7 @@ jobs:
           node tests/mockServer/index.js &
       - name: start meteor app
         run: |
-          meteor --settings ./settings-files/E2E-test.json
+          meteor --settings ./settings-files/E2E-test.json &
       - name: Sleep for 5 mins
         uses: jakejarvis/wait-action@master
         with:
