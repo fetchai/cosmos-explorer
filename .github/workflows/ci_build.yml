@@ -36,7 +36,13 @@ jobs:
       - name: start the mock server
         run: |
           node tests/mockServer/index.js &
-      - name: Run the production build
+      - name: start meteor app
+        run: |
+          meteor --settings ./settings-files/E2E-test.json
+      - name: Sleep for 30 seconds
+          uses: jakejarvis/wait-action@master
+          with:
+            time: '30s'
         run: |
           ./build.sh
       - name: Test docker image building
