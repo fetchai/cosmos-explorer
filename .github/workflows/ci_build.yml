@@ -29,8 +29,9 @@ jobs:
           meteor npm install --save
       - name: install mock server
         with:
-        node-version: "12"
-        build: cd tests/mockServer && npm install && cd ../../
+          node-version: "12"
+        run: |
+          cd tests/mockServer && npm install && cd ../../
       - name: start the mock server
         run: |
           node tests/mockServer/index.js
