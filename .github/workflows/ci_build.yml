@@ -45,6 +45,8 @@ jobs:
 #          time: '60s'
       - name: Cypress run
         uses: cypress-io/github-action@v1
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         with:
           wait-on: http://localhost:3000
       - name: Test docker image building
