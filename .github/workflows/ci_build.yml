@@ -23,7 +23,7 @@ jobs:
       - uses: actions/setup-python@v2
       - uses: actions/setup-node@v2-beta
         with:
-          node-version: '14'
+          node-version: '10'
       - uses: meteorengineer/setup-meteor@v1
         with:
           meteor-release: '1.9'
