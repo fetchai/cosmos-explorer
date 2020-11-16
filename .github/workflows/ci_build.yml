@@ -40,9 +40,9 @@ jobs:
         run: |
           meteor --settings ./settings-files/E2E-test.json
       - name: Sleep for 30 seconds
-          uses: jakejarvis/wait-action@master
-          with:
-            time: '30s'
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '30s'
       - name: Test docker image building
         run: |
           docker build .
