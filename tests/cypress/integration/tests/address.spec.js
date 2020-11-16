@@ -11,6 +11,8 @@ context('Address', () => {
     it("Check the address is found", () => {
      cy.contains(testAddress)
    })
+
+
   //
   // it("Check that at least one transaction is displayed in tabled relating to this address", () => {
   //    const expectedTotal = "95.4100 TESTFET"
