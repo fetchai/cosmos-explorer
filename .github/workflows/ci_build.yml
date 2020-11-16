@@ -39,10 +39,10 @@ jobs:
       - name: start meteor app
         run: |
           meteor --settings ./settings-files/E2E-test.json &
-      - name: Sleep for 60 seconds
+      - name: Sleep for 120 seconds
         uses: jakejarvis/wait-action@master
         with:
-          time: '60s'
+          time: '120s'
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
