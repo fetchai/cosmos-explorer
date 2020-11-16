@@ -43,11 +43,11 @@ jobs:
         uses: jakejarvis/wait-action@master
         with:
           time: '60s'
-      - name: Test docker image building
-        run: |
-          docker build .
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
           build: npm run build
           wait-on: http://localhost:3000
+      - name: Test docker image building
+        run: |
+          docker build .
