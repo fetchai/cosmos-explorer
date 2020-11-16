@@ -94,7 +94,7 @@ app.get('/lcd/txs/:hash', (req, res) => {
     console.log("ERROR AS UNDEFINED PARAM")
   } else {
         console.log("PARMAS IS", req.params.hash)
-       response = loadJSON(`/home/douglas/big-dipper-block-explorer/tests/mockServer/public/transactions/${req.params.hash}`);
+       response = loadJSON(`${PWD}/public/transactions/${req.params.hash}`);
   }
       res.end(JSON.stringify(response))
 })
@@ -124,10 +124,7 @@ app.get('/rpc/validators', (req, res) => {
 
       console.log("/rpc/validators  with height ", JSON.stringify(req.originalUrl))
 
-       result = loadJSON(`/home/douglas/big-dipper-block-explorer/tests/mockServer/public/validators/height${req.query.height}`);
-
-
-
+       result = loadJSON(`${PWD}/public/validators/height${req.query.height}`);
   }
 
   if(typeof result === "undefined"){
@@ -171,10 +168,10 @@ app.get('/rpc/block', (req, res) => {
   let response;
 try {
     console.log("and height to search for is ", height)
-   response = loadJSON(`/home/douglas/big-dipper-block-explorer/tests/mockServer/public/blocks/block${height}`);
+   response = loadJSON(`${PWD}/public/blocks/block${height}`);
 }  catch (error) {
         console.log("it throws")
-    response = loadJSON('/home/douglas/big-dipper-block-explorer/tests/mockServer/public/blocks/error');
+    response = loadJSON(`${PWD}/public/blocks/error`);
 }
         console.log("after block")
     res.end(JSON.stringify(response))
