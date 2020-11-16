@@ -5,7 +5,9 @@ const app = express()
 const port = 4000;
 
 
-const PWD = process.env.PWD;
+const PWD = process.env.PWD + "/tests/mockServer";
+
+console.log("PWD",  PWD);
 
 const dumpConsensusState = loadJSON(`${PWD}/public/dump-consensus-state`);
 const status = loadJSON(`${PWD}/public/status`);
