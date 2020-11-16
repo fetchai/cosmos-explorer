@@ -35,7 +35,7 @@ jobs:
           cd tests/mockServer && npm install && cd ../../
       - name: start the mock server
         run: |
-          node tests/mockServer/index.js && exit 0
+          node tests/mockServer/index.js; exit 0
       - name: Run the production build
         run: |
           ./build.sh
