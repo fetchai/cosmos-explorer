@@ -38,6 +38,7 @@
     "numbro": "^2.3.2",
     "path": "^0.12.7",
     "plottable": "^3.9.0",
+    "prebuild-install": "^6.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-bootstrap": "^1.0.1",
