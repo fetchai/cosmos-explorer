@@ -159,6 +159,7 @@ app.get('/lcd/minting/annual-provisions', (req, res) => {
     res.end(JSON.stringify(annualProvisions))
 })
 
+
 app.get('/rpc/block', (req, res) => {
   console.log("block  22222", JSON.stringify(req.originalUrl))
   const {height} = req.query
