@@ -164,6 +164,7 @@ app.get('/rpc/block', (req, res) => {
   console.log("block  22222", JSON.stringify(req.originalUrl))
   const {height} = req.query
 
+
   let response;
 try {
     console.log("and height to search for is ", height)
