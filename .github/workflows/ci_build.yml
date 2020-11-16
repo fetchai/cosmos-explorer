@@ -27,22 +27,22 @@ jobs:
       - uses: meteorengineer/setup-meteor@v1
         with:
           meteor-release: '1.9'
-#      - name: Run the install
-#        run: |
-#          meteor npm install
-#      - name: install mock server
-#        run: |
-#          cd tests/mockServer && npm install && cd ../../
-#      - name: start the mock server
-#        run: |
-#          node tests/mockServer/index.js &
-#      - name: start meteor app
-#        run: |
-#          meteor --settings ./settings-files/E2E-test.json &
-#      - name: Sleep for 60 seconds
-#        uses: jakejarvis/wait-action@master
-#        with:
-#          time: '60s'
+      - name: Run the install
+        run: |
+          meteor npm install
+      - name: install mock server
+        run: |
+          cd tests/mockServer && npm install && cd ../../
+      - name: start the mock server
+        run: |
+          node tests/mockServer/index.js &
+      - name: start meteor app
+        run: |
+          meteor --settings ./settings-files/E2E-test.json &
+      - name: Sleep for 60 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '60s'
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
