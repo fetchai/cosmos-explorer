@@ -173,7 +173,7 @@ try {
         console.log("it throws")
     response = loadJSON(`${PWD}/public/blocks/error`);
 }
-        console.log("after block")
+    console.log("after block")
     res.end(JSON.stringify(response))
 })
 
