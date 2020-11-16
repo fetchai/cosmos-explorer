@@ -26,11 +26,11 @@ const unbondedValidators = loadJSON(`${PWD}/public/validators/unbonding-validato
 
 const testAddress = "fetch193vvag846gz3pt3q0mdjuxn0s5jrt39fsjrays"
 // account files relate to this single address
-const bankBalances = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/account/bank-balances");
-const authAccount = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/account/auth-account");
-const stakingDelegators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/account/staking-delegators");
-const distributionDelegators = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/account/distribution-delegators");
-const distributionDelegatorsUnbonding = loadJSON("/home/douglas/big-dipper-block-explorer/tests/mockServer/public/account/staking-delegator-unbonding-delegations");
+const bankBalances = loadJSON(`${PWD}/public/account/bank-balances`);
+const authAccount = loadJSON(`${PWD}/public/account/auth-account`);
+const stakingDelegators = loadJSON(`${PWD}/public/account/staking-delegators`);
+const distributionDelegators = loadJSON(`${PWD}/public/account/distribution-delegators`);
+const distributionDelegatorsUnbonding = loadJSON(`${PWD}/public/account/staking-delegator-unbonding-delegations`);
 
 
 function loadJSON(file) {
