@@ -44,9 +44,8 @@ jobs:
         with:
           time: '420s'
       - name: Cypress run
-        uses: cypress-io/github-action@v2
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        run: |
+          npm run cypress:headless
       - name: check what is running
         run: |
           echo sudo lsof -i:4000
