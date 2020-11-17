@@ -41,7 +41,7 @@ jobs:
           meteor --settings ./settings-files/E2E-test.json &
       - name: check what is running
         run: |
-          sudo lsof -i:3000
+          sudo lsof -i:4000
 #      - name: Sleep for 5 mins
 #        uses: jakejarvis/wait-action@master
 #        with:
