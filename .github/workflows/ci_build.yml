@@ -43,15 +43,15 @@ jobs:
         uses: jakejarvis/wait-action@master
         with:
           time: '60s'
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-        with:
-          wait-on: http://127.0.0.1:3000
+#      - name: Cypress run
+#        uses: cypress-io/github-action@v2
+#        env:
+#          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+#        with:
+#          wait-on: http://127.0.0.1:3000
       - name: check what is running
         run: |
-          echo sudo lsof -i:4000
+          echo sudo lsof -i:3000
       - name: Test docker image building
         run: |
           docker build .
