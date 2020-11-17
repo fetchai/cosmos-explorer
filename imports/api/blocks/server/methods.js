@@ -306,9 +306,7 @@ Meteor.methods({
                 // calculate the uptime based on the records stored in previous blocks
                 // only do this every 15 blocks ~
 
-                if (true) {
-                  debugger;
-                          console.log("we are up to here wwwwwqqqqqq");
+                if ((height % 15) === 0) {
                   // let startAggTime = new Date();
                   const numBlocks = Meteor.call('blocks.findUpTime', address);
                   let uptime = 0;
@@ -355,14 +353,11 @@ Meteor.methods({
             const endGetValidatorsTime = new Date();
             console.log(`Get height validators time: ${(endGetValidatorsTime - startGetValidatorsTime) / 1000}seconds.`);
 
-                  debugger;
-
-            console.log("dud get to this point")
             Chain.update({ chainId: block.block.header.chain_id }, { $set: { lastSyncedTime: blockData.time, blockTime } });
 
             analyticsData.averageBlockTime = blockTime;
             analyticsData.timeDiff = timeDiff;
-        debugger;
+
             analyticsData.time = blockData.time;
 
             // initialize validator data at first block
@@ -381,7 +376,6 @@ Meteor.methods({
                 const validator = validators.result.validators[v];
                 validator.voting_power = parseInt(validator.voting_power, 10);
                 validator.proposer_priority = parseInt(validator.proposer_priority, 10);
-                  debugger;
 
                 const valExist = Validators.findOne({ 'pub_key.value': validator.pub_key.value });
                 if (!valExist) {
@@ -416,11 +410,8 @@ Meteor.methods({
                     // validator.removedAt = 0
                     // validatorSet.splice(val, 1);
                   } else {
-                    debugger;
-
                     console.log('no con pub key?');
                   }
-                  debugger;
 
                   // bulkValidators.insert(validator);
                   bulkValidators.find({ address: validator.address }).upsert().updateOne({ $set: validator });
@@ -455,10 +446,9 @@ Meteor.methods({
                     // calculate self delegation percentage every 30 blocks
                     validator.delegator_address = Meteor.call('getDelegator', validatorData.operator_address);
 
-                    if (true) {
+                    if (height % 30 === 1) {
                       try {
                         const response = HTTP.get(`${LCD}/staking/delegators/${validator.delegator_address}/delegations/${validator.operator_address}`);
-                          console.log("we are up to here /staking/delegators");
 
                         if (response.statusCode === 200) {
                           const selfDelegation = JSON.parse(response.content).result;
@@ -518,7 +508,7 @@ Meteor.methods({
               }
             }
             // check if there's any validator not in db 14400 blocks(~1 day)
-            if (true) {
+            if (height % 14400 === 0) {
               try {
                 console.log('Checking all validators against db...');
                 const dbValidators = {};
@@ -552,7 +542,7 @@ Meteor.methods({
             }
 
             // fetching keybase every 14400 blocks(~1 day)
-            if (true) {
+            if (height % 14400 === 1) {
               console.log('Fetching keybase...');
               Validators.find({}).forEach((validator) => {
                 try {

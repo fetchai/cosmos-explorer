@@ -3,6 +3,7 @@ import { explorerUrl } from './constants'
 context('Blocks', () => {
   beforeEach(() => {
     cy.visit(`${explorerUrl}/blocks`)
+                cy.wait(5000);
   })
 
   it("Check there are many blocks being displayed on the page", () => {
@@ -14,7 +15,7 @@ context('Blocks', () => {
    })
 
   it("Check most recent block is displayed in the page", () => {
-    const recentBlockHash = "EC72479AE487253D3C69FB2CBBE1C2D1E2AE39AB8F2D15A0A0202925265845AF"
+    const recentBlockHash = "058E36E241D85CB04FCA72C324883936A6D12194A533CC6973F1F81AC78DDB90"
     cy.contains(recentBlockHash)
   })
 
