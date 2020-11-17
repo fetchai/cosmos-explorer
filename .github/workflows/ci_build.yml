@@ -48,7 +48,7 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         with:
-          wait-on: http://localhost:3000
+          wait-on: http://127.0.0.1:3000
       - name: check what is running
         run: |
           echo sudo lsof -i:4000
