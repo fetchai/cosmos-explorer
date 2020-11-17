@@ -39,16 +39,13 @@ jobs:
       - name: start meteor app
         run: |
           meteor --settings ./settings-files/E2E-test.json &
-      - name: Sleep for 7 min
+      - name: Sleep for 7 mins to give server ample time to start (takes about 4-5 mins)
         uses: jakejarvis/wait-action@master
         with:
           time: '420s'
       - name: Cypress run
         run: |
           npm run cypress:headless
-      - name: check what is running
-        run: |
-          echo sudo lsof -i:4000
       - name: Test docker image building
         run: |
           docker build .
