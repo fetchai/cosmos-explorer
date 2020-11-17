@@ -38,11 +38,11 @@ jobs:
           node tests/mockServer/index.js &
       - name: start meteor app
         run: |
-          meteor --settings ./settings-files/E2E-test.json &
-      - name: Sleep for 1 min
+          meteor --settings ./settings-files/sandbox-agent-land.json &
+      - name: Sleep for 5 min
         uses: jakejarvis/wait-action@master
         with:
-          time: '60s'
+          time: '300s'
 #      - name: Cypress run
 #        uses: cypress-io/github-action@v2
 #        env:
