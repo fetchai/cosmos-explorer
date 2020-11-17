@@ -39,19 +39,19 @@ jobs:
       - name: start meteor app
         run: |
           meteor --settings ./settings-files/E2E-test.json &
+      - name: Sleep for 1 min
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '60s'
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        with:
+          wait-on: http://localhost:3000
       - name: check what is running
         run: |
-          sudo lsof -i:4000
-#      - name: Sleep for 5 mins
-#        uses: jakejarvis/wait-action@master
-#        with:
-#          time: '300s'
-#      - name: Cypress run
-#        uses: cypress-io/github-action@v2
-#        env:
-#          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-#        with:
-#          wait-on: http://localhost:3000
+          echo sudo lsof -i:4000
       - name: Test docker image building
         run: |
           docker build .
