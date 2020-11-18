@@ -1,4 +1,4 @@
-FROM node:14-buster as base
+FROM node:15-buster as base
 
 RUN apt update && \
     apt install -y libusb-1.0-0-dev && \
