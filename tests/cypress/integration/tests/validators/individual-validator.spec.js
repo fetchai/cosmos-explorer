@@ -6,9 +6,9 @@ context('Validators', () => {
     cy.wait(3000);
   })
 
-  it("Check correct number of missed blocks calculated correctly", () => {
-     cy.contains("Last 250 blocks").parentsUntil(".rows").contains("83.33333333333334")
-   })
+  // it("Check correct number of missed blocks calculated correctly", () => {
+  //    cy.contains("Last 250 blocks").parentsUntil(".rows").contains("83.33333333333334")
+  //  })
 
   it("Check all voting power displayed correctly", () => {
      cy.get(".voting-power").contains("100")
