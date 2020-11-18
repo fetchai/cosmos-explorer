@@ -2,7 +2,6 @@
   "public":{
       "networkDisplayName": "Agent Land",
       "chainName": "Sandbox Agent land",
-      "DKGTab": true,
       "chainId": "sandbox-agent-land",
       "genesisTime": "2020-07-02T11:15:00.007Z",
       "gtm": "",
@@ -31,7 +30,7 @@
       "gasPrice": 0.02,
       "coingeckoId": "fetch-ai"
   },
-  "genesisFile": "http://localhost:8080/genesis.json",
+  "genesisFile": "http://localhost/genesis.json",
   "remote":{
       "rpc":"https://rpc-agent-land.sandbox.fetch-ai.com",
       "lcd":"https://rest-agent-land.sandbox.fetch-ai.com"

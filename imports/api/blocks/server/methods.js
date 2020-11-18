@@ -149,21 +149,24 @@ Meteor.methods({
       } catch (e) {
         console.log(e);
       }
+        debugger;
 
       url = `${LCD}/staking/validators?status=unbonding`;
 
       try {
+        debugger;
         const response = HTTP.get(url);
         JSON.parse(response.content).result.forEach(
           (validator) => validatorSet[validator.consensus_pubkey] = validator,
         );
       } catch (e) {
-        console.log(e);
+        console.log( "taking/validators?status=" , e);
       }
 
       url = `${LCD}/staking/validators?status=unbonded`;
 
       try {
+                debugger;
         const response = HTTP.get(url);
         JSON.parse(response.content).result.forEach(
           (validator) => validatorSet[validator.consensus_pubkey] = validator,
@@ -177,10 +180,14 @@ Meteor.methods({
         const startBlockTime = new Date();
         // add timeout here? and outside this loop (for catched up and keep fetching)?
         this.unblock();
+                debugger;
         url = `${RPC}/block?height=${height}`;
         const analyticsData = {};
 
+        console.log("we are up to here");
         console.log(url);
+        debugger;
+        debugger;
         try {
           const bulkValidators = Validators.rawCollection().initializeUnorderedBulkOp();
           const bulkValidatorRecords = ValidatorRecords.rawCollection().initializeUnorderedBulkOp();
@@ -190,6 +197,7 @@ Meteor.methods({
           const startGetHeightTime = new Date();
           let response = HTTP.get(url);
           if (response.statusCode === 200) {
+             debugger;
             let block = JSON.parse(response.content);
             block = block.result;
             // store height, hash, numtransaction and time in db
@@ -201,10 +209,7 @@ Meteor.methods({
             blockData.lastBlockHash = block.block.header.last_block_id.hash;
             blockData.proposerAddress = block.block.header.proposer_address;
             blockData.validators = [];
-             debugger;
            if(Meteor.settings.public.DKGTab){
-                          debugger;
-
                 blockData.dkg = {};
                 blockData.dkg.round = response.data.result.block.header.entropy.round
                 blockData.dkg.startBlock = response.data.result.block.header.entropy.dkg_id
@@ -226,6 +231,7 @@ Meteor.methods({
               // record for analytics
               // PrecommitRecords.insert({height:height, precommits:precommits.length});
             }
+        debugger;
 
             // save txs in database
             if (block.block.data.txs && block.block.data.txs.length > 0) {
@@ -245,13 +251,14 @@ Meteor.methods({
                 evidence: block.block.evidence.evidence,
               });
             }
-
+ debugger;
             blockData.precommitsCount = blockData.validators.length;
 
             analyticsData.height = height;
 
             const endGetHeightTime = new Date();
             console.log(`Get height time: ${(endGetHeightTime - startGetHeightTime) / 1000}seconds.`);
+        debugger;
 
 
             const startGetValidatorsTime = new Date();
@@ -262,6 +269,7 @@ Meteor.methods({
             const validators = JSON.parse(response.content);
             validators.result.block_height = parseInt(validators.result.block_height);
             ValidatorSets.insert(validators.result);
+        debugger;
 
             blockData.validatorsCount = validators.result.validators.length;
             const startBlockInsertTime = new Date();
@@ -603,7 +611,7 @@ Meteor.methods({
 
             // calculate voting power distribution every 60 blocks ~ 5mins
 
-            if (height % 60 === 1) {
+            if (height % 5 === 0) {
               console.log('===== calculate voting power distribution =====');
               const activeValidators = Validators.find({ status: 2, jailed: false }, { sort: { voting_power: -1 } }).fetch();
               const numTopTwenty = Math.ceil(activeValidators.length * 0.2);
@@ -665,6 +673,7 @@ Meteor.methods({
         console.log(`This block used: ${(endBlockTime - startBlockTime) / 1000}seconds.`);
       }
       SYNCING = false;
+      console.log("did get to here test test test", totalValidators)
       Chain.update({ chainId: Meteor.settings.public.chainId }, { $set: { lastBlocksSyncedTime: new Date(), totalValidators } });
     }
 

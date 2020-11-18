@@ -1,0 +1,83 @@
+{
+  "height": "6",
+  "result": [
+    {
+      "operator_address": "fetchvaloper12xd8rgp2u0cwp8lnj2ndulpzad3y9m9f2r8lsx",
+      "consensus_pubkey": "fetchvalconspub1zcjduepqpzmqj5g42cz4w2vjnt00z0jcalcl6sn4p2fynys6xjfy8xgzyzmswn296q",
+      "jailed": false,
+      "status": 2,
+      "tokens": "100000000000000000000",
+      "delegator_shares": "100000000000000000000.000000000000000000",
+      "description": {
+        "moniker": "Bourne",
+        "identity": "",
+        "website": "",
+        "security_contact": "",
+        "details": ""
+      },
+      "unbonding_height": "0",
+      "unbonding_time": "1970-01-01T00:00:00Z",
+      "commission": {
+        "commission_rates": {
+          "rate": "0.050000000000000000",
+          "max_rate": "0.100000000000000000",
+          "max_change_rate": "0.010000000000000000"
+        },
+        "update_time": "2020-08-25T15:00:00Z"
+      },
+      "min_self_delegation": "50"
+    },
+    {
+      "operator_address": "fetchvaloper108hhutnylgz09acca2ljde8dp6huhsu67hn8v7",
+      "consensus_pubkey": "fetchvalconspub1zcjduepqpd82rz3hutjc5jm9vjfqgudheay59z4adem5ecj0a3jr992dkk4qqdpdyw",
+      "jailed": false,
+      "status": 2,
+      "tokens": "100000000000000000000",
+      "delegator_shares": "100000000000000000000.000000000000000000",
+      "description": {
+        "moniker": "Powers",
+        "identity": "",
+        "website": "",
+        "security_contact": "",
+        "details": ""
+      },
+      "unbonding_height": "0",
+      "unbonding_time": "1970-01-01T00:00:00Z",
+      "commission": {
+        "commission_rates": {
+          "rate": "0.050000000000000000",
+          "max_rate": "0.100000000000000000",
+          "max_change_rate": "0.010000000000000000"
+        },
+        "update_time": "2020-08-25T15:00:00Z"
+      },
+      "min_self_delegation": "50"
+    },
+    {
+      "operator_address": "fetchvaloper1cct4fhhksplu9m9wjljuthjqhjj93z0s97p3g7",
+      "consensus_pubkey": "fetchvalconspub1zcjduepqalpp5al2xvcszjfxx4wusgvf56l49gwr0r67dw6ry4dqn4xqnz7qmu33eq",
+      "jailed": false,
+      "status": 2,
+      "tokens": "100000000000000000000",
+      "delegator_shares": "100000000000000000000.000000000000000000",
+      "description": {
+        "moniker": "Bond",
+        "identity": "",
+        "website": "",
+        "security_contact": "",
+        "details": ""
+      },
+      "unbonding_height": "0",
+      "unbonding_time": "1970-01-01T00:00:00Z",
+      "commission": {
+        "commission_rates": {
+          "rate": "0.050000000000000000",
+          "max_rate": "0.100000000000000000",
+          "max_change_rate": "0.010000000000000000"
+        },
+        "update_time": "2020-08-25T15:00:00Z"
+      },
+      "min_self_delegation": "50"
+    }
+  ]
+}

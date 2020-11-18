@@ -23,7 +23,7 @@ common:
     cancel: '取消'
     retry: '重试'
 navbar:
-    version: 'beta'
+    siteName: '北斗'
     validators: '验证人'
     blocks: '区块'
     transactions: '交易'
@@ -34,8 +34,10 @@ navbar:
     spanish: "Español"
     italian: "Italiano"
     polish: "Polski"
+    russian: "Русский"
     chinese: "中文（繁）"
     simChinese: "中文（简）"
+    portuguese: "Português"
     license: 'LICENSE'
     forkMe: 'Fork me!'
 consensus:
@@ -129,7 +131,7 @@ transactions:
     txHash: '交易哈希'
     valid: '有效'
     fee: '费用'
-    noFee: 'No fee' 
+    noFee: 'No fee'
     gasUsedWanted: '瓦斯 (已用 / 要求)'
     noTxFound: '没有这笔交易。'
     noValidatorTxsFound: '没有跟这个验证人有关的交易'

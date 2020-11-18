@@ -23,6 +23,7 @@ common:
     cancel: 'Cancelar'
     retry: 'Reintentar'
 navbar:
+    siteName: 'BIG DIPPER'
     version: 'beta'
     validators: 'Validadores'
     blocks: 'Bloques'
@@ -34,8 +35,10 @@ navbar:
     spanish: "Español"
     italian: "Italiano"
     polish: "Polski"
+    russian: "Русский"
     chinese: "中文（繁）"
     simChinese: "中文（简）"
+    portuguese: "Português"
     license: 'LICENCIA'
     forkMe: 'Fork me!'
 consensus:
@@ -137,7 +140,7 @@ transactions:
     transfer: 'Transferencia'
     staking: 'Participación'
     distribution: 'Distribución'
-    governance: 'Governanza'
+    governance: 'Gobernanza'
     slashing: 'Recorte'
 proposals:
     notFound: 'No se ha encontrado el proposal.'

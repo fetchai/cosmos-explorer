@@ -1,0 +1,38 @@
+{
+  "jsonrpc": "2.0",
+  "id": -1,
+  "result": {
+    "node_info": {
+      "protocol_version": {
+        "p2p": "7",
+        "block": "10",
+        "app": "0"
+      },
+      "id": "4b2804ec4f6ac708cdfc7fb59009a16548b39d34",
+      "listen_addr": "tcp://127.0.0.1:26656",
+      "network": "sandbox-agent-land",
+      "version": "0.33.3",
+      "channels": "40202122233038",
+      "moniker": "Lee",
+      "other": {
+        "tx_index": "on",
+        "rpc_address": "tcp://127.0.0.1:26657"
+      }
+    },
+    "sync_info": {
+      "latest_block_hash": "1A038C7B601B358A2FF275A5982D774CECEFED71B7012CD05DC57119F71C64CF",
+      "latest_app_hash": "443974CC1179F18F97FA397189865798173BB7643CF58D867EC880683DF41D3B",
+      "latest_block_height": "6",
+      "latest_block_time": "2020-11-11T21:14:24.36107914Z",
+      "catching_up": false
+    },
+    "validator_info": {
+      "address": "541F0F3F31573B29E098A21EBA19937CAA6CEBD6",
+      "pub_key": {
+        "type": "tendermint/PubKeyEd25519",
+        "value": "esyaU8wk0o3XDM1CU3mO6mPckwvI1xAOFRAZfPeNf1o="
+      },
+      "voting_power": "0"
+    }
+  }
+}

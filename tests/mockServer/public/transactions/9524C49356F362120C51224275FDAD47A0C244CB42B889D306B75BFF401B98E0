@@ -1,0 +1,89 @@
+{
+  "height": "6",
+  "txhash": "9524C49356F362120C51224275FDAD47A0C244CB42B889D306B75BFF401B98E0",
+  "raw_log": "[{\"msg_index\":0,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"action\",\"value\":\"send\"},{\"key\":\"sender\",\"value\":\"fetch193vvag846gz3pt3q0mdjuxn0s5jrt39fsjrays\"},{\"key\":\"module\",\"value\":\"bank\"}]},{\"type\":\"transfer\",\"attributes\":[{\"key\":\"recipient\",\"value\":\"fetch1aphl6z643vnak5hgtutm8yrx5u6dqv7r8flx0j\"},{\"key\":\"sender\",\"value\":\"fetch193vvag846gz3pt3q0mdjuxn0s5jrt39fsjrays\"},{\"key\":\"amount\",\"value\":\"10000000000000000atestfet\"}]}]}]",
+  "logs": [
+    {
+      "msg_index": 0,
+      "log": "",
+      "events": [
+        {
+          "type": "message",
+          "attributes": [
+            {
+              "key": "action",
+              "value": "send"
+            },
+            {
+              "key": "sender",
+              "value": "fetch193vvag846gz3pt3q0mdjuxn0s5jrt39fsjrays"
+            },
+            {
+              "key": "module",
+              "value": "bank"
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "attributes": [
+            {
+              "key": "recipient",
+              "value": "fetch1aphl6z643vnak5hgtutm8yrx5u6dqv7r8flx0j"
+            },
+            {
+              "key": "sender",
+              "value": "fetch193vvag846gz3pt3q0mdjuxn0s5jrt39fsjrays"
+            },
+            {
+              "key": "amount",
+              "value": "10000000000000000atestfet"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "gas_wanted": "80000",
+  "gas_used": "67957",
+  "tx": {
+    "type": "cosmos-sdk/StdTx",
+    "value": {
+      "msg": [
+        {
+          "type": "cosmos-sdk/MsgSend",
+          "value": {
+            "from_address": "fetch193vvag846gz3pt3q0mdjuxn0s5jrt39fsjrays",
+            "to_address": "fetch1aphl6z643vnak5hgtutm8yrx5u6dqv7r8flx0j",
+            "amount": [
+              {
+                "denom": "atestfet",
+                "amount": "10000000000000000"
+              }
+            ]
+          }
+        }
+      ],
+      "fee": {
+        "amount": [
+          {
+            "denom": "atestfet",
+            "amount": "1000"
+          }
+        ],
+        "gas": "80000"
+      },
+      "signatures": [
+        {
+          "pub_key": {
+            "type": "tendermint/PubKeySecp256k1",
+            "value": "AzHIVndQh3RCMFJGjLtmXq4j7rMHqaYLMoVM8XybqpJV"
+          },
+          "signature": "Hnh3f16079nLYF1rJnoeijZwQji1ri/CgVuej7VarwI+jgyOLO0a0q2RdJQgaDsTCtKFU10sbJk2dgJk9hCRrw=="
+        }
+      ],
+      "memo": ""
+    }
+  },
+  "timestamp": "2020-09-01T17:25:37Z"
+}

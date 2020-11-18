@@ -20,18 +20,35 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-python@v2
+      - uses: actions/setup-node@v2-beta
         with:
-          node-version: "12"
+          node-version: '10'
       - uses: meteorengineer/setup-meteor@v1
         with:
-          meteor-release: '1.8.1'
+          meteor-release: '1.9'
       - name: Run the install
         run: |
-          meteor npm install --save
-      - name: Run the production build
+          meteor npm install
+      - name: install mock server
         run: |
-          ./build.sh
+          cd tests/mockServer && npm install && cd ../../
+      - name: start the mock server
+        run: |
+          node tests/mockServer/index.js &
+      - name: start meteor app
+        run: |
+          meteor --settings ./settings-files/E2E-test.json &
+      - name: Sleep for 7 min
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '420s'
+      - name: Cypress run
+        run: |
+          npm run cypress:headless
+      - name: check what is running
+        run: |
+          echo sudo lsof -i:4000
       - name: Test docker image building
         run: |
           docker build .

@@ -1,0 +1,372 @@
+{
+  "jsonrpc": "2.0",
+  "id": -1,
+  "result": {
+    "round_state": {
+      "height": "4",
+      "round": "0",
+      "step": 4,
+      "start_time": "2020-11-13T16:27:39.888167995Z",
+      "commit_time": "2020-11-13T16:27:34.888167995Z",
+      "validators": {
+        "validators": [
+          {
+            "address": "53DA94FF1C314816F5AAF290AE07B0EB5206D7C4",
+            "pub_key": {
+              "type": "tendermint/PubKeyEd25519",
+              "value": "CLYJURVWBVcpkpre8T5Y7/H9QnUKkkmSGjSSQ5kCILc="
+            },
+            "voting_power": "100",
+            "proposer_priority": "-33"
+          },
+          {
+            "address": "9BB4F95CA3A6033CF94DA1E4438F076DB1AAB4A9",
+            "pub_key": {
+              "type": "tendermint/PubKeyEd25519",
+              "value": "C06hijfi5YpLZWSSBHG3z0lCir1ud0ziT+xkMpVNtao="
+            },
+            "voting_power": "100",
+            "proposer_priority": "-33"
+          },
+          {
+            "address": "F0B2B12E0942F1EF2821E4921746597460CC077C",
+            "pub_key": {
+              "type": "tendermint/PubKeyEd25519",
+              "value": "78Iad+ozMQFJJjVdyCGJpr9SocN49ea7QyVaCdTAmLw="
+            },
+            "voting_power": "100",
+            "proposer_priority": "67"
+          }
+        ],
+        "proposer": {
+          "address": "9BB4F95CA3A6033CF94DA1E4438F076DB1AAB4A9",
+          "pub_key": {
+            "type": "tendermint/PubKeyEd25519",
+            "value": "C06hijfi5YpLZWSSBHG3z0lCir1ud0ziT+xkMpVNtao="
+          },
+          "voting_power": "100",
+          "proposer_priority": "-33"
+        }
+      },
+      "proposal": {
+        "Type": 32,
+        "height": "4",
+        "round": "0",
+        "pol_round": "-1",
+        "block_id": {
+          "hash": "29A9ABFF94BF1158F3936131C008E22970460E20ED3BA203814300B225771437",
+          "parts": {
+            "total": "1",
+            "hash": "CA10303CAD66AE083B4DB6F43E0D3A3E7EB1359E2EE349201A1EA71FCFA2E279"
+          }
+        },
+        "timestamp": "2020-11-13T16:27:39.993272321Z",
+        "signature": "K70ts6ieRGx7grft1mRj5oEN4MOPXjIHaxIDcOQ7OoXrz8lhSsWi9lpJS9wCm6nUKVpj72ZJrbx6hNTxmlUEBw=="
+      },
+      "proposal_block": {
+        "header": {
+          "version": {
+            "block": "10",
+            "app": "0"
+          },
+          "chain_id": "sandbox-agent-land",
+          "height": "822035",
+          "time": "2020-11-13T16:27:34.789936353Z",
+          "last_block_id": {
+            "hash": "80B2F3DED124C2BF67D682ABB6B7201166BC3EB48A4CE7EC7FD60AFCB28C4998",
+            "parts": {
+              "total": "1",
+              "hash": "08069444767F41B6F75E21E0FD173E591FCB9A74ECCCAC8679CD2801B39C369D"
+            }
+          },
+          "last_commit_hash": "D802D437AD0121D0AAC1EDDEAD3D859C533D4BC2861733D12FE8091660610354",
+          "data_hash": "",
+          "validators_hash": "17D12E0BCC3E1BEB266A813CD0ACDF977724B785AE97C24A3AB34A6CDF0B6694",
+          "next_validators_hash": "17D12E0BCC3E1BEB266A813CD0ACDF977724B785AE97C24A3AB34A6CDF0B6694",
+          "consensus_hash": "048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F",
+          "app_hash": "561AF0E65B5F91E7212F7DCA2B6C307051859F38A217A005C7FC904903D39834",
+          "last_results_hash": "",
+          "evidence_hash": "",
+          "proposer_address": "9BB4F95CA3A6033CF94DA1E4438F076DB1AAB4A9"
+        },
+        "data": {
+          "txs": null
+        },
+        "evidence": {
+          "evidence": null
+        },
+        "last_commit": {
+          "height": "4",
+          "round": "0",
+          "block_id": {
+            "hash": "80B2F3DED124C2BF67D682ABB6B7201166BC3EB48A4CE7EC7FD60AFCB28C4998",
+            "parts": {
+              "total": "1",
+              "hash": "08069444767F41B6F75E21E0FD173E591FCB9A74ECCCAC8679CD2801B39C369D"
+            }
+          },
+          "signatures": [
+            {
+              "block_id_flag": 2,
+              "validator_address": "53DA94FF1C314816F5AAF290AE07B0EB5206D7C4",
+              "timestamp": "2020-11-13T16:27:34.789936353Z",
+              "signature": "xkNQjl0rSrGu44R8xTlpLhrFYfL4B5CRNLgpfvz2uwb6viIb2xicGGUHP1/aX+ynyYiFppOzdL9WlKyeEi5HBw=="
+            },
+            {
+              "block_id_flag": 2,
+              "validator_address": "9BB4F95CA3A6033CF94DA1E4438F076DB1AAB4A9",
+              "timestamp": "2020-11-13T16:27:34.79014112Z",
+              "signature": "rN0hTQ+TujwHXziOoV+8k4x9FepNbfhmb/DRQl8JPCwIqLHjHO/nuJ7P7fTvLvQAbFOb05NX8tAxdHJjFrymDw=="
+            },
+            {
+              "block_id_flag": 2,
+              "validator_address": "F0B2B12E0942F1EF2821E4921746597460CC077C",
+              "timestamp": "2020-11-13T16:27:34.788304375Z",
+              "signature": "4t4ZXwTYpKDWOnsjKTKrfnkn2IbMXNiV3b1O/2//C2a4nFI10B9WNUEB5YQYb62QJw3PNZnyCOKn3XlNmh5lDQ=="
+            }
+          ]
+        }
+      },
+      "proposal_block_parts": {
+        "count/total": "1/1",
+        "parts_bit_array": "x"
+      },
+      "locked_round": "-1",
+      "locked_block": null,
+      "locked_block_parts": null,
+      "valid_round": "-1",
+      "valid_block": null,
+      "valid_block_parts": null,
+      "votes": [
+        {
+          "round": "0",
+          "prevotes": [
+            "nil-Vote",
+            "Vote{1:9BB4F95CA3A6 822035/00/1(Prevote) 29A9ABFF94BF 9C5E425BBA7E @ 2020-11-13T16:27:40.007726585Z}",
+            "nil-Vote"
+          ],
+          "prevotes_bit_array": "BA{3:_x_} 100/300 = 0.33",
+          "precommits": [
+            "nil-Vote",
+            "nil-Vote",
+            "nil-Vote"
+          ],
+          "precommits_bit_array": "BA{3:___} 0/300 = 0.00"
+        },
+        {
+          "round": "1",
+          "prevotes": [
+            "nil-Vote",
+            "nil-Vote",
+            "nil-Vote"
+          ],
+          "prevotes_bit_array": "BA{3:___} 0/300 = 0.00",
+          "precommits": [
+            "nil-Vote",
+            "nil-Vote",
+            "nil-Vote"
+          ],
+          "precommits_bit_array": "BA{3:___} 0/300 = 0.00"
+        }
+      ],
+      "commit_round": "-1",
+      "last_commit": {
+        "votes": [
+          "Vote{0:53DA94FF1C31 822034/00/2(Precommit) 80B2F3DED124 C643508E5D2B @ 2020-11-13T16:27:34.789936353Z}",
+          "Vote{1:9BB4F95CA3A6 822034/00/2(Precommit) 80B2F3DED124 ACDD214D0F93 @ 2020-11-13T16:27:34.79014112Z}",
+          "Vote{2:F0B2B12E0942 822034/00/2(Precommit) 80B2F3DED124 E2DE195F04D8 @ 2020-11-13T16:27:34.788304375Z}"
+        ],
+        "votes_bit_array": "BA{3:xxx} 300/300 = 1.00",
+        "peer_maj_23s": {}
+      },
+      "last_validators": {
+        "validators": [
+          {
+            "address": "53DA94FF1C314816F5AAF290AE07B0EB5206D7C4",
+            "pub_key": {
+              "type": "tendermint/PubKeyEd25519",
+              "value": "CLYJURVWBVcpkpre8T5Y7/H9QnUKkkmSGjSSQ5kCILc="
+            },
+            "voting_power": "100",
+            "proposer_priority": "-133"
+          },
+          {
+            "address": "9BB4F95CA3A6033CF94DA1E4438F076DB1AAB4A9",
+            "pub_key": {
+              "type": "tendermint/PubKeyEd25519",
+              "value": "C06hijfi5YpLZWSSBHG3z0lCir1ud0ziT+xkMpVNtao="
+            },
+            "voting_power": "100",
+            "proposer_priority": "167"
+          },
+          {
+            "address": "F0B2B12E0942F1EF2821E4921746597460CC077C",
+            "pub_key": {
+              "type": "tendermint/PubKeyEd25519",
+              "value": "78Iad+ozMQFJJjVdyCGJpr9SocN49ea7QyVaCdTAmLw="
+            },
+            "voting_power": "100",
+            "proposer_priority": "-33"
+          }
+        ],
+        "proposer": {
+          "address": "53DA94FF1C314816F5AAF290AE07B0EB5206D7C4",
+          "pub_key": {
+            "type": "tendermint/PubKeyEd25519",
+            "value": "CLYJURVWBVcpkpre8T5Y7/H9QnUKkkmSGjSSQ5kCILc="
+          },
+          "voting_power": "100",
+          "proposer_priority": "-133"
+        }
+      },
+      "triggered_timeout_precommit": false
+    },
+    "peers": [
+      {
+        "node_address": "78ec2bad5b588b10d455f5382d5573b5aa104675@10.127.96.94:26656",
+        "peer_state": {
+          "round_state": {
+            "height": "822035",
+            "round": "0",
+            "step": 3,
+            "start_time": "2020-11-13T16:27:40.089345733Z",
+            "proposal": true,
+            "proposal_block_parts_header": {
+              "total": "1",
+              "hash": "CA10303CAD66AE083B4DB6F43E0D3A3E7EB1359E2EE349201A1EA71FCFA2E279"
+            },
+            "proposal_block_parts": "x",
+            "proposal_pol_round": "-1",
+            "proposal_pol": "___",
+            "prevotes": "_x_",
+            "precommits": "___",
+            "last_commit_round": "0",
+            "last_commit": "xxx",
+            "catchup_commit_round": "-1",
+            "catchup_commit": "___"
+          },
+          "stats": {
+            "votes": "66",
+            "block_parts": "11"
+          }
+        }
+      },
+      {
+        "node_address": "5603914ecd76863edb80bd0392d2e5c0b7caf436@10.127.96.195:26656",
+        "peer_state": {
+          "round_state": {
+            "height": "4",
+            "round": "0",
+            "step": 3,
+            "start_time": "2020-11-13T16:27:40.089288926Z",
+            "proposal": true,
+            "proposal_block_parts_header": {
+              "total": "1",
+              "hash": "CA10303CAD66AE083B4DB6F43E0D3A3E7EB1359E2EE349201A1EA71FCFA2E279"
+            },
+            "proposal_block_parts": "x",
+            "proposal_pol_round": "-1",
+            "proposal_pol": "___",
+            "prevotes": "_x_",
+            "precommits": "___",
+            "last_commit_round": "0",
+            "last_commit": "xxx",
+            "catchup_commit_round": "-1",
+            "catchup_commit": "___"
+          },
+          "stats": {
+            "votes": "60",
+            "block_parts": "10"
+          }
+        }
+      },
+      {
+        "node_address": "fac8c9cc4f94b30276437534d12a28dc6c0af420@127.0.0.1:54424",
+        "peer_state": {
+          "round_state": {
+            "height": "4",
+            "round": "0",
+            "step": 3,
+            "start_time": "2020-11-13T16:27:40.091221653Z",
+            "proposal": true,
+            "proposal_block_parts_header": {
+              "total": "1",
+              "hash": "CA10303CAD66AE083B4DB6F43E0D3A3E7EB1359E2EE349201A1EA71FCFA2E279"
+            },
+            "proposal_block_parts": "x",
+            "proposal_pol_round": "-1",
+            "proposal_pol": "___",
+            "prevotes": "_x_",
+            "precommits": "___",
+            "last_commit_round": "0",
+            "last_commit": "xxx",
+            "catchup_commit_round": "-1",
+            "catchup_commit": "___"
+          },
+          "stats": {
+            "votes": "0",
+            "block_parts": "0"
+          }
+        }
+      },
+      {
+        "node_address": "b0e95800555afc606c25ea4805d6b670bf97c8ac@10.127.96.4:26656",
+        "peer_state": {
+          "round_state": {
+            "height": "4",
+            "round": "0",
+            "step": 4,
+            "start_time": "2020-11-13T16:27:40.099081453Z",
+            "proposal": true,
+            "proposal_block_parts_header": {
+              "total": "1",
+              "hash": "CA10303CAD66AE083B4DB6F43E0D3A3E7EB1359E2EE349201A1EA71FCFA2E279"
+            },
+            "proposal_block_parts": "x",
+            "proposal_pol_round": "-1",
+            "proposal_pol": "___",
+            "prevotes": "_x_",
+            "precommits": "___",
+            "last_commit_round": "0",
+            "last_commit": "xxx",
+            "catchup_commit_round": "-1",
+            "catchup_commit": "___"
+          },
+          "stats": {
+            "votes": "63",
+            "block_parts": "11"
+          }
+        }
+      },
+      {
+        "node_address": "753999f55defbbedc4f22945231dee225ddabc25@10.127.96.198:26656",
+        "peer_state": {
+          "round_state": {
+            "height": "4",
+            "round": "0",
+            "step": 3,
+            "start_time": "2020-11-13T16:27:40.090199633Z",
+            "proposal": true,
+            "proposal_block_parts_header": {
+              "total": "1",
+              "hash": "CA10303CAD66AE083B4DB6F43E0D3A3E7EB1359E2EE349201A1EA71FCFA2E279"
+            },
+            "proposal_block_parts": "x",
+            "proposal_pol_round": "-1",
+            "proposal_pol": null,
+            "prevotes": "_x_",
+            "precommits": "___",
+            "last_commit_round": "0",
+            "last_commit": "xxx",
+            "catchup_commit_round": "-1",
+            "catchup_commit": "___"
+          },
+          "stats": {
+            "votes": "0",
+            "block_parts": "0"
+          }
+        }
+      }
+    ]
+  }
+}
