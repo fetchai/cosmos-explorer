@@ -5,7 +5,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "develop"
     labels:
       - "dependencies"
       - "gh-actions"
@@ -14,7 +13,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "develop"
     labels:
       - "dependencies"
       - "web"
@@ -23,7 +21,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "develop"
     labels:
       - "dependencies"
       - "docker"
