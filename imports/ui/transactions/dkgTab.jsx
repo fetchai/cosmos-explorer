@@ -20,6 +20,7 @@ export default class DKGTab extends Component{
         super(props);
         this.getGroupSignatureDisplayString = this.getGroupSignatureDisplayString.bind(this)
         this.copy = this.copy.bind(this)
+
       debugger;
         console.log("got to here");
         this.state = {
@@ -54,7 +55,7 @@ export default class DKGTab extends Component{
         </Container>
     }
 
-    return <><ul className="DKG-list">
+    return <li><ul className="DKG-list">
 
         <Tooltip title={this.state.copied? <span className="toolTip">Copied!</span> : <span className="toolTip">Copy to Clipboard</span>} >
         <li className="signature"
@@ -69,7 +70,7 @@ export default class DKGTab extends Component{
         <h3 className="DKG-title"><T>DKG.txIds</T></h3>
             <ul className="DKG-list">
                 {this.state.DKG.txIds.map(id => <li>${id}</li>)}
-            </ul></>: ""}</>
+            </ul></>: ""}</li>
 
 }
 }

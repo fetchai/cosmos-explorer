@@ -247,7 +247,8 @@ messageTypes:
     IBCTransfer: 'IBC Transfer'
     IBCReceive: 'IBC Receive'
 DKG:
-    groupSignature: 'Group Signature: '
+    entropy: 'Entropy Information'
+    groupSignature: 'Group Signature '
     round: 'DKG Round: '
     startBlock: 'DKG Start Block: '
     endBlock: 'DKG End Block: '
