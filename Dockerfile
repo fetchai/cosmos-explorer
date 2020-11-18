@@ -1,8 +1,10 @@
-FROM node:buster as build
+FROM node:buster as base
 
 RUN apt update && \
     apt install -y libusb-1.0-0-dev && \
     apt clean
+############################################################
+FROM base as build
 
 # Install meteor
 RUN curl https://install.meteor.com/ | sh
@@ -20,7 +22,7 @@ RUN meteor npm install --save -f
 RUN meteor build --allow-superuser ../output/ --architecture os.linux.x86_64 --server-only
 
 ############################################################ß
-FROM node:buster
+FROM base
 
 # # Copy the tarball from build container. Then untar it
 COPY --from=build /source/output/big-dipper.tar.gz /opt/big_dipper/big_dipper.tar.gz
