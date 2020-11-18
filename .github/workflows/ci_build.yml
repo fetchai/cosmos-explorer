@@ -39,7 +39,7 @@ jobs:
       - name: start meteor app
         run: |
           meteor --settings ./settings-files/E2E-test.json &
-      - name: Sleep for 7 mins to give server ample time to start (takes about 4-5 mins)
+      - name: Sleep for 7 min
         uses: jakejarvis/wait-action@master
         with:
           time: '420s'
