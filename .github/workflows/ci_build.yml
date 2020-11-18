@@ -46,9 +46,6 @@ jobs:
       - name: Cypress run
         run: |
           npm run cypress:headless
-      - name: check what is running
-        run: |
-          echo sudo lsof -i:4000
       - name: Test docker image building
         run: |
           docker build .
