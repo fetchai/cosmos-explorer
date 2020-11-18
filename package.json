@@ -43,7 +43,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-bootstrap": "^1.0.1",
-    "react-chartjs-2": "^2.9.0",
+    "react-chartjs-2": "^2.11.1",
     "react-dom": "^16.13.1",
     "react-google-tag-manager": "^2.2.1",
     "react-helmet": "^5.2.1",
