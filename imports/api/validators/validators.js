@@ -6,10 +6,10 @@ export const Validators = new Mongo.Collection('validators');
 
 Validators.helpers({
   firstSeen() {
-    return ValidatorRecords.findOne({ address: this.address });
+    return ValidatorRecords.findOne({ address: this.proposerAddress });
   },
   history() {
-    return VotingPowerHistory.find({ address: this.address }, { sort: { height: -1 }, limit: 50 }).fetch();
+    return VotingPowerHistory.find({ address: this.proposerAddress }, { sort: { height: -1 }, limit: 50 }).fetch();
   },
 });
 // Validators.helpers({
