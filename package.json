@@ -42,7 +42,7 @@
     "prebuild-install": "^6.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
-    "react-bootstrap": "^1.0.1",
+    "react-bootstrap": "^1.4.0",
     "react-chartjs-2": "^2.11.1",
     "react-dom": "^16.13.1",
     "react-google-tag-manager": "^2.2.1",
