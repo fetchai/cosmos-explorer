@@ -57,7 +57,7 @@
     "reactstrap": "^8.5.1",
     "rebuild": "^0.1.2",
     "rollup": "^2.32.1",
-    "secp256k1": "^3.8.0",
+    "secp256k1": "^4.0.2",
     "showdown": "^1.9.1",
     "styled-components": "^4.4.1",
     "tendermint": "^4.0.8",
