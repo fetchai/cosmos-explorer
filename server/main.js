@@ -64,7 +64,6 @@ const getProposalsResults = () => {
 const updateMissedBlocks = () => {
   Meteor.call('ValidatorRecords.calculateMissedBlocks', (error, result) => {
     if (error) {
-      debugger;
       console.log(`missed blocks error: ${error}`);
     }
     if (result) {
@@ -99,7 +98,6 @@ const aggregateMinutely = () => {
     if (error) {
       console.log(`aggregate minutely block time error: ${error}`);
     } else {
-      debugger;
       console.log(`aggregate minutely block time ok: ${result}`);
     }
   });

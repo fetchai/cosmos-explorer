@@ -33,7 +33,15 @@
         "app_hash": "B85B516AD08359C05BA68F4FFAE3E9C913D3B4AA147F0D8EBED10BB87FF3EDFC",
         "last_results_hash": "",
         "evidence_hash": "",
-        "proposer_address": "71CE3BA6EEEFAA10313030A5990250419CFAF4EA"
+        "proposer_address": "71CE3BA6EEEFAA10313030A5990250419CFAF4EA",
+         "entropy": {
+          "group_signature": null,
+          "round": "-1",
+          "aeon_length": "-1",
+          "dkg_id": "-1",
+          "next_aeon_start": "-1",
+          "qual": null
+        }
       },
       "data": {
         "txs": null

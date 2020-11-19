@@ -13,14 +13,6 @@ Meteor.publish('chainStates.latest', function () {
 });
 
 publishComposite('chain.status', function() {
-
-  console.log("chain.status Meteor.settings.public.chainId")
-  debugger;
-
-//   Chain.find().toArray(function (err, docs) {
-//     console.log("chain trinted" , docs)
-// });
-
   return {
     find() {
       return Chain.find({ chainId: Meteor.settings.public.chainId });

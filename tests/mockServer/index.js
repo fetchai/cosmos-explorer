@@ -164,7 +164,6 @@ app.get('/rpc/block', (req, res) => {
   console.log("block  22222", JSON.stringify(req.originalUrl))
   const {height} = req.query
 
-
   let response;
 try {
     console.log("and height to search for is ", height)
@@ -178,7 +177,8 @@ try {
 })
 
 app.get('/*', (req, res) => {
-  proccess.exit("URL BLOCK EXPLORER REQUESTED NOT FOUND BY MOCK SERVER : " + req.originalUrl)
+  console.log("URL BLOCK EXPLORER REQUESTED NOT FOUND BY MOCK SERVER : " + req.originalUrl);
+  process.exit("URL BLOCK EXPLORER REQUESTED NOT FOUND BY MOCK SERVER : " + req.originalUrl);
 })
 
 app.listen(port, function () {
