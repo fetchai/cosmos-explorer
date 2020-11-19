@@ -14,21 +14,13 @@ import { Evidences } from '../../evidences/evidences.js';
 import { Transactions } from '../../transactions/transactions.js';
 import { LCD, RPC } from '../../../../server/main';
 import React from "react";
+import BN from 'bn.js'
+
 let SYNCING = false;
 
 function hasTransactionIds(block){
     return Boolean(block.block.data.txs && block.block.data.txs.length > 0)
 }
-
-// import Block from '../../../ui/components/Block';
-
-// getValidatorVotingPower = (validators, address) => {
-//     for (v in validators){
-//         if (validators[v].address == address){
-//             return parseInt(validators[v].voting_power);
-//         }
-//     }
-// }
 
 const getRemovedValidators = (prevValidators, validators) => {
   // let removeValidators = [];
@@ -214,7 +206,7 @@ Meteor.methods({
                 blockData.dkg.round = response.data.result.block.header.entropy.round
                 blockData.dkg.startBlock = response.data.result.block.header.entropy.dkg_id
                 blockData.dkg.groupSignature = response.data.result.block.header.entropy.group_signature
-                blockData.dkg.endBlock = response.data.result.block.header.entropy.dkg_id + response.data.result.block.header.entropy.aeon_length
+                blockData.dkg.endBlock =  new BN(response.data.result.block.header.entropy.dkg_id).add(new BN(response.data.result.block.header.entropy.aeon_length)).toString()
                 blockData.dkg.txIds = hasTransactionIds(block)? block.block.data.txs : [];
             }
 
@@ -231,7 +223,6 @@ Meteor.methods({
               // record for analytics
               // PrecommitRecords.insert({height:height, precommits:precommits.length});
             }
-        debugger;
 
             // save txs in database
             if (block.block.data.txs && block.block.data.txs.length > 0) {

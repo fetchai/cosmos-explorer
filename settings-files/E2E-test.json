@@ -3,7 +3,7 @@
        "networkDisplayName": "Agent Land",
       "chainName": "Agent land",
       "chainId": "sandbox-agent-land",
-      "DKGTab": false,
+      "DKGTab": true,
       "genesisTime": "2020-07-02T11:15:00.007Z",
       "gtm": "",
       "slashingWindow": 10000,
