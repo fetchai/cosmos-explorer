@@ -141,12 +141,9 @@ Meteor.methods({
       } catch (e) {
         console.log(e);
       }
-        debugger;
-
       url = `${LCD}/staking/validators?status=unbonding`;
 
       try {
-        debugger;
         const response = HTTP.get(url);
         JSON.parse(response.content).result.forEach(
           (validator) => validatorSet[validator.consensus_pubkey] = validator,
@@ -158,7 +155,6 @@ Meteor.methods({
       url = `${LCD}/staking/validators?status=unbonded`;
 
       try {
-                debugger;
         const response = HTTP.get(url);
         JSON.parse(response.content).result.forEach(
           (validator) => validatorSet[validator.consensus_pubkey] = validator,
@@ -172,14 +168,9 @@ Meteor.methods({
         const startBlockTime = new Date();
         // add timeout here? and outside this loop (for catched up and keep fetching)?
         this.unblock();
-                debugger;
         url = `${RPC}/block?height=${height}`;
         const analyticsData = {};
 
-        console.log("we are up to here");
-        console.log(url);
-        debugger;
-        debugger;
         try {
           const bulkValidators = Validators.rawCollection().initializeUnorderedBulkOp();
           const bulkValidatorRecords = ValidatorRecords.rawCollection().initializeUnorderedBulkOp();
@@ -189,7 +180,6 @@ Meteor.methods({
           const startGetHeightTime = new Date();
           let response = HTTP.get(url);
           if (response.statusCode === 200) {
-             debugger;
             let block = JSON.parse(response.content);
             block = block.result;
             // store height, hash, numtransaction and time in db
@@ -201,12 +191,12 @@ Meteor.methods({
             blockData.lastBlockHash = block.block.header.last_block_id.hash;
             blockData.proposerAddress = block.block.header.proposer_address;
             blockData.validators = [];
-           if(Meteor.settings.public.DKGTab){
+           if(Meteor.settings.public.DKGTab) {
                 blockData.dkg = {};
-                blockData.dkg.round = response.data.result.block.header.entropy.round
-                blockData.dkg.startBlock = response.data.result.block.header.entropy.dkg_id
-                blockData.dkg.groupSignature = response.data.result.block.header.entropy.group_signature
-                blockData.dkg.endBlock =  new BN(response.data.result.block.header.entropy.dkg_id).add(new BN(response.data.result.block.header.entropy.aeon_length)).toString()
+                blockData.dkg.round = block.block.header.entropy.round
+                blockData.dkg.startBlock = block.block.header.entropy.dkg_id
+                blockData.dkg.groupSignature = block.block.header.entropy.group_signature
+                blockData.dkg.endBlock =  new BN(block.block.header.entropy.dkg_id).add(new BN(block.block.header.entropy.aeon_length)).toString()
                 blockData.dkg.txIds = hasTransactionIds(block)? block.block.data.txs : [];
             }
 
@@ -242,14 +232,12 @@ Meteor.methods({
                 evidence: block.block.evidence.evidence,
               });
             }
- debugger;
             blockData.precommitsCount = blockData.validators.length;
 
             analyticsData.height = height;
 
             const endGetHeightTime = new Date();
             console.log(`Get height time: ${(endGetHeightTime - startGetHeightTime) / 1000}seconds.`);
-        debugger;
 
 
             const startGetValidatorsTime = new Date();
@@ -260,7 +248,6 @@ Meteor.methods({
             const validators = JSON.parse(response.content);
             validators.result.block_height = parseInt(validators.result.block_height);
             ValidatorSets.insert(validators.result);
-        debugger;
 
             blockData.validatorsCount = validators.result.validators.length;
             const startBlockInsertTime = new Date();

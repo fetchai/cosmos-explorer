@@ -35,7 +35,6 @@ Meteor.methods({
 
 
 
-      debugger;
       Chain.update({ chainId: Meteor.settings.public.chainId }, {
         $set: {
           votingHeight: height,
