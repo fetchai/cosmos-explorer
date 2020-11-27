@@ -22,6 +22,7 @@ import NotFound from '/imports/ui/pages/NotFound.jsx';
 import { toast, ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.min.css';
+import Contracts from './contracts/List'
 
 // import './App.js'
 
@@ -81,6 +82,7 @@ class App extends Component {
                 <Route exact path="/" component={Home} />
                 <Route path="/blocks" component={BlocksTable} />
                 <Route path="/transactions" component={Transactions} />
+                <Route path="/contracts" component={Contracts} />
                 <Route path="/account/:address" render={(props) => <Account {...props} />} />
                 <Route path="/validators" exact component={Validators} />
                 <Route path="/validators/inactive" render={(props) => <Validators {...props} inactive />} />

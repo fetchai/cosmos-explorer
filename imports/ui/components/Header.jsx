@@ -198,6 +198,11 @@ export default class Header extends Component {
                 </NavLink>
               </NavItem>
               <NavItem>
+                <NavLink tag={Link} to="/contracts">
+                  <T>navbar.contracts</T>
+                </NavLink>
+              </NavItem>
+              <NavItem>
                 <NavLink tag={Link} to="/proposals">
                   <T>navbar.proposals</T>
                 </NavLink>

@@ -3,8 +3,14 @@ import { HTTP } from 'meteor/http';
 import { Transactions } from '../transactions.js';
 import { Validators } from '../../validators/validators.js';
 import { LCD } from '../../../../server/main';
+import {flatten} from 'flat';
+
 
 const AddressLength = 40;
+
+
+const isContractTransaction = (tx) => flatten(tx).some((el) => el.includes('contract'))
+
 
 Meteor.methods({
   'Transactions.index'(hash, blockTime) {
@@ -17,6 +23,9 @@ Meteor.methods({
     console.log(hash);
 
     tx.height = parseInt(tx.height);
+
+
+
 
     // if (!tx.code){
     //     let msg = tx.tx.value.msg;
@@ -61,6 +70,9 @@ Meteor.methods({
     //         }
     //     }
     // }
+
+
+
 
 
     const txId = Transactions.insert(tx);

@@ -39,6 +39,7 @@ navbar:
     validators: 'Validators'
     blocks: 'Blocks'
     transactions: 'Transactions'
+    contracts: 'Contracts'
     proposals: 'Proposals'
     votingPower: 'Voting Power'
     lang: "ENG"
