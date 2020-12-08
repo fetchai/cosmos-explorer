@@ -139,6 +139,7 @@ transactions:
     transactions: 'Transactions'
     notFound: 'No transaction found.'
     activities: 'Activities'
+    contracts: 'Contracts'
     txHash: 'Tx Hash'
     valid: 'Valid'
     fee: 'Fee'

@@ -6,6 +6,39 @@ import _ from 'lodash';
 import Account from './Account.jsx';
 import { MsgType } from './MsgType.jsx';
 
+import {flatten} from 'flat';
+
+
+
+function getContractAddressFromTX(tx){
+  console.log("getContractAddressFromTX")
+  const flattened = flatten(tx);
+
+
+  let found = false
+
+  let contractAddress = "";
+    Object.entries(flattened).some(([key, value]) => {
+	console.log("key, value");
+	console.log(key, value);
+
+	if(found) {
+	  contractAddress = value;
+	  return true;
+  }
+
+	if(value === "contract_address") {
+found = true
+  }
+});
+
+    console.log("contractAddress", contractAddress)
+
+return contractAddress
+
+
+}
+
 const T = i18n.createComponent();
 
 MultiSend = (props) => (
@@ -293,6 +326,10 @@ export default class Activites extends Component {
       // ibc
     case 'cosmos-sdk/IBCTransferMsg':
       return <MsgType type={msg.type} />;
+    case 'wasm/execute':
+      return  <p>
+        {getContractAddressFromTX(this.props.tx)}
+        </p>;
     case 'cosmos-sdk/IBCReceiveMsg':
       return <MsgType type={msg.type} />;
 

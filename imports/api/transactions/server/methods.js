@@ -74,8 +74,11 @@ Meteor.methods({
 
 
 
-
     const txId = Transactions.insert(tx);
+    const txCount = Transactions.find({}).count();
+    console.log("txId" , txId)
+    console.log("txCount", txCount)
+
     if (txId) {
       return txId;
     }

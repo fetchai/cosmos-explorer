@@ -13,6 +13,7 @@ import BlocksTable from '/imports/ui/blocks/BlocksTable.jsx';
 import Proposals from '/imports/ui/proposals/Proposals.jsx';
 import ValidatorDetails from '/imports/ui/validators/ValidatorDetails.jsx';
 import Transactions from '/imports/ui/transactions/TransactionsList.jsx';
+import Contracts from '/imports/ui/contracts/TransactionsList.jsx';
 import Distribution from '/imports/ui/voting-power/Distribution.jsx';
 import SearchBar from '/imports/ui/components/SearchBar.jsx';
 import moment from 'moment';
@@ -22,7 +23,6 @@ import NotFound from '/imports/ui/pages/NotFound.jsx';
 import { toast, ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.min.css';
-import Contracts from './contracts/List'
 
 // import './App.js'
 

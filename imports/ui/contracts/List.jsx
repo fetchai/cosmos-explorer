@@ -13,6 +13,7 @@ export default class Contracts extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log("componentDidUpdatecomponentDidUpdatecomponentDidUpdate")
     if (this.props != prevProps) {
       if (this.props.transactions.length > 0) {
         this.setState({
@@ -43,11 +44,11 @@ export default class Contracts extends Component {
     return (
       <div className="transactions-list">
         <Row className="header text-nowrap d-none d-lg-flex">
-          <Col xs={9} lg={7}>
+          <Col xs={9} lg={8}>
             <i className="material-icons">message</i>
             {' '}
             <span className="d-none d-md-inline-block">
-              <T>transactions.activities</T>
+              <T>transactions.contracts</T>
             </span>
           </Col>
           <Col xs={3} lg={{ size: 1, order: 'last' }}>
@@ -57,7 +58,7 @@ export default class Contracts extends Component {
               <T>transactions.txHash</T>
             </span>
           </Col>
-          <Col xs={4} md={2} lg={1}>
+          <Col xs={4} md={2} lg={2}>
             <i className="fas fa-database" />
             {' '}
             <span className="d-none d-md-inline-block">
@@ -71,13 +72,13 @@ export default class Contracts extends Component {
               <T>transactions.valid</T>
             </span>
           </Col>
-          <Col xs={12} lg={2}>
-            <i className="material-icons">monetization_on</i>
-            {' '}
-            <span className="d-none d-md-inline-block">
-              <T>transactions.fee</T>
-            </span>
-          </Col>
+          {/*<Col xs={12} lg={2}>*/}
+          {/*  <i className="material-icons">monetization_on</i>*/}
+          {/*  {' '}*/}
+          {/*  <span className="d-none d-md-inline-block">*/}
+          {/*    <T>transactions.fee</T>*/}
+          {/*  </span>*/}
+          {/*</Col>*/}
         </Row>
         {this.state.txs}
       </div>

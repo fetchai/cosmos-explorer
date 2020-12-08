@@ -39,7 +39,7 @@
       "readGenesis": true
   },
   "params":{
-      "startHeight": 0,
+      "startHeight": 1210870,
       "defaultBlockTime": 5000,
       "blockInterval": 15000,
       "consensusInterval": 1000,

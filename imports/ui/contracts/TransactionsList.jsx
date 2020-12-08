@@ -12,7 +12,7 @@ import List from './ListContainer.js';
 
 const T = i18n.createComponent();
 
-export default class Transactions extends Component {
+export default class Contracts extends Component {
   constructor(props) {
     super(props);
 
@@ -24,7 +24,7 @@ export default class Transactions extends Component {
       proposerDir: -1,
       priority: 2,
       loadmore: false,
-      sidebarOpen: (props.location.pathname.split('/transactions/').length == 2),
+      sidebarOpen: (props.location.pathname.split('/contracts/').length == 2),
     };
 
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
@@ -45,13 +45,13 @@ export default class Transactions extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname != prevProps.location.pathname) {
       this.setState({
-        sidebarOpen: (this.props.location.pathname.split('/transactions/').length == 2),
+        sidebarOpen: (this.props.location.pathname.split('/contracts/').length == 2),
       });
     }
   }
 
     trackScrolling = () => {
-      const wrappedElement = document.getElementById('transactions');
+      const wrappedElement = document.getElementById('contracts');
       if (this.isBottom(wrappedElement)) {
         // console.log('header bottom reached');
         document.removeEventListener('scroll', this.trackScrolling);
@@ -74,7 +74,7 @@ export default class Transactions extends Component {
       this.setState({ sidebarOpen: open }, (error, result) => {
         const timer = Meteor.setTimeout(() => {
           if (!open) {
-            this.props.history.push('/transactions');
+            this.props.history.push('/contracts');
           }
           Meteor.clearTimeout(timer);
         }, 500);
@@ -83,7 +83,7 @@ export default class Transactions extends Component {
 
     render() {
       return (
-        <div id="transactions">
+        <div id="contracts">
           <Helmet>
             <title>Latest Transactions on the Fetch.ai Network Explorer</title>
             <meta name="description" content="See what is happening on Cosmos Hub" />
@@ -100,7 +100,7 @@ export default class Transactions extends Component {
           </Row>
           <Switch>
             <Route
-              path="/transactions/:txId"
+              path="/contracts/:txId"
               render={(props) => (
                 <Sidebar
                   sidebar={<Transaction {...props} />}
