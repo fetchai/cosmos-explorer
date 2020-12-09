@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Transactions } from '/imports/api/transactions/transactions.js';
+import { Contracts } from '/imports/api/transactions/contracts.js';
 import List from './List.jsx';
 
 export default ValidatorDetailsContainer = withTracker((props) => {
@@ -19,12 +20,14 @@ export default ValidatorDetailsContainer = withTracker((props) => {
 
   if (Meteor.isServer || !loading) {
       console.log("Meteor.isServerMeteor. || !loading isServerMeteor.isServer || !loading ")
-           transactions = Transactions.find({ 'tx.value.msg.type' : 'wasm/execute' }, { sort: { height: -1 }, limit: props.limit }).fetch();
 
+
+
+
+      transactions = Contracts.find({}, { sort: { height: -1 }, limit: props.limit }).fetch();
 
       console.log("TRANSACTIONS LENGTH", transactions.length);
       console.log("TRANSACTIONS database total records", Transactions.find().count());
-
 
     if (Meteor.isServer) {
          console.log("Meteor.isServerMeteor.isServerMeteor.isServer")

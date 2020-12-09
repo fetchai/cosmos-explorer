@@ -1,15 +1,45 @@
 import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
+import {flatten} from 'flat';
 import { Transactions } from '../transactions.js';
+import { Contracts } from '../contracts.js';
 import { Validators } from '../../validators/validators.js';
 import { LCD } from '../../../../server/main';
-import {flatten} from 'flat';
 
 
 const AddressLength = 40;
 
+const isContractTransaction = (tx) => {
+  return JSON.stringify(tx).includes('contract')
+}
 
-const isContractTransaction = (tx) => flatten(tx).some((el) => el.includes('contract'))
+function getContractAddressesFromTX(tx){
+  console.log("getContractAddressFromTX")
+  const flattened = flatten(tx);
+
+  let nextValueIsAddress = false
+
+  let contractAddresses = [];
+    Object.entries(flattened).forEach(([key, value]) => {
+	console.log("key, value");
+	console.log(key, value);
+
+	if(nextValueIsAddress) {
+	  contractAddresses.push(value);
+    nextValueIsAddress = false
+  }
+
+	if(value === "contract_address") {
+nextValueIsAddress = true
+  }
+});
+
+    console.log("contractAddresses", contractAddresses)
+
+return contractAddresses
+
+
+}
 
 
 Meteor.methods({
@@ -27,52 +57,59 @@ Meteor.methods({
 
 
 
-    // if (!tx.code){
-    //     let msg = tx.tx.value.msg;
-    //     for (let m in msg){
-    //         if (msg[m].type == "cosmos-sdk/MsgCreateValidator"){
-    //             console.log(msg[m].value);
-    //             let command = Meteor.settings.bin.gaiadebug+" pubkey "+msg[m].value.pubkey;
-    //             let validator = {
-    //                 consensus_pubkey: msg[m].value.pubkey,
-    //                 description: msg[m].value.description,
-    //                 commission: msg[m].value.commission,
-    //                 min_self_delegation: msg[m].value.min_self_delegation,
-    //                 operator_address: msg[m].value.validator_address,
-    //                 delegator_address: msg[m].value.delegator_address,
-    //                 voting_power: Math.floor(parseInt(msg[m].value.value.amount) / 1000000)
-    //             }
+    if(isContractTransaction(tx)) {
+              console.log("actuallyisContractTransaction")
+      // process.exit();
+    } else {
+                          console.log("not isContractTransaction")
+            // process.exit();
+    }
 
-    //             Meteor.call('runCode', command, function(error, result){
-    //                 validator.address = result.match(/\s[0-9A-F]{40}$/igm);
-    //                 validator.address = validator.address[0].trim();
-    //                 validator.hex = result.match(/\s[0-9A-F]{64}$/igm);
-    //                 validator.hex = validator.hex[0].trim();
-    //                 validator.pub_key = result.match(/{".*"}/igm);
-    //                 validator.pub_key = JSON.parse(validator.pub_key[0].trim());
-    //                 let re = new RegExp(Meteor.settings.public.bech32PrefixAccPub+".*$","igm");
-    //                 validator.cosmosaccpub = result.match(re);
-    //                 validator.cosmosaccpub = validator.cosmosaccpub[0].trim();
-    //                 re = new RegExp(Meteor.settings.public.bech32PrefixValPub+".*$","igm");
-    //                 validator.operator_pubkey = result.match(re);
-    //                 validator.operator_pubkey = validator.operator_pubkey[0].trim();
+    if(isContractTransaction(tx)) {
 
-    //                 Validators.upsert({consensus_pubkey:msg[m].value.pubkey},validator);
-    //                 VotingPowerHistory.insert({
-    //                     address: validator.address,
-    //                     prev_voting_power: 0,
-    //                     voting_power: validator.voting_power,
-    //                     type: 'add',
-    //                     height: tx.height+2,
-    //                     block_time: blockTime
-    //                 });
-    //             })
-    //         }
-    //     }
-    // }
+      const addresses = getContractAddressesFromTX(tx);
+      // find contract in contracts table
+
+      let contract
+
+      for (let i = 0; i < addresses.length; i++)
+      {
+        contract = Contracts.findOne({ contractAddress
+      :
+        addresses[i]
+      })
+
+        const ContractExists = !!contract;
+
+        console.log("ContractExists", ContractExists)
+
+        const count = Contracts.find().count()
+        console.log("ContractExists count", count)
 
 
+        if (ContractExists) {
+          // update
+          Contracts.update(
+            { contractAddress: addresses[i] },
+            { $push: tx }
+          )
 
+        }
+      else
+        {
+        Contracts.insert({
+          contract_address: addresses[i],
+          txs: [
+            tx
+          ]
+        })
+      }
+    }
+    }
+
+
+    const count = Contracts.find().count()
+        console.log("ContractExists count outside", count)
 
     const txId = Transactions.insert(tx);
     const txCount = Transactions.find({}).count();
