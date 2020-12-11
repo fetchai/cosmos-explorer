@@ -1,28 +1,35 @@
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Transactions } from '/imports/api/transactions/transactions.js';
+import { Contracts } from '/imports/api/transactions/contracts.js';
 import Transaction from './Transaction.jsx';
 
 export default TransactionContainer = withTracker((props) => {
-  const txId = props.match.params.txId.toUpperCase();
+  // const txId = props.match.params.txId.toUpperCase();
 
-  let transactionsHandle; let transaction; let
+  const urlBits =  window.location.href.split('/');
+  const contractAddress = urlBits[urlBits.length - 1];
+
+  console.log("urlBits", urlBits.toString())
+  console.log("contractAddress", contractAddress)
+
+
+  let transactionsHandle; let contract; let
     transactionExist;
   let loading = false;
 
   if (Meteor.isClient) {
-    transactionsHandle = Meteor.subscribe('transactions.findOne', txId);
+    transactionsHandle = Meteor.subscribe('contracts.findOne', contractAddress);
     loading = !transactionsHandle.ready();
   }
 
   if (Meteor.isServer || !loading) {
-    transaction = Transactions.findOne({ txhash: txId });
+    contract = Contracts.findOne({ contract_address: contractAddress });
 
     if (Meteor.isServer) {
       loading = false;
-      transactionExist = !!transaction;
+      transactionExist = !!contract;
     } else {
-      transactionExist = !loading && !!transaction;
+      transactionExist = !loading && !!contract;
     }
     if (props.location.search === '?new' && !transactionExist) {
       loading = true;
@@ -32,6 +39,6 @@ export default TransactionContainer = withTracker((props) => {
   return {
     loading,
     transactionExist,
-    transaction: transactionExist ? transaction : {},
+    contract: transactionExist ? contract : {},
   };
 })(Transaction);

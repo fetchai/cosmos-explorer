@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Col, Row, Spinner } from 'reactstrap';
 import i18n from 'meteor/universe:i18n';
-import { TransactionRow } from './TransactionRow.jsx';
+import { ContractRow } from './ContractRow.jsx';
 
 const T = i18n.createComponent();
 export default class Contracts extends Component {
@@ -18,7 +18,7 @@ export default class Contracts extends Component {
       if (this.props.transactions.length > 0) {
         this.setState({
           txs: this.props.transactions.map((tx, i) => (
-            <TransactionRow
+            <ContractRow
               key={i}
               index={i}
               tx={tx}

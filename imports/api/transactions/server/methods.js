@@ -7,6 +7,19 @@ import { Validators } from '../../validators/validators.js';
 import { LCD } from '../../../../server/main';
 
 
+    let totalAddressesTest = []
+
+
+/**
+ * Makes array unique
+ *
+ * @param myArray
+ * @returns {any[]}
+ */
+function unique(myArray) {
+  return [...new Set(myArray)];
+};
+
 const AddressLength = 40;
 
 const isContractTransaction = (tx) => {
@@ -36,7 +49,9 @@ nextValueIsAddress = true
 
     console.log("contractAddresses", contractAddresses)
 
-return contractAddresses
+
+
+return unique(contractAddresses)
 
 
 }
@@ -65,51 +80,71 @@ Meteor.methods({
             // process.exit();
     }
 
+
     if(isContractTransaction(tx)) {
 
       const addresses = getContractAddressesFromTX(tx);
       // find contract in contracts table
+      console.log("addresses", addresses.toString())
 
+
+      totalAddressesTest = totalAddressesTest.concat(addresses);
+      debugger;
+      totalAddressesTest = unique(totalAddressesTest);
+      debugger;
       let contract
 
       for (let i = 0; i < addresses.length; i++)
       {
-        contract = Contracts.findOne({ contractAddress
+        contract = Contracts.findOne({ contract_address
       :
         addresses[i]
       })
 
         const ContractExists = !!contract;
 
+        debugger;
+
         console.log("ContractExists", ContractExists)
 
         const count = Contracts.find().count()
+debugger;
         console.log("ContractExists count", count)
-
-
+        console.log("totalAddressesTest", totalAddressesTest.toString())
+debugger;
         if (ContractExists) {
           // update
           Contracts.update(
-            { contractAddress: addresses[i] },
-            { $push: tx }
+            { contract_address: addresses[i] },
+            { $push: { txs: tx } },
           )
 
         }
+
       else
         {
         Contracts.insert({
           contract_address: addresses[i],
+          starting_height: tx.height,
           txs: [
             tx
           ]
         })
       }
+
+
+
     }
     }
 
 
     const count = Contracts.find().count()
         console.log("ContractExists count outside", count)
+
+
+    // if(count > 1){
+    //   process.exit();
+    // }
 
     const txId = Transactions.insert(tx);
     const txCount = Transactions.find({}).count();

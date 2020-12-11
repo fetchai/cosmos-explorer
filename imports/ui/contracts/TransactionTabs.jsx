@@ -5,7 +5,7 @@ import {
 import classnames from 'classnames';
 import numbro from 'numbro';
 import i18n from 'meteor/universe:i18n';
-import { TransactionRow } from './TransactionRow.jsx';
+import { ContractRow } from './ContractRow.jsx';
 
 const T = i18n.createComponent();
 export default class TransactionTabs extends Component {
@@ -45,7 +45,7 @@ export default class TransactionTabs extends Component {
       return (
         <Card>
           <CardHeader>
-            <T>transactions.transactions</T>
+            <T>contracts.contracts</T>
             {' '}
             <small>
               (
@@ -122,7 +122,7 @@ export default class TransactionTabs extends Component {
                 <Row>
                   <Col>
                     {(this.state.transferTxs.length > 0) ? this.state.transferTxs.map((tx, i) => (
-                      <TransactionRow
+                      <ContractRow
                         key={i}
                         index={i}
                         tx={tx}
@@ -136,7 +136,7 @@ export default class TransactionTabs extends Component {
                 <Row>
                   <Col>
                     {(this.state.stakingTxs.length > 0) ? this.state.stakingTxs.map((tx, i) => (
-                      <TransactionRow
+                      <ContractRow
                         key={i}
                         index={i}
                         tx={tx}
@@ -150,7 +150,7 @@ export default class TransactionTabs extends Component {
                 <Row>
                   <Col>
                     {(this.state.distributionTxs.length > 0) ? this.state.distributionTxs.map((tx, i) => (
-                      <TransactionRow
+                      <ContractRow
                         key={i}
                         index={i}
                         tx={tx}
@@ -164,7 +164,7 @@ export default class TransactionTabs extends Component {
                 <Row>
                   <Col>
                     {(this.state.governanceTxs.length > 0) ? this.state.governanceTxs.map((tx, i) => (
-                      <TransactionRow
+                      <ContractRow
                         key={i}
                         index={i}
                         tx={tx}
@@ -178,7 +178,7 @@ export default class TransactionTabs extends Component {
                 <Row>
                   <Col>
                     {(this.state.slashingTxs.length > 0) ? this.state.slashingTxs.map((tx, i) => (
-                      <TransactionRow
+                      <ContractRow
                         key={i}
                         index={i}
                         tx={tx}

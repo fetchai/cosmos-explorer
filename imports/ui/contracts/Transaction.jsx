@@ -32,40 +32,40 @@ export default class Transaction extends Component {
     }
 
     if (this.props.transactionExist) {
-      const tx = this.props.transaction;
+      const contract = this.props.contract;
       return (
         <Container id="transaction">
           <Helmet>
             <title>
-              Transaction
-              {tx.txhash}
+              Contract
+              {contract.contract_address}
               {' '}
               on the Network Explorer
             </title>
-            <meta name="description" content={`Details of transaction ${tx.txhash}`} />
+            <meta name="description" content={`Details of contract ${contract.contract_address}`} />
           </Helmet>
           <h4>
             <T>transactions.transaction</T>
             {' '}
-            {(!tx.code) ? <TxIcon valid /> : <TxIcon />}
+            {(!contract.code) ? <TxIcon valid /> : <TxIcon />}
           </h4>
-          {(tx.code) ? (
+          {(contract.code) ? (
             <Row>
               <Col xs={{ size: 12, order: 'last' }} className="error">
                 <Alert color="danger">
                   <CosmosErrors
-                    code={tx.code}
-                    logs={tx}
-                    gasWanted={tx.gas_wanted}
-                    gasUses={tx.gas_used}
+                    code={contract.code}
+                    logs={contract}
+                    gasWanted={contract.gas_wanted}
+                    gasUses={contract.gas_used}
                   />
                 </Alert>
               </Col>
             </Row>
           ) : ''}
           <Card>
-            <div className="card-header">
-              <T>common.information</T>
+            <div className="card-header margin-top">
+              <T>common.information</T>  <T>common.information</T>
             </div>
             <CardBody>
               <Row>
@@ -73,19 +73,19 @@ export default class Transaction extends Component {
                   <T>common.hash</T>
                 </Col>
                 <Col md={8} className="value text-nowrap overflow-auto address">
-                  {tx.txhash}
+                  {contract.txhash}
                 </Col>
                 <Col md={4} className="label">
                   <T>common.height</T>
                 </Col>
                 <Col md={8} className="value">
-                  <Link to={`/blocks/${tx.height}`}>
-                    {numbro(tx.height).format('0,0')}
+                  <Link to={`/blocks/${contract.height}`}>
+                    {numbro(contract.height).format('0,0')}
                   </Link>
-                  {tx.block() ? (
+                  {contract.block() ? (
                     <span>
                       {' '}
-                      <TimeStamp time={tx.block().time} />
+                      <TimeStamp time={contract.block().time} />
                     </span>
                   ) : null}
                 </Col>
@@ -93,7 +93,7 @@ export default class Transaction extends Component {
                   <T>transactions.fee</T>
                 </Col>
                 <Col md={8} className="value">
-                  {(tx.tx.value.fee.amount.length > 0) ? tx.tx.value.fee.amount.map((fee, i) => (
+                  {(contract.tx.value.fee.amount.length > 0) ? contract.tx.value.fee.amount.map((fee, i) => (
                     <span className="text-nowrap" key={i}>
                       {' '}
                       {((fee.amount / Meteor.settings.public.stakingFraction) >= 1) ? (new Coin(parseFloat(fee.amount), fee.denom)).stakeString() : (new Coin(parseFloat(fee.amount), fee.denom)).mintString()}
@@ -109,17 +109,17 @@ export default class Transaction extends Component {
                   <T>transactions.gasUsedWanted</T>
                 </Col>
                 <Col md={8} className="value">
-                  {numbro(tx.gas_used).format('0,0')}
+                  {numbro(contract.gas_used).format('0,0')}
                   {' '}
                   /
                   {' '}
-                  {numbro(tx.gas_wanted).format('0,0')}
+                  {numbro(contract.gas_wanted).format('0,0')}
                 </Col>
                 <Col md={4} className="label">
                   <T>transactions.memo</T>
                 </Col>
                 <Col md={8} className="value">
-                  <Markdown markup={tx.tx.value.memo} />
+                  <Markdown markup={contract.tx.value.memo} />
                 </Col>
 
               </Row>
@@ -130,9 +130,9 @@ export default class Transaction extends Component {
               <T>transactions.activities</T>
             </div>
           </Card>
-          {(tx.tx.value.msg && tx.tx.value.msg.length > 0) ? tx.tx.value.msg.map((msg, i) => (
+          {(contract.tx.value.msg && contract.tx.value.msg.length > 0) ? contract.tx.value.msg.map((msg, i) => (
             <Card body key={i}>
-              <Activities msg={msg} invalid={(!!tx.code)} events={tx.events} denom={this.denom} tx={tx}/>
+              <Activities msg={msg} invalid={(!!contract.code)} events={contract.events} denom={this.denom} tx={contract}/>
             </Card>
           )) : ''}
         </Container>

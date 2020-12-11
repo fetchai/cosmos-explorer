@@ -328,7 +328,7 @@ export default class Activites extends Component {
       return <MsgType type={msg.type} />;
     case 'wasm/execute':
       return  <p>
-        {getContractAddressFromTX(this.props.tx)}
+        {this.props.tx.contract_address}
         </p>;
     case 'cosmos-sdk/IBCReceiveMsg':
       return <MsgType type={msg.type} />;

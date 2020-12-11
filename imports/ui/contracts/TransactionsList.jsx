@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row } from 'reactstrap';
+import { CardHeader, Col, Row } from 'reactstrap'
 import { Meteor } from 'meteor/meteor';
 import { Route, Switch } from 'react-router-dom';
 import Sidebar from 'react-sidebar';
@@ -91,7 +91,7 @@ export default class Contracts extends Component {
           <Row>
             <Col md={3} xs={12}>
               <h1 className="d-none d-lg-block">
-                <T>transactions.transactions</T>
+                           <T>contracts.contracts</T>
               </h1>
             </Col>
             <Col md={9} xs={12} className="text-md-right">
@@ -100,7 +100,7 @@ export default class Contracts extends Component {
           </Row>
           <Switch>
             <Route
-              path="/contracts/:txId"
+              path="/contracts/:contract_address"
               render={(props) => (
                 <Sidebar
                   sidebar={<Transaction {...props} />}

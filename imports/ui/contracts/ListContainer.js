@@ -14,7 +14,7 @@ export default ValidatorDetailsContainer = withTracker((props) => {
 
   if (Meteor.isClient) {
       console.log("Meteor.isClientMeteor.isClient", props.limit)
-    transactionsHandle = Meteor.subscribe('transactions.list', props.limit);
+    transactionsHandle = Meteor.subscribe('contracts.list', props.limit);
     loading = (!transactionsHandle.ready() && props.limit == Meteor.settings.public.initialPageSize);
   }
 
@@ -22,12 +22,10 @@ export default ValidatorDetailsContainer = withTracker((props) => {
       console.log("Meteor.isServerMeteor. || !loading isServerMeteor.isServer || !loading ")
 
 
-
-
       transactions = Contracts.find({}, { sort: { height: -1 }, limit: props.limit }).fetch();
 
       console.log("TRANSACTIONS LENGTH", transactions.length);
-      console.log("TRANSACTIONS database total records", Transactions.find().count());
+      console.log("TRANSACTIONS database total records", Contracts.find().count());
 
     if (Meteor.isServer) {
          console.log("Meteor.isServerMeteor.isServerMeteor.isServer")
