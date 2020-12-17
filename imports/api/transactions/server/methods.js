@@ -48,12 +48,32 @@ nextValueIsAddress = true
 });
 
     console.log("contractAddresses", contractAddresses)
-
-
-
 return unique(contractAddresses)
+}
 
+function getSenderFromTX(tx){
+  console.log("getSenderFromTX")
+  const flattened = flatten(tx);
 
+  let nextValueIsAddress = false
+
+  let senderAddress = "";
+    Object.entries(flattened).forEach(([key, value]) => {
+	console.log("getSenderFromTX key, value");
+	console.log(key, value);
+
+	if(nextValueIsAddress) {
+	  contractAddresses.push(value);
+    nextValueIsAddress = false
+  }
+
+	if(value === "sender") {
+nextValueIsAddress = true
+  }
+});
+
+    console.log("contractAddresses", contractAddresses)
+return unique(contractAddresses)
 }
 
 

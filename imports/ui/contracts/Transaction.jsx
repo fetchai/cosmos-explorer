@@ -13,6 +13,9 @@ import { TxIcon } from '../components/Icons.jsx';
 import Coin from '/both/utils/coins.js';
 import TimeStamp from '../components/TimeStamp.jsx';
 
+
+
+
 const T = i18n.createComponent();
 export default class Transaction extends Component {
   constructor(props) {
@@ -32,6 +35,8 @@ export default class Transaction extends Component {
     }
 
     if (this.props.transactionExist) {
+      debugger;
+
       const contract = this.props.contract;
       return (
         <Container id="transaction">
@@ -45,7 +50,7 @@ export default class Transaction extends Component {
             <meta name="description" content={`Details of contract ${contract.contract_address}`} />
           </Helmet>
           <h4>
-            <T>transactions.transaction</T>
+            <T>contracts.contract</T>
             {' '}
             {(!contract.code) ? <TxIcon valid /> : <TxIcon />}
           </h4>
@@ -92,19 +97,6 @@ export default class Transaction extends Component {
                 <Col md={4} className="label">
                   <T>transactions.fee</T>
                 </Col>
-                <Col md={8} className="value">
-                  {(contract.tx.value.fee.amount.length > 0) ? contract.tx.value.fee.amount.map((fee, i) => (
-                    <span className="text-nowrap" key={i}>
-                      {' '}
-                      {((fee.amount / Meteor.settings.public.stakingFraction) >= 1) ? (new Coin(parseFloat(fee.amount), fee.denom)).stakeString() : (new Coin(parseFloat(fee.amount), fee.denom)).mintString()}
-                      {' '}
-                    </span>
-                  )) : (
-                    <span>
-                      <T>transactions.noFee</T>
-                    </span>
-                  )}
-                </Col>
                 <Col md={4} className="label">
                   <T>transactions.gasUsedWanted</T>
                 </Col>
@@ -118,23 +110,30 @@ export default class Transaction extends Component {
                 <Col md={4} className="label">
                   <T>transactions.memo</T>
                 </Col>
-                <Col md={8} className="value">
-                  <Markdown markup={contract.tx.value.memo} />
-                </Col>
-
+                {/*<Col md={8} className="value">*/}
+                {/*  <Markdown markup={contract.tx.value.memo} />*/}
+                {/*</Col>*/}
               </Row>
             </CardBody>
           </Card>
           <Card>
+              <Card>
             <div className="card-header">
               <T>transactions.activities</T>
             </div>
           </Card>
-          {(contract.tx.value.msg && contract.tx.value.msg.length > 0) ? contract.tx.value.msg.map((msg, i) => (
+          {(contract.txs && contract.txs.length) ? contract.txs.map((tx, i) =>
+             (tx.tx.value.msg && tx.tx.value.msg.length > 0) ? tx.tx.value.msg.map((msg, i) => (
             <Card body key={i}>
-              <Activities msg={msg} invalid={(!!contract.code)} events={contract.events} denom={this.denom} tx={contract}/>
-            </Card>
-          )) : ''}
+              <Activities msg={msg} invalid={(!!tx.code)} events={tx.events} denom={this.denom}  tx={tx}/>
+            </Card>)) : '') : ''}
+
+              </Card>
+          {/*   {(typeof contract.txs !== "undefined" && contract.txs.length) ? contract.txs.map((tx, i) => (*/}
+          {/*  <Card body key={i}>*/}
+          {/*    <Activities msg={""} invalid={(!!tx.tx.code)} events={tx.tx.events} denom={this.denom}  tx={tx.tx}/>*/}
+          {/*  </Card>*/}
+          {/*)) : ''}*/}
         </Container>
       );
     }

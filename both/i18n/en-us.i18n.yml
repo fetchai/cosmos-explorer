@@ -155,6 +155,7 @@ transactions:
     slashing: 'Slashing'
 contracts:
     contracts: 'Contracts'
+    contract: 'Contract'
 proposals:
     notFound: 'No proposal found.'
     listOfProposals: 'Here is a list of governance proposals.'
