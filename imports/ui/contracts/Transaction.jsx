@@ -96,7 +96,7 @@ export default class Transaction extends Component {
                   <T>contracts.CreatedBy</T>
                 </Col>
                 <Col md={8} className="value text-nowrap overflow-auto address">
-                  {contract.contract_owner}
+                  {contract.time}
                 </Col>
               </Row>
             </CardBody>

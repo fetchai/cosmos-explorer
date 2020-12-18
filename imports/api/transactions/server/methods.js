@@ -52,15 +52,20 @@ return unique(contractAddresses)
 }
 
 
-async function getBlockTime(height){
+ function getBlockTime(height){
+  console.log("getBlockTime")
   const url = `${RPC}//block?height=${height}`;
 
 
-    const response = await HTTP.get(url);
+    const response =  HTTP.get(url);
 
 
   const tx = JSON.parse(response.content);
 
+    console.log("url", tx)
+  process.exit()
+
+   return tx.time
 }
 
 function getSenderFromTX(tx){
@@ -156,14 +161,27 @@ debugger;
         {
           const owner = getSenderFromTX(tx)
 
+
+
+
+          const time =  getBlockTime(tx.height).then(time => {
+
+          console.log("time", time);
+          process.exit();
+
         Contracts.insert({
           contract_address: addresses[i],
           contract_owner: owner,
+          time: time,
           starting_height: tx.height,
           txs: [
             tx
           ]
         })
+
+          })
+
+
       }
 
 
