@@ -51,6 +51,18 @@ nextValueIsAddress = true
 return unique(contractAddresses)
 }
 
+
+async function getBlockTime(height){
+  const url = `${RPC}//block?height=${height}`;
+
+
+    const response = await HTTP.get(url);
+
+
+  const tx = JSON.parse(response.content);
+
+}
+
 function getSenderFromTX(tx){
   console.log("getSenderFromTX")
   const flattened = flatten(tx);
@@ -63,7 +75,7 @@ function getSenderFromTX(tx){
 	console.log(key, value);
 
 	if(nextValueIsAddress) {
-	  contractAddresses.push(value);
+	  senderAddress = value;
     nextValueIsAddress = false
   }
 
@@ -72,8 +84,7 @@ nextValueIsAddress = true
   }
 });
 
-    console.log("contractAddresses", contractAddresses)
-return unique(contractAddresses)
+return senderAddress
 }
 
 
@@ -143,8 +154,11 @@ debugger;
 
       else
         {
+          const owner = getSenderFromTX(tx)
+
         Contracts.insert({
           contract_address: addresses[i],
+          contract_owner: owner,
           starting_height: tx.height,
           txs: [
             tx

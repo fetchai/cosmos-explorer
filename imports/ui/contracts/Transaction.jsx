@@ -3,14 +3,12 @@ import {
   Alert, Card, CardBody, Col, Container, Row, Spinner,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Markdown } from 'react-showdown';
 import numbro from 'numbro';
 import { Helmet } from 'react-helmet';
 import i18n from 'meteor/universe:i18n';
 import CosmosErrors from '../components/CosmosErrors.jsx';
 import Activities from '../components/Activities.jsx';
 import { TxIcon } from '../components/Icons.jsx';
-import Coin from '/both/utils/coins.js';
 import TimeStamp from '../components/TimeStamp.jsx';
 
 
@@ -35,16 +33,17 @@ export default class Transaction extends Component {
     }
 
     if (this.props.transactionExist) {
-      debugger;
 
+      const  denom  = this.props.denom;
       const contract = this.props.contract;
+      debugger;
       return (
         <Container id="transaction">
           <Helmet>
             <title>
-              Contract
+              Contract  {' '}
               {contract.contract_address}
-              {' '}
+
               on the Network Explorer
             </title>
             <meta name="description" content={`Details of contract ${contract.contract_address}`} />
@@ -52,7 +51,7 @@ export default class Transaction extends Component {
           <h4>
             <T>contracts.contract</T>
             {' '}
-            {(!contract.code) ? <TxIcon valid /> : <TxIcon />}
+            { (!contract.code) ? <TxIcon valid /> : <TxIcon />}
           </h4>
           {(contract.code) ? (
             <Row>
@@ -70,49 +69,35 @@ export default class Transaction extends Component {
           ) : ''}
           <Card>
             <div className="card-header margin-top">
-              <T>common.information</T>  <T>common.information</T>
+              <T>common.information</T>
             </div>
             <CardBody>
               <Row>
                 <Col md={4} className="label">
-                  <T>common.hash</T>
+                  <T>contracts.contractAddress</T>
                 </Col>
                 <Col md={8} className="value text-nowrap overflow-auto address">
-                  {contract.txhash}
+                  {contract.contract_address}
+                </Col>
+
+                <Col md={4} className="label">
+                  <T>contracts.number</T>
+                </Col>
+                <Col md={8} className="value text-nowrap overflow-auto address">
+                  {contract.txs.length}
                 </Col>
                 <Col md={4} className="label">
-                  <T>common.height</T>
+                  <T>contracts.CreatedAt</T>
                 </Col>
-                <Col md={8} className="value">
-                  <Link to={`/blocks/${contract.height}`}>
-                    {numbro(contract.height).format('0,0')}
-                  </Link>
-                  {contract.block() ? (
-                    <span>
-                      {' '}
-                      <TimeStamp time={contract.block().time} />
-                    </span>
-                  ) : null}
+                <Col md={8} className="value text-nowrap overflow-auto address">
+                  {contract.contract_address}
                 </Col>
                 <Col md={4} className="label">
-                  <T>transactions.fee</T>
+                  <T>contracts.CreatedBy</T>
                 </Col>
-                <Col md={4} className="label">
-                  <T>transactions.gasUsedWanted</T>
+                <Col md={8} className="value text-nowrap overflow-auto address">
+                  {contract.contract_owner}
                 </Col>
-                <Col md={8} className="value">
-                  {numbro(contract.gas_used).format('0,0')}
-                  {' '}
-                  /
-                  {' '}
-                  {numbro(contract.gas_wanted).format('0,0')}
-                </Col>
-                <Col md={4} className="label">
-                  <T>transactions.memo</T>
-                </Col>
-                {/*<Col md={8} className="value">*/}
-                {/*  <Markdown markup={contract.tx.value.memo} />*/}
-                {/*</Col>*/}
               </Row>
             </CardBody>
           </Card>
@@ -125,9 +110,14 @@ export default class Transaction extends Component {
           {(contract.txs && contract.txs.length) ? contract.txs.map((tx, i) =>
              (tx.tx.value.msg && tx.tx.value.msg.length > 0) ? tx.tx.value.msg.map((msg, i) => (
             <Card body key={i}>
-              <Activities msg={msg} invalid={(!!tx.code)} events={tx.events} denom={this.denom}  tx={tx}/>
+              {" gggg"}
+              {"qwerty"}{msg.type.toString()}
+              {"qwerty2"}{!!tx.code}
+              {"qwerty3"}{tx.events ? tx.events.toString() : ""}
+              {"qwerty4"}{denom}
+              {"qwerty5"}{tx.toString()}
+              <Activities msg={msg} invalid={(!!tx.code)} events={tx.events} denom={denom} tx={tx}/>
             </Card>)) : '') : ''}
-
               </Card>
           {/*   {(typeof contract.txs !== "undefined" && contract.txs.length) ? contract.txs.map((tx, i) => (*/}
           {/*  <Card body key={i}>*/}

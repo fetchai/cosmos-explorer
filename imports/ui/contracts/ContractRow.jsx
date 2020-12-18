@@ -1,15 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Alert, Card, Col, PopoverBody, Row, UncontrolledPopover,
+  Alert, Col, Row,
 } from 'reactstrap';
-import numbro from 'numbro';
-import { Markdown } from 'react-showdown';
 import { TxIcon } from '../components/Icons.jsx';
-import Activities from '../components/Activities.jsx';
 import CosmosErrors from '../components/CosmosErrors.jsx';
 import TimeAgo from '../components/TimeAgo.jsx';
-import Coin from '/both/utils/coins.js';
 import SentryBoundary from '../components/SentryBoundary.jsx';
 
 const showdown = require('showdown');

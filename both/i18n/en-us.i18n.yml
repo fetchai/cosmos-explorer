@@ -156,6 +156,10 @@ transactions:
 contracts:
     contracts: 'Contracts'
     contract: 'Contract'
+    contractAddress: 'Contract Address'
+    number: 'number of Contract Transactions'
+    CreatedAt: 'Created at'
+    CreatedBy: 'Created by'
 proposals:
     notFound: 'No proposal found.'
     listOfProposals: 'Here is a list of governance proposals.'
