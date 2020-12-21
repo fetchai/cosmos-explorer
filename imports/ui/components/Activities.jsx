@@ -95,6 +95,9 @@ export default class Activites extends Component {
   render() {
     // console.log(this.props);
     const { msg } = this.props;
+
+    debugger;
+
     switch (msg.type) {
     // bank
     case 'cosmos-sdk/MsgSend':

@@ -55,16 +55,8 @@ return unique(contractAddresses)
  function getBlockTime(height){
   console.log("getBlockTime")
   const url = `${RPC}//block?height=${height}`;
-
-
     const response =  HTTP.get(url);
-
-
-  const tx = JSON.parse(response.content);
-
-    console.log("url", tx)
-  process.exit()
-
+    const tx = JSON.parse(response.content);
    return tx.time
 }
 
@@ -92,7 +84,6 @@ nextValueIsAddress = true
 return senderAddress
 }
 
-
 Meteor.methods({
   'Transactions.index'(hash, blockTime) {
     this.unblock();
@@ -105,24 +96,11 @@ Meteor.methods({
 
     tx.height = parseInt(tx.height);
 
-
-
-
-    if(isContractTransaction(tx)) {
-              console.log("actuallyisContractTransaction")
-      // process.exit();
-    } else {
-                          console.log("not isContractTransaction")
-            // process.exit();
-    }
-
-
     if(isContractTransaction(tx)) {
 
       const addresses = getContractAddressesFromTX(tx);
       // find contract in contracts table
       console.log("addresses", addresses.toString())
-
 
       totalAddressesTest = totalAddressesTest.concat(addresses);
       debugger;
@@ -130,12 +108,11 @@ Meteor.methods({
       debugger;
       let contract
 
-      for (let i = 0; i < addresses.length; i++)
-      {
-        contract = Contracts.findOne({ contract_address
-      :
-        addresses[i]
-      })
+      for (let i = 0; i < addresses.length; i++) {
+        contract = Contracts.findOne({
+          contract_address:
+            addresses[i]
+        })
 
         const ContractExists = !!contract;
 
@@ -144,10 +121,17 @@ Meteor.methods({
         console.log("ContractExists", ContractExists)
 
         const count = Contracts.find().count()
-debugger;
+
+        debugger;
+
         console.log("ContractExists count", count)
         console.log("totalAddressesTest", totalAddressesTest.toString())
-debugger;
+
+        debugger;
+
+         // console.log("url", tx)
+         //  console.log("time", time);
+
         if (ContractExists) {
           // update
           Contracts.update(
@@ -155,48 +139,28 @@ debugger;
             { $push: { txs: tx } },
           )
 
-        }
-
-      else
-        {
+        } else {
           const owner = getSenderFromTX(tx)
 
-
-
-
-          const time =  getBlockTime(tx.height).then(time => {
-
-          console.log("time", time);
-          process.exit();
-
-        Contracts.insert({
-          contract_address: addresses[i],
-          contract_owner: owner,
-          time: time,
-          starting_height: tx.height,
-          txs: [
-            tx
-          ]
-        })
-
+          Contracts.insert({
+            contract_address: addresses[i],
+            contract_owner: owner,
+            time: tx.timestamp,
+            starting_height: tx.height,
+            txs: [
+              tx
+            ]
           })
 
-
+        }
       }
-
-
-
     }
-    }
-
 
     const count = Contracts.find().count()
-        console.log("ContractExists count outside", count)
+
+      console.log("ContractExists count outside", count)
 
 
-    // if(count > 1){
-    //   process.exit();
-    // }
 
     const txId = Transactions.insert(tx);
     const txCount = Transactions.find({}).count();
@@ -208,6 +172,7 @@ debugger;
     }
     return false;
   },
+
   'Transactions.findDelegation'(address, height) {
     // following cosmos-sdk/x/slashing/spec/06_events.md and cosmos-sdk/x/staking/spec/06_events.md
     return Transactions.find({

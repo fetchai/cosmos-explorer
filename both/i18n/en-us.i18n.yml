@@ -157,7 +157,7 @@ contracts:
     contracts: 'Contracts'
     contract: 'Contract'
     contractAddress: 'Contract Address'
-    number: 'number of Contract Transactions'
+    number: 'Number of Contract Transactions'
     CreatedAt: 'Created at'
     CreatedBy: 'Created by'
 proposals:

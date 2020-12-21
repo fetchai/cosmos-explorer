@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Contracts } from '/imports/api/transactions/contracts.js';
-import Transaction from './Transaction.jsx';
+import Contract from './Contract.jsx';
 
 export default TransactionContainer = withTracker((props) => {
   // const txId = props.match.params.txId.toUpperCase();
@@ -41,4 +41,4 @@ export default TransactionContainer = withTracker((props) => {
     transactionExist,
     contract: transactionExist ? contract : {},
   };
-})(Transaction);
+})(Contract);

@@ -1171,6 +1171,12 @@ tr:nth-of-type(odd) {
   border-color: $colorLightGrey !important;
 }
 
-.margin-top {
-      margin-top: 10px;
-    }
+.no-border {
+      border: none;
+}
+
+.contract-box {
+  max-height: 400px;
+  overflow-y: scroll;
+  padding-right:5px;
+}

@@ -10,17 +10,17 @@ import CosmosErrors from '../components/CosmosErrors.jsx';
 import Activities from '../components/Activities.jsx';
 import { TxIcon } from '../components/Icons.jsx';
 import TimeStamp from '../components/TimeStamp.jsx';
+import { Meteor } from 'meteor/meteor';
 
 
 
 
 const T = i18n.createComponent();
-export default class Transaction extends Component {
+export default class Contract extends Component {
   constructor(props) {
     super(props);
     const showdown = require('showdown');
     showdown.setFlavor('github');
-    const { denom } = this.props;
   }
 
   render() {
@@ -34,8 +34,8 @@ export default class Transaction extends Component {
 
     if (this.props.transactionExist) {
 
-      const  denom  = this.props.denom;
       const contract = this.props.contract;
+      const denom =  Meteor.settings.public.coins[0].denom;
       debugger;
       return (
         <Container id="transaction">
@@ -87,13 +87,13 @@ export default class Transaction extends Component {
                   {contract.txs.length}
                 </Col>
                 <Col md={4} className="label">
-                  <T>contracts.CreatedAt</T>
+                  <T>contracts.CreatedBy</T>
                 </Col>
                 <Col md={8} className="value text-nowrap overflow-auto address">
-                  {contract.contract_address}
+                  {contract.contract_owner}
                 </Col>
                 <Col md={4} className="label">
-                  <T>contracts.CreatedBy</T>
+                  <T>contracts.CreatedAt</T>
                 </Col>
                 <Col md={8} className="value text-nowrap overflow-auto address">
                   {contract.time}
@@ -101,12 +101,13 @@ export default class Transaction extends Component {
               </Row>
             </CardBody>
           </Card>
-          <Card>
+          <Card className="no-border">
               <Card>
             <div className="card-header">
               <T>transactions.activities</T>
             </div>
           </Card>
+            <div className="contract-box">
           {(contract.txs && contract.txs.length) ? contract.txs.map((tx, i) =>
              (tx.tx.value.msg && tx.tx.value.msg.length > 0) ? tx.tx.value.msg.map((msg, i) => (
             <Card body key={i}>
@@ -118,6 +119,7 @@ export default class Transaction extends Component {
               {"qwerty5"}{tx.toString()}
               <Activities msg={msg} invalid={(!!tx.code)} events={tx.events} denom={denom} tx={tx}/>
             </Card>)) : '') : ''}
+            </div>
               </Card>
           {/*   {(typeof contract.txs !== "undefined" && contract.txs.length) ? contract.txs.map((tx, i) => (*/}
           {/*  <Card body key={i}>*/}
