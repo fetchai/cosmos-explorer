@@ -15,6 +15,8 @@ showdown.setFlavor('github');
 export const ContractRow = (props) => {
   const { tx } = props;
 
+  debugger;
+
   return (
     <SentryBoundary>
       <Row className={(tx.code) ? 'tx-info invalid' : 'tx-info'}>
@@ -39,7 +41,7 @@ export const ContractRow = (props) => {
           <i className="material-icons">schedule</i>
           {' '}
           <span>
-            {tx.block() ? <TimeAgo time={tx.block().time} /> : ''}
+            {tx.block() ? <TimeAgo time={tx.timestamp} /> : ''}
           </span>
         </Col>
         <Col xs={(!props.blockList) ? 2 : 4} md={1}>

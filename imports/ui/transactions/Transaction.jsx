@@ -33,6 +33,8 @@ export default class Transaction extends Component {
 
     if (this.props.transactionExist) {
       const tx = this.props.transaction;
+      debugger;
+
       return (
         <Container id="transaction">
           <Helmet>

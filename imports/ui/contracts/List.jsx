@@ -44,21 +44,21 @@ export default class Contracts extends Component {
     return (
       <div className="transactions-list">
         <Row className="header text-nowrap d-none d-lg-flex">
-          <Col xs={9} lg={8}>
+          <Col xs={9} lg={7}>
             <i className="material-icons">message</i>
             {' '}
             <span className="d-none d-md-inline-block">
               <T>transactions.contracts</T>
             </span>
           </Col>
-          <Col xs={3} lg={{ size: 1, order: 'last' }}>
-            <i className="fas fa-hashtag" />
+          <Col xs={3} lg={{ size: 1 }}>
+                <i className="material-icons">check_circle</i>
             {' '}
-            <span className="d-none d-md-inline-block">
-              <T>transactions.txHash</T>
+            <span className="d-none d-lg-inline-block">
+              <T>transactions.valid</T>
             </span>
           </Col>
-          <Col xs={4} md={2} lg={2}>
+          <Col xs={4} md={2} lg={1}>
             <i className="fas fa-database" />
             {' '}
             <span className="d-none d-md-inline-block">
@@ -66,19 +66,12 @@ export default class Contracts extends Component {
             </span>
           </Col>
           <Col xs={2} md={1} className="text-nowrap">
-            <i className="material-icons">check_circle</i>
+          <i className="fas fa-hashtag" />
             {' '}
-            <span className="d-none d-lg-inline-block">
-              <T>transactions.valid</T>
+            <span className="d-none d-md-inline-block">
+              <T>transactions.txHash</T>
             </span>
           </Col>
-          {/*<Col xs={12} lg={2}>*/}
-          {/*  <i className="material-icons">monetization_on</i>*/}
-          {/*  {' '}*/}
-          {/*  <span className="d-none d-md-inline-block">*/}
-          {/*    <T>transactions.fee</T>*/}
-          {/*  </span>*/}
-          {/*</Col>*/}
         </Row>
         {this.state.txs}
       </div>
