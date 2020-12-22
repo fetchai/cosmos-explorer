@@ -11,6 +11,8 @@ import Activities from '../components/Activities.jsx';
 import { TxIcon } from '../components/Icons.jsx';
 import TimeStamp from '../components/TimeStamp.jsx';
 import { Meteor } from 'meteor/meteor';
+import Account from '../components/Account'
+import { MsgType } from '../components/MsgType'
 
 
 
@@ -108,24 +110,18 @@ export default class Contract extends Component {
             </div>
           </Card>
             <div className="contract-box">
-          {(contract.txs && contract.txs.length) ? contract.txs.map((tx, i) =>
+          {(contract.txs && contract.txs.length) ? contract.txs.map((tx, n) =>
              (tx.tx.value.msg && tx.tx.value.msg.length > 0) ? tx.tx.value.msg.map((msg, i) => (
             <Card body key={i}>
-              {" gggg"}
-              {"qwerty"}{msg.type.toString()}
-              {"qwerty2"}{!!tx.code}
-              {"qwerty3"}{tx.events ? tx.events.toString() : ""}
-              {"qwerty4"}{denom}
-              {"qwerty5"}{tx.toString()}
-              <Activities msg={msg} invalid={(!!tx.code)} events={tx.events} denom={denom} tx={tx}/>
+              <ul className="contract-transaction">
+                <li>Transaction at  {new Date(tx.timestamp).toLocaleString()}</li>
+                <li>Sender: {msg.value.sender}</li>
+                <li>Amount: {tx.tx.value.fee.amount[0].amount} {tx.tx.value.fee.amount[0].denom}</li>
+                <li>Raw Log: {tx.raw_log}</li>
+              </ul>
             </Card>)) : '') : ''}
             </div>
               </Card>
-          {/*   {(typeof contract.txs !== "undefined" && contract.txs.length) ? contract.txs.map((tx, i) => (*/}
-          {/*  <Card body key={i}>*/}
-          {/*    <Activities msg={""} invalid={(!!tx.tx.code)} events={tx.tx.events} denom={this.denom}  tx={tx.tx}/>*/}
-          {/*  </Card>*/}
-          {/*)) : ''}*/}
         </Container>
       );
     }

@@ -1180,3 +1180,14 @@ tr:nth-of-type(odd) {
   overflow-y: scroll;
   padding-right:5px;
 }
+
+.contract-transaction {
+  list-style: none;
+
+  li {
+    margin-bottom:5px;
+  }
+  li:first-of-type {
+    margin-bottom:7px;
+  }
+}
