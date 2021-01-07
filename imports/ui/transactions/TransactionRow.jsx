@@ -19,6 +19,8 @@ showdown.setFlavor('github');
 export const TransactionRow = (props) => {
   const { tx } = props;
 
+  debugger;
+
   return (
     <SentryBoundary>
       <Row className={(tx.code) ? 'tx-info invalid' : 'tx-info'}>

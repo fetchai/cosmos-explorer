@@ -96,7 +96,6 @@ export default class Activites extends Component {
     // console.log(this.props);
     const { msg } = this.props;
 
-    debugger;
 
     switch (msg.type) {
     // bank

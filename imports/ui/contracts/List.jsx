@@ -13,7 +13,6 @@ export default class Contracts extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log("componentDidUpdatecomponentDidUpdatecomponentDidUpdate")
     if (this.props != prevProps) {
       if (this.props.transactions.length > 0) {
         this.setState({
@@ -43,7 +42,7 @@ export default class Contracts extends Component {
 
     return (
       <div className="transactions-list">
-        <Row className="header text-nowrap d-none d-lg-flex">
+        <Row className="header text-nowrap d-none d-lg-flex margin-top-list">
           <Col xs={9} lg={7}>
             <i className="material-icons">message</i>
             {' '}
@@ -65,7 +64,7 @@ export default class Contracts extends Component {
               <T>common.height</T>
             </span>
           </Col>
-          <Col xs={2} md={1} className="text-nowrap">
+          <Col xs={2} md={1}  lg={1} className="text-nowrap">
           <i className="fas fa-hashtag" />
             {' '}
             <span className="d-none d-md-inline-block">

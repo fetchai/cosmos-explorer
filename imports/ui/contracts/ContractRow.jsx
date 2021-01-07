@@ -15,12 +15,10 @@ showdown.setFlavor('github');
 export const ContractRow = (props) => {
   const { tx } = props;
 
-  debugger;
-
   return (
     <SentryBoundary>
-      <Row className={(tx.code) ? 'tx-info invalid' : 'tx-info'}>
-        <Col xs={12} lg={7} className="activity">
+      <Row className={(tx.code) ? 'tx-info invalid' : 'tx-info '}>
+        <Col xs={12} lg={7} className="activity card card-body contract-address-box">
             <Link to={`/contracts/${tx.contract_address}`}>
             {tx.contract_address}
           </Link>
@@ -32,7 +30,7 @@ export const ContractRow = (props) => {
             {tx.starting_height}
           </Link>
         </Col>
-        <Col xs={ {size: 12, order: 'last'} } md={ {size: 3, order: 'last'} } lg={{ size: 2, order: 'last' }} className="text-truncate">
+        <Col xs={ {size: 12, order: 'last'} } md={ {size: 3, order: 'last'} } lg={{ size: 1, order: 'last' }} className="text-truncate">
           <i className="fas fa-hashtag d-lg-none" />
           {' '}
             {tx.txs.length}
@@ -41,7 +39,7 @@ export const ContractRow = (props) => {
           <i className="material-icons">schedule</i>
           {' '}
           <span>
-            {tx.block() ? <TimeAgo time={tx.timestamp} /> : ''}
+            <TimeAgo time={new Date(tx.time).getTime()} />
           </span>
         </Col>
         <Col xs={(!props.blockList) ? 2 : 4} md={1}>

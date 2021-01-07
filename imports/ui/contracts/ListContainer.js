@@ -19,13 +19,7 @@ export default ValidatorDetailsContainer = withTracker((props) => {
   }
 
   if (Meteor.isServer || !loading) {
-      console.log("Meteor.isServerMeteor. || !loading isServerMeteor.isServer || !loading ")
-
-
-      transactions = Contracts.find({}, { sort: { height: -1 }, limit: props.limit }).fetch();
-
-      console.log("TRANSACTIONS LENGTH", transactions.length);
-      console.log("TRANSACTIONS database total records", Contracts.find().count());
+    transactions = Contracts.find({}, { sort: { height: -1 }, limit: props.limit }).fetch();
 
     if (Meteor.isServer) {
          console.log("Meteor.isServerMeteor.isServerMeteor.isServer")
@@ -34,7 +28,6 @@ export default ValidatorDetailsContainer = withTracker((props) => {
     } else {
       transactionsExist = !loading && !!transactions;
                console.log("transactionsExist", transactionsExist)
-
     }
   }
 

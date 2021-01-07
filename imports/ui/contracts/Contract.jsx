@@ -98,7 +98,7 @@ export default class Contract extends Component {
                   <T>contracts.CreatedAt</T>
                 </Col>
                 <Col md={8} className="value text-nowrap overflow-auto address">
-                  {contract.time}
+                  {new Date(contracts.timestamp).toLocaleString()}
                 </Col>
               </Row>
             </CardBody>

@@ -35,6 +35,10 @@ export default class Transaction extends Component {
       const tx = this.props.transaction;
       debugger;
 
+      const r = tx.block().time
+      debugger;
+
+
       return (
         <Container id="transaction">
           <Helmet>

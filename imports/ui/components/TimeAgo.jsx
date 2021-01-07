@@ -5,6 +5,7 @@ import moment from 'moment';
 export default class TimeAgo extends Component {
   constructor(props) {
     super(props);
+    debugger;
 
     moment.relativeTimeThreshold('s', 60);
     moment.relativeTimeThreshold('ss', 3);
@@ -13,6 +14,8 @@ export default class TimeAgo extends Component {
       timer: 0,
       time: moment(props.time).fromNow(),
     };
+        debugger;
+
   }
 
   componentDidMount() {
