@@ -5,6 +5,33 @@ import { Validators } from '../../validators/validators.js';
 
 const AddressLength = 40;
 
+const bulkTransactions = Transactions.rawCollection().initializeUnorderedBulkOp();
+
+getTransaction = async (hash) => {
+    // hash = hash.toUpperCase();
+    // console.log("Get tx: "+hash)
+    try {
+        let url = LCD+ '/txs/'+hash;
+        let response = HTTP.get(url);
+        let tx = JSON.parse(response.content);
+
+        tx.height = parseInt(tx.height);
+        tx.processed = true;
+
+        let txId = Transactions.update({txhash:hash}, {$set:tx});
+        // bulkTransactions.find({txhash:hash}).updateOne({$set:tx});
+        // console.log(bulkTransactions.length)
+        if (txId){
+            return txId;
+        }
+        else return false;
+
+    }
+    catch(e) {
+        console.log("Getting transaction %o: %o", hash, e);
+    }
+}
+
 Meteor.methods({
     'Transactions.updateTransactions': async function () {
         this.unblock();

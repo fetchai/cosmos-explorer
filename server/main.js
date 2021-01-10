@@ -56,6 +56,17 @@ updateTransactions = () => {
   })
 }
 
+updateTransactions = () => {
+    Meteor.call('Transactions.updateTransactions', (error, result) => {
+        if (error){
+            console.log("updateTransactions: "+error);
+        }
+        else{
+            console.log("updateTransactions: "+result);
+        }
+    })
+}
+
 getConsensusState = () => {
   Meteor.call('chain.getConsensusState', (error, result) => {
     if (error) {
