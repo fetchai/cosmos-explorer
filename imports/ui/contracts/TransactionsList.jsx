@@ -47,8 +47,20 @@ export default class Contracts extends Component {
       this.setState({
         sidebarOpen: (this.props.location.pathname.split('/contracts/').length == 2),
       });
+
+      setTimeout(() => {
+
+      }, 3000)
+
     }
   }
+
+  closeSidebar = () => {
+       this.setState({
+        sidebarOpen: false,
+      })
+  }
+
 
     trackScrolling = () => {
       const wrappedElement = document.getElementById('contracts');
@@ -103,14 +115,14 @@ export default class Contracts extends Component {
               path="/contracts/:contract_address"
               render={(props) => (
                 <Sidebar
-                  sidebar={<Transaction {...props} />}
+                  sidebar={<Transaction {...props, closeSidebar: closeSidebar.bind(this)} />}
                   open={this.state.sidebarOpen}
                   onSetOpen={this.onSetSidebarOpen}
                   styles={{
                     sidebar: {
                       background: 'white',
                       position: 'fixed',
-                      width: '85%',
+                      width: '100%',
                       zIndex: 4,
                     },
                     overlay: {

@@ -2,20 +2,11 @@ import React, { Component } from 'react';
 import {
   Alert, Card, CardBody, Col, Container, Row, Spinner,
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import numbro from 'numbro';
 import { Helmet } from 'react-helmet';
 import i18n from 'meteor/universe:i18n';
 import CosmosErrors from '../components/CosmosErrors.jsx';
-import Activities from '../components/Activities.jsx';
 import { TxIcon } from '../components/Icons.jsx';
-import TimeStamp from '../components/TimeStamp.jsx';
 import { Meteor } from 'meteor/meteor';
-import Account from '../components/Account'
-import { MsgType } from '../components/MsgType'
-
-
-
 
 const T = i18n.createComponent();
 export default class Contract extends Component {

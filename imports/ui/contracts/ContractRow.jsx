@@ -10,6 +10,7 @@ import SentryBoundary from '../components/SentryBoundary.jsx';
 
 const showdown = require('showdown');
 
+
 showdown.setFlavor('github');
 
 export const ContractRow = (props) => {
