@@ -49,17 +49,12 @@ export default class Contracts extends Component {
       });
 
       setTimeout(() => {
-
       }, 3000)
 
     }
   }
 
-  closeSidebar = () => {
-       this.setState({
-        sidebarOpen: false,
-      })
-  }
+
 
 
     trackScrolling = () => {
@@ -92,6 +87,12 @@ export default class Contracts extends Component {
         }, 500);
       });
     }
+
+      closeSidebar () {
+       this.setState({
+        sidebarOpen: false,
+      })
+  };
 
     render() {
       return (

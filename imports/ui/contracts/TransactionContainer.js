@@ -39,7 +39,7 @@ export default TransactionContainer = withTracker((props) => {
   return {
     loading,
     transactionExist,
-    closeSidebar:
+    closeSidebar: props.closeSidebar,
     contract: transactionExist ? contract : {},
   };
 })(Contract);
