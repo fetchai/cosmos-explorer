@@ -1193,7 +1193,7 @@ tr:nth-of-type(odd) {
 }
 
 .margin-top-list {
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .padding-left {
@@ -1205,4 +1205,47 @@ tr:nth-of-type(odd) {
     padding: 0.5rem;
     margin-bottom: 0.5rem;
   margin-left: 15px;
+}
+
+.unset-flex {
+  flex: unset !important;
+  width: unset  !important;
+}
+
+.extra-margin-right {
+  margin-right:100px !important;
+  display:inline-block;
+}
+
+.max-width-45 {
+  //max-width: 45% !important;
+}
+
+#transaction {
+      padding-top: 15px !important;
+      padding-bottom: 15px !important;
+    float: left;
+}
+
+.transactions-list {
+      clear: both;
+}
+
+#transaction > h4 > span:nth-child(1) {
+  display: inline-block;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    text-indent: 3px;
+}
+
+.margin-left {
+  margin-left: 20px;
+}
+
+.margin-left-row {
+  margin-left: 10px;
+}
+
+.address {
+  margin-bottom: 2px;
 }

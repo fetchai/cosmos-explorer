@@ -60,7 +60,7 @@ return unique(contractAddresses)
    return tx.time
 }
 
-function getSenderFromTX(tx){
+function getAttributeFromTX(tx, attributeName){
   console.log("getSenderFromTX")
   const flattened = flatten(tx);
 
@@ -76,7 +76,7 @@ function getSenderFromTX(tx){
     nextValueIsAddress = false
   }
 
-	if(value === "sender") {
+	if(value === attributeName) {
 nextValueIsAddress = true
   }
 });
@@ -108,6 +108,8 @@ Meteor.methods({
       debugger;
       let contract
 
+
+      // is logic here good as results discarded todo check the logic.
       for (let i = 0; i < addresses.length; i++) {
         contract = Contracts.findOne({
           contract_address:
@@ -140,7 +142,22 @@ Meteor.methods({
           )
 
         } else {
-          const owner = getSenderFromTX(tx)
+          // get sender as owner
+          let owner = getAttributeFromTX(tx, "sender")
+          // else get signer
+          if(!owner){
+                       owner = getAttributeFromTX(tx, "signer")
+          }
+
+
+          if(!owner || !owner.length){
+
+            console.log("tx is ", tx)
+            console.log("owner is ", owner)
+            // process.exit();
+          } else {
+            console.log("found owner is ", owner)
+          }
 
           Contracts.insert({
             contract_address: addresses[i],

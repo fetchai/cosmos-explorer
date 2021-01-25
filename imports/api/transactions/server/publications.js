@@ -74,11 +74,10 @@ publishComposite('transactions.findOne', function(hash) {
   };
 });
 
-
-publishComposite('contracts.findOne', function(contractAddress) {
+publishComposite('contracts.contractAddress', function(contractAddress, limit) {
   return {
     find() {
-      return Contracts.find({ contract_address: contractAddress });
+      return Contracts.find({ contract_address: contractAddress }, { sort: { height: -1 }, limit });
     }
   };
 });

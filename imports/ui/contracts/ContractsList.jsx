@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { CardHeader, Col, Row } from 'reactstrap'
+import { Col, Row } from 'reactstrap'
 import { Meteor } from 'meteor/meteor';
-import { Route, Switch } from 'react-router-dom';
-import Sidebar from 'react-sidebar';
 import { Helmet } from 'react-helmet';
 import i18n from 'meteor/universe:i18n';
 import ChainStates from '../components/ChainStatesContainer.js';
-import Transaction from './TransactionContainer.js';
+
 import { LoadMore } from '../components/LoadMore.jsx';
 import List from './ListContainer.js';
 
@@ -25,6 +23,7 @@ export default class Contracts extends Component {
       priority: 2,
       loadmore: false,
       sidebarOpen: (props.location.pathname.split('/contracts/').length == 2),
+      contractAddress: null,
     };
 
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
@@ -48,19 +47,34 @@ export default class Contracts extends Component {
         sidebarOpen: (this.props.location.pathname.split('/contracts/').length == 2),
       });
 
+       const contractAddress = this.contractAddressFromURI();
+                               this.setState({ contractAddress: contractAddress });
+
       setTimeout(() => {
       }, 3000)
 
     }
   }
 
-
-
+  /**
+   * in uri there can be the contract address and if it is in address then we return it else return null
+   *
+   * @returns {any}
+   */
+  contractAddressFromURI(){
+    const parts = this.props.location.pathname.split('/contracts/')
+    return (parts.length == 2 || !parts[1]) ? parts[1] : null
+  }
 
     trackScrolling = () => {
       const wrappedElement = document.getElementById('contracts');
       if (this.isBottom(wrappedElement)) {
-        // console.log('header bottom reached');
+
+        // if it is between 1 and 10 lets not show the loadmore icon as this is shown wrongly in places when few transactions exist, and this is most prominent on contract page.
+        const rowsCount = document.getElementsByClassName("contract-row").length
+        if(rowsCount > 1 && rowsCount < 10){
+          return;
+        }
         document.removeEventListener('scroll', this.trackScrolling);
         this.setState({ loadmore: true });
         this.setState({
@@ -102,6 +116,9 @@ export default class Contracts extends Component {
             <meta name="description" content="See what is happening on Cosmos Hub" />
           </Helmet>
           <Row>
+
+            {this.contractAddressFromURI()?  "" :
+             <>
             <Col md={3} xs={12}>
               <h1 className="d-none d-lg-block">
                            <T>contracts.contracts</T>
@@ -110,31 +127,11 @@ export default class Contracts extends Component {
             <Col md={9} xs={12} className="text-md-right">
               <ChainStates />
             </Col>
+            </>
+            }
+
           </Row>
-          <Switch>
-            <Route
-              path="/contracts/:contract_address"
-              render={(props) => (
-                <Sidebar
-                  sidebar={<Transaction {...props, closeSidebar: closeSidebar.bind(this)} />}
-                  open={this.state.sidebarOpen}
-                  onSetOpen={this.onSetSidebarOpen}
-                  styles={{
-                    sidebar: {
-                      background: 'white',
-                      position: 'fixed',
-                      width: '100%',
-                      zIndex: 4,
-                    },
-                    overlay: {
-                      zIndex: 3,
-                    },
-                  }}
-                />
-              )}
-            />
-          </Switch>
-          <List limit={this.state.limit} />
+          <List limit={this.state.limit} contractAddress={this.state.contractAddress} />
           <LoadMore show={this.state.loadmore} />
         </div>
       );

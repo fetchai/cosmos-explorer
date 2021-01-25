@@ -4,14 +4,9 @@ import { Contracts } from '/imports/api/transactions/contracts.js';
 import Contract from './Contract.jsx';
 
 export default TransactionContainer = withTracker((props) => {
-  // const txId = props.match.params.txId.toUpperCase();
 
   const urlBits =  window.location.href.split('/');
   const contractAddress = urlBits[urlBits.length - 1];
-
-  console.log("urlBits", urlBits.toString())
-  console.log("contractAddress", contractAddress)
-
 
   let transactionsHandle; let contract; let
     transactionExist;
@@ -31,6 +26,7 @@ export default TransactionContainer = withTracker((props) => {
     } else {
       transactionExist = !loading && !!contract;
     }
+
     if (props.location.search === '?new' && !transactionExist) {
       loading = true;
     }

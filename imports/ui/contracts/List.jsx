@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Col, Row, Spinner } from 'reactstrap';
 import i18n from 'meteor/universe:i18n';
 import { ContractRow } from './ContractRow.jsx';
+import Contract from './Contract'
 
 const T = i18n.createComponent();
 export default class Contracts extends Component {
@@ -41,39 +42,57 @@ export default class Contracts extends Component {
     }
 
     return (
+      <>
+         {
+              this.props.isContractTransaction ? <Contract loading={false} transactionExist={true} closeSidebar={false} contract={this.props.contract}/> : ""
+              }
       <div className="transactions-list">
         <Row className="header text-nowrap d-none d-lg-flex margin-top-list">
-          <Col xs={9} lg={7}>
+          <Col xs={9} lg={6} className="max-width-45">
             <i className="material-icons">message</i>
             {' '}
             <span className="d-none d-md-inline-block">
-              <T>transactions.contracts</T>
+
+              {this.props.isContractTransaction ? <T>transactions.transactions</T>
+               : <T>contracts.contractAddresses</T>
+              }
+
             </span>
           </Col>
-          <Col xs={3} lg={{ size: 1 }}>
+          <Col xs={3} lg={{ size: 2 }} className="margin-left">
                 <i className="material-icons">check_circle</i>
             {' '}
-            <span className="d-none d-lg-inline-block">
+            <span className="d-none d-lg-inline-block  extra-margin-right">
               <T>transactions.valid</T>
             </span>
           </Col>
-          <Col xs={4} md={2} lg={1}>
+          <Col xs={4} md={1} lg={{ size: 2 }}>
             <i className="fas fa-database" />
             {' '}
-            <span className="d-none d-md-inline-block">
+            <span className="d-none d-md-inline-block  extra-margin-right">
               <T>common.height</T>
             </span>
           </Col>
-          <Col xs={2} md={1}  lg={1} className="text-nowrap">
-          <i className="fas fa-hashtag" />
+          <Col xs={2} md={2} lg={5} className="text-nowrap unset-flex  extra-margin-right">
+            {
+              this.props.isContractTransaction ?  <><i className="fas fa-hashtag" />
             {' '}
             <span className="d-none d-md-inline-block">
               <T>transactions.txHash</T>
-            </span>
+            </span></> :
+               <> <i className="fas fa-hashtag" />
+            {' '}
+            <span className="d-none d-md-inline-block">
+              <T>transactions.txCount</T>
+            </span></>
+
+            }
           </Col>
         </Row>
         {this.state.txs}
       </div>
+              </>
+
     );
   }
 }
