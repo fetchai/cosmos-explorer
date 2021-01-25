@@ -16,7 +16,6 @@ const T = i18n.createComponent();
 export default class Contract extends Component {
   constructor(props) {
     super(props);
-    debugger;
     const showdown = require('showdown');
     showdown.setFlavor('github');
   }

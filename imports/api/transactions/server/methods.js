@@ -6,10 +6,6 @@ import { Contracts } from '../contracts.js';
 import { Validators } from '../../validators/validators.js';
 import { LCD } from '../../../../server/main';
 
-
-    let totalAddressesTest = []
-
-
 /**
  * Makes array unique
  *
@@ -26,19 +22,23 @@ const isContractTransaction = (tx) => {
   return JSON.stringify(tx).includes('contract')
 }
 
-function getContractAddressesFromTX(tx){
+/**
+ * finds field called "contract_address" from raw log
+ *
+ * @param tx
+ * @returns {*}
+ */
+function getContractAddressFromTX(tx){
   console.log("getContractAddressFromTX")
   const flattened = flatten(tx);
 
   let nextValueIsAddress = false
 
-  let contractAddresses = [];
+  let contractAddresses = null;
     Object.entries(flattened).forEach(([key, value]) => {
-	console.log("key, value");
-	console.log(key, value);
 
 	if(nextValueIsAddress) {
-	  contractAddresses.push(value);
+	  contractAddresses = value;
     nextValueIsAddress = false
   }
 
@@ -47,8 +47,7 @@ nextValueIsAddress = true
   }
 });
 
-    console.log("contractAddresses", contractAddresses)
-return unique(contractAddresses)
+return contractAddresses
 }
 
 
@@ -98,41 +97,17 @@ Meteor.methods({
 
     if(isContractTransaction(tx)) {
 
-      const addresses = getContractAddressesFromTX(tx);
-      // find contract in contracts table
-      console.log("addresses", addresses.toString())
-
-      totalAddressesTest = totalAddressesTest.concat(addresses);
-      debugger;
-      totalAddressesTest = unique(totalAddressesTest);
-      debugger;
+      const address = getContractAddressFromTX(tx);
       let contract
 
 
       // is logic here good as results discarded todo check the logic.
-      for (let i = 0; i < addresses.length; i++) {
         contract = Contracts.findOne({
           contract_address:
-            addresses[i]
+            address
         })
 
         const ContractExists = !!contract;
-
-        debugger;
-
-        console.log("ContractExists", ContractExists)
-
-        const count = Contracts.find().count()
-
-        debugger;
-
-        console.log("ContractExists count", count)
-        console.log("totalAddressesTest", totalAddressesTest.toString())
-
-        debugger;
-
-         // console.log("url", tx)
-         //  console.log("time", time);
 
         if (ContractExists) {
           // update
@@ -148,17 +123,6 @@ Meteor.methods({
           if(!owner){
                        owner = getAttributeFromTX(tx, "signer")
           }
-
-
-          if(!owner || !owner.length){
-
-            console.log("tx is ", tx)
-            console.log("owner is ", owner)
-            // process.exit();
-          } else {
-            console.log("found owner is ", owner)
-          }
-
           Contracts.insert({
             contract_address: addresses[i],
             contract_owner: owner,
@@ -171,18 +135,8 @@ Meteor.methods({
 
         }
       }
-    }
-
-    const count = Contracts.find().count()
-
-      console.log("ContractExists count outside", count)
-
-
 
     const txId = Transactions.insert(tx);
-    const txCount = Transactions.find({}).count();
-    console.log("txId" , txId)
-    console.log("txCount", txCount)
 
     if (txId) {
       return txId;
