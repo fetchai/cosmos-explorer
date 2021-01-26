@@ -53,7 +53,6 @@ export default ValidatorDetailsContainer = withTracker((props) => {
               transactions = formatTransactions(contract, props.contractAddress);
       }
 
-
     } else {
       transactions = Contracts.find({}, { sort: { starting_height: -1 } }).fetch();
     }
