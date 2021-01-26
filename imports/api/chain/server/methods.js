@@ -21,13 +21,19 @@ Meteor.methods({
     this.unblock();
     const url = `${RPC}/dump_consensus_state`;
     try {
+
       const response = HTTP.get(url);
       let consensus = JSON.parse(response.content);
+
+       console.log("44444444444444444444444444444444qwerty", consensus)
+
       consensus = consensus.result;
       const { height } = consensus.round_state;
       const { round } = consensus.round_state;
       const { step } = consensus.round_state;
       const votedPower = Math.round(parseFloat(consensus.round_state.votes[round].prevotes_bit_array.split(' ')[3]) * 100);
+
+
 
       Chain.update({ chainId: Meteor.settings.public.chainId }, {
         $set: {
@@ -41,6 +47,7 @@ Meteor.methods({
         },
       });
     } catch (e) {
+            console.log("ERROR IN DUNP");
       console.log(e);
     }
   },
@@ -141,6 +148,10 @@ Meteor.methods({
             console.log(e);
           }
         }
+
+
+        console.log("chainStateschainStateschainStateschainStates", chainStates)
+        // process.exit(chainStateschainStateschainStateschainStates)
 
         ChainStates.insert(chainStates);
       }
@@ -297,6 +308,10 @@ Meteor.methods({
 
       chainParams.readGenesis = true;
       chainParams.activeVotingPower = totalVotingPower;
+
+      console.log("chainParams", chainParams)
+
+
       Chain.upsert({ chainId: chainParams.chainId }, { $set: chainParams });
 
       console.log('=== Finished processing genesis file ===');

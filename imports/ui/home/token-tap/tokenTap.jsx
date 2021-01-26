@@ -92,11 +92,9 @@ submit = async (event) => {
     } catch(err) {
            error = true;
     }
-    debugger;
      if(typeof response !== "undefined" && response.status !== 200) error = true;
 
     if(error){
-        debugger;
         this.setState({error: <T>common.error</T>, success: false})
     } else {
          this.setModalState(false)

@@ -1,0 +1,9 @@
+{
+  "jsonrpc": "2.0",
+  "id": -1,
+  "error": {
+    "code": -32603,
+    "message": "Internal error",
+    "data": "height must be less than or equal to the current blockchain height"
+  }
+}

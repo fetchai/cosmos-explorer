@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
 import { Helmet } from 'react-helmet';
+import { Meteor } from 'meteor/meteor';
 import i18n from 'meteor/universe:i18n';
 import TwentyEighty from './TwentyEightyContainer.js';
 import ThirtyFour from './ThirtyFourContainer.js';
@@ -18,7 +19,7 @@ export default class Distribution extends Component {
     return (
       <div id="voting-power-dist">
         <Helmet>
-          <title>Voting Power Distribution on the Network Explorer</title>
+          <title>Voting Power Distribution on the {Meteor.settings.public.networkDisplayName} Explorer by Fetch.ai</title>
           <meta name="description" content="We would like to keep track how voting power are distributed over time among validators." />
         </Helmet>
         <Row>

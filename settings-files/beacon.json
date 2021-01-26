@@ -1,0 +1,54 @@
+{
+  "public":{
+      "networkDisplayName": "BeaconWorld",
+      "chainName": "beaconworld-0",
+      "chainId": "beaconworld-0",
+      "DKGTab": true,
+      "genesisTime": "2020-11-17T16:30:00Z",
+      "gtm": "",
+      "slashingWindow": 10000,
+      "uptimeWindow": 250,
+      "initialPageSize": 30,
+      "validatorStatus0": 1,
+      "tokenTap" : true,
+      "tokenTapURL" : "https://faucet-beaconworld.prod.fetch-ai.com/claim",
+      "bech32PrefixAccAddr": "fetch",
+      "bech32PrefixAccPub": "fetchpub",
+      "bech32PrefixValAddr": "fetchvaloper",
+      "bech32PrefixValPub": "fetchvaloperpub",
+      "bech32PrefixConsAddr": "fetchvalcons",
+      "bech32PrefixConsPub": "fetchvalconspub",
+      "bondDenom": "atestfet",
+      "powerReduction": 1000000000000000000,
+      "coins": [
+          {
+              "denom": "atestfet",
+              "displayName": "TESTFET",
+              "displayNamePlural": "TESTFET",
+              "fraction": 1000000000000000000
+          }
+      ],
+      "gasPrice": 0.02,
+      "coingeckoId": "fetch-ai"
+  },
+  "genesisFile": "http://localhost/genesis-beacon.json",
+  "remote":{
+      "rpc":"https://rpc-beaconworld.prod.fetch-ai.com",
+      "lcd":"https://rest-beaconworld.prod.fetch-ai.com"
+  },
+  "debug": {
+      "startTimer": true,
+      "readGenesis": true
+  },
+  "params":{
+      "startHeight": 0,
+      "defaultBlockTime": 5000,
+      "blockInterval": 15000,
+      "consensusInterval": 1000,
+      "statusInterval":7500,
+      "signingInfoInterval": 1800000,
+      "proposalInterval": 5000,
+      "missedBlocksInterval": 60000,
+      "delegationInterval": 900000
+  }
+}

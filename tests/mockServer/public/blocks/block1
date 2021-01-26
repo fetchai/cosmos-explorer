@@ -1,0 +1,66 @@
+{
+  "jsonrpc": "2.0",
+  "id": -1,
+  "result": {
+    "block_id": {
+      "hash": "F06AF09B90C6D7AD9DD1B78C3113E79C86C4ECBCA93814052DA6082706D6BF45",
+      "parts": {
+        "total": "1",
+        "hash": "C598C6AF94CFBBE83B7740ACA3DE7C801404D6AF99A88C3964247636204F733C"
+      }
+    },
+    "block": {
+      "header": {
+        "version": {
+          "block": "10",
+          "app": "0"
+        },
+        "chain_id": "sandbox-agent-land",
+        "height": "1",
+        "time": "2020-09-01T18:30:00Z",
+        "last_block_id": {
+          "hash": "",
+          "parts": {
+            "total": "0",
+            "hash": ""
+          }
+        },
+        "last_commit_hash": "",
+        "data_hash": "",
+        "validators_hash": "025672894503171B7FBE3E8FED2320891C2D0A04FDAD81CA44FD2B0555C9B9AA",
+        "next_validators_hash": "025672894503171B7FBE3E8FED2320891C2D0A04FDAD81CA44FD2B0555C9B9AA",
+        "consensus_hash": "048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F",
+        "app_hash": "",
+        "last_results_hash": "",
+        "evidence_hash": "",
+        "proposer_address": "53DA94FF1C314816F5AAF290AE07B0EB5206D7C4",
+         "entropy": {
+          "group_signature": null,
+          "round": "-1",
+          "aeon_length": "-1",
+          "dkg_id": "-1",
+          "next_aeon_start": "-1",
+          "qual": null
+        }
+      },
+      "data": {
+        "txs": null
+      },
+      "evidence": {
+        "evidence": null
+      },
+      "last_commit": {
+        "height": "0",
+        "round": "0",
+        "block_id": {
+          "hash": "",
+          "parts": {
+            "total": "0",
+            "hash": ""
+          }
+        },
+        "signatures": null
+      }
+    }
+  }
+}

@@ -13,18 +13,14 @@ import * as cheerio from 'cheerio';
 import { Evidences } from '../../evidences/evidences.js';
 import { Transactions } from '../../transactions/transactions.js';
 import { LCD, RPC } from '../../../../server/main';
+import React from "react";
+import BN from 'bn.js'
 
 let SYNCING = false;
 
-// import Block from '../../../ui/components/Block';
-
-// getValidatorVotingPower = (validators, address) => {
-//     for (v in validators){
-//         if (validators[v].address == address){
-//             return parseInt(validators[v].voting_power);
-//         }
-//     }
-// }
+function hasTransactionIds(block){
+    return Boolean(block.block.data.txs && block.block.data.txs.length > 0)
+}
 
 const getRemovedValidators = (prevValidators, validators) => {
   // let removeValidators = [];
@@ -145,7 +141,6 @@ Meteor.methods({
       } catch (e) {
         console.log(e);
       }
-
       url = `${LCD}/staking/validators?status=unbonding`;
 
       try {
@@ -154,7 +149,7 @@ Meteor.methods({
           (validator) => validatorSet[validator.consensus_pubkey] = validator,
         );
       } catch (e) {
-        console.log(e);
+        console.log( "taking/validators?status=" , e);
       }
 
       url = `${LCD}/staking/validators?status=unbonded`;
@@ -176,7 +171,6 @@ Meteor.methods({
         url = `${RPC}/block?height=${height}`;
         const analyticsData = {};
 
-        console.log(url);
         try {
           const bulkValidators = Validators.rawCollection().initializeUnorderedBulkOp();
           const bulkValidatorRecords = ValidatorRecords.rawCollection().initializeUnorderedBulkOp();
@@ -197,6 +191,15 @@ Meteor.methods({
             blockData.lastBlockHash = block.block.header.last_block_id.hash;
             blockData.proposerAddress = block.block.header.proposer_address;
             blockData.validators = [];
+           if(Meteor.settings.public.DKGTab) {
+                blockData.dkg = {};
+                blockData.dkg.round = block.block.header.entropy.round
+                blockData.dkg.startBlock = block.block.header.entropy.dkg_id
+                blockData.dkg.groupSignature = block.block.header.entropy.group_signature
+                blockData.dkg.endBlock =  new BN(block.block.header.entropy.dkg_id).add(new BN(block.block.header.entropy.aeon_length)).toString()
+                blockData.dkg.txIds = hasTransactionIds(block)? block.block.data.txs : [];
+            }
+
             const precommits = block.block.last_commit.signatures;
             if (precommits != null) {
               // console.log(precommits.length);
@@ -229,7 +232,6 @@ Meteor.methods({
                 evidence: block.block.evidence.evidence,
               });
             }
-
             blockData.precommitsCount = blockData.validators.length;
 
             analyticsData.height = height;
@@ -587,7 +589,7 @@ Meteor.methods({
 
             // calculate voting power distribution every 60 blocks ~ 5mins
 
-            if (height % 60 === 1) {
+            if (height % 5 === 0) {
               console.log('===== calculate voting power distribution =====');
               const activeValidators = Validators.find({ status: 2, jailed: false }, { sort: { voting_power: -1 } }).fetch();
               const numTopTwenty = Math.ceil(activeValidators.length * 0.2);
@@ -649,6 +651,7 @@ Meteor.methods({
         console.log(`This block used: ${(endBlockTime - startBlockTime) / 1000}seconds.`);
       }
       SYNCING = false;
+      console.log("did get to here test test test", totalValidators)
       Chain.update({ chainId: Meteor.settings.public.chainId }, { $set: { lastBlocksSyncedTime: new Date(), totalValidators } });
     }
 

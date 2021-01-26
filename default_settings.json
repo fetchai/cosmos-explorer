@@ -1,5 +1,6 @@
 {
     "public":{
+        "networkDisplayName": "AEA Testnet",
         "chainName": "Cosmos Testnet",
         "chainId": "{Chain ID}",
         "gtm": "{Add your Google Tag Manager ID here}",
@@ -7,6 +8,7 @@
         "genesisTime": "2025-10-20",
         "uptimeWindow": 250,
         "initialPageSize": 30,
+        "secp256k1": false,
         "bech32PrefixAccAddr": "cosmos",
         "bech32PrefixAccPub": "cosmospub",
         "bech32PrefixValAddr": "cosmosvaloper",
