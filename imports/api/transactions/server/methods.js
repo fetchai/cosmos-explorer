@@ -67,7 +67,7 @@ function getAttributeFromTX(tx, attributeName){
 
   let senderAddress = "";
     Object.entries(flattened).forEach(([key, value]) => {
-	console.log("getSenderFromTX key, value");
+	console.log("getSenderFromTX key",  value);
 	console.log(key, value);
 
 	if(nextValueIsAddress) {
@@ -98,11 +98,9 @@ Meteor.methods({
     if(isContractTransaction(tx)) {
 
       const address = getContractAddressFromTX(tx);
-      let contract
-
 
       // is logic here good as results discarded todo check the logic.
-        contract = Contracts.findOne({
+       const contract = Contracts.findOne({
           contract_address:
             address
         })
@@ -112,19 +110,19 @@ Meteor.methods({
         if (ContractExists) {
           // update
           Contracts.update(
-            { contract_address: addresses[i] },
+            { contract_address: address },
             { $push: { txs: tx } },
           )
 
         } else {
           // get sender as owner
           let owner = getAttributeFromTX(tx, "sender")
-          // else get signer
+          // else get signer and consider that the owner
           if(!owner){
                        owner = getAttributeFromTX(tx, "signer")
           }
           Contracts.insert({
-            contract_address: addresses[i],
+            contract_address: address,
             contract_owner: owner,
             time: tx.timestamp,
             starting_height: tx.height,

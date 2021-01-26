@@ -23,7 +23,7 @@ export default class Contract extends Component {
   render() {
     if (this.props.loading) {
       return (
-        <Container id="transaction">
+        <Container id="contract-transaction">
           <Spinner type="grow" color="primary" />
         </Container>
       );
@@ -35,7 +35,7 @@ export default class Contract extends Component {
       return (
 
 
-        <Container id="transaction">
+        <Container id="contract-transaction">
 
           <Helmet>
             <title>
@@ -103,7 +103,7 @@ export default class Contract extends Component {
     }
 
     return (
-      <Container id="transaction">
+      <Container id="contract-transaction">
         <div>
           <T>transactions.noTxFound</T>
         </div>

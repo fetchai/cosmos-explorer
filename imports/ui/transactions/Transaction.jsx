@@ -17,6 +17,9 @@ const T = i18n.createComponent();
 export default class Transaction extends Component {
   constructor(props) {
     super(props);
+
+    debugger;
+
     const showdown = require('showdown');
     showdown.setFlavor('github');
     const { denom } = this.props;
@@ -33,12 +36,6 @@ export default class Transaction extends Component {
 
     if (this.props.transactionExist) {
       const tx = this.props.transaction;
-      debugger;
-
-      const r = tx.block().time
-      debugger;
-
-
       return (
         <Container id="transaction">
           <Helmet>

@@ -28,7 +28,7 @@ export default TransactionContainer = withTracker((props) => {
       loading = true;
     }
   }
-
+debugger;
   return {
     loading,
     transactionExist,

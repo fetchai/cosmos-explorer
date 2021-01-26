@@ -7,6 +7,9 @@ import ChainStates from '../components/ChainStatesContainer.js';
 
 import { LoadMore } from '../components/LoadMore.jsx';
 import List from './ListContainer.js';
+import { Route, Switch } from 'react-router-dom'
+import Sidebar from 'react-sidebar'
+import Transaction from '../transactions/TransactionContainer'
 
 const T = i18n.createComponent();
 
@@ -22,7 +25,7 @@ export default class Contracts extends Component {
       proposerDir: -1,
       priority: 2,
       loadmore: false,
-      sidebarOpen: (props.location.pathname.split('/contracts/').length == 2),
+      sidebarOpen: (props.location.pathname.split('/').length > 1),
       contractAddress: null,
     };
 
@@ -44,7 +47,7 @@ export default class Contracts extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname != prevProps.location.pathname) {
       this.setState({
-        sidebarOpen: (this.props.location.pathname.split('/contracts/').length == 2),
+        sidebarOpen: (this.props.location.pathname.split('/').length > 1),
       });
 
        const contractAddress = this.contractAddressFromURI();
@@ -131,6 +134,32 @@ export default class Contracts extends Component {
             }
 
           </Row>
+                    <Switch>
+            <Route
+              path="/contracts/transactions/:txId"
+              render={(props) => {
+                debugger;
+                return <Sidebar
+                  sidebar={<Transaction {...props} />}
+                  open={this.state.sidebarOpen}
+                  onSetOpen={this.onSetSidebarOpen}
+                  styles={{
+                    sidebar: {
+                      background: 'white',
+                      position: 'fixed',
+                      width: '85%',
+                      zIndex: 4,
+                    },
+                    overlay: {
+                      zIndex: 3,
+                    },
+                  }}
+                />
+              }
+
+              }
+            />
+          </Switch>
           <List limit={this.state.limit} contractAddress={this.state.contractAddress} />
           <LoadMore show={this.state.loadmore} />
         </div>

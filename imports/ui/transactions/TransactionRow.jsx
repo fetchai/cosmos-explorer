@@ -34,7 +34,7 @@ export const TransactionRow = (props) => {
         <Col xs={(!props.blockList) ? { size: 6, order: 'last' } : { size: 12, order: 'last' }} md={(!props.blockList) ? { size: 3, order: 'last' } : { size: 7, order: 'last' }} lg={(!props.blockList) ? { size: 1, order: 'last' } : { size: 2, order: 'last' }} className="text-truncate">
           <i className="fas fa-hashtag d-lg-none" />
           {' '}
-          <Link to={`/transactions/${tx.txhash}`}>
+          <Link to={`/contracts/transactions/${tx.txhash}`}>
             {tx.txhash}
           </Link>
         </Col>

@@ -205,12 +205,12 @@ body {
   }
   
   div {
-    &#main, &#transaction, &#block {
+    &#main, &#transaction, &#block, #contract-transaction  {
       padding-top: 6rem;
       padding-bottom: 3.85rem;
     }
   
-    &#transaction .card.card-body {
+    &#transaction .card.card-body, #contract-transaction  .card.card-body {
       overflow-x: auto;
   
       p {
@@ -268,7 +268,7 @@ body {
     }
   }
   
-  #transactions div.transactions-list {
+  #transactions div.transactions-list, #contract-transaction {
     margin-top: 0.5em;
   }
   
@@ -372,7 +372,7 @@ body {
     }
   }
   
-  #home .card, #transaction .card, #block .card, #account .card {
+  #home .card, #transaction .card, #block .card, #account .card, #contract-transaction {
     /* margin: 0 0 0.75em 0; */
     margin-bottom: 0.75em;
   }
@@ -595,7 +595,7 @@ body {
     background-color: rgba(237, 20, 61, 0.2) !important;
   }
   
-  #transaction .error .alert-danger {
+  #transaction .error .alert-danger, #contract-transaction {
     margin-bottom: 0.5em;
   }
   
@@ -714,7 +714,7 @@ body {
   
   @media only screen and (max-width: 767px) {
     div {
-      &#main, &#transaction, &#block {
+      &#main, &#transaction, &#block, #contract-transaction {
         padding-bottom: 4.85rem;
       }
     }
@@ -854,7 +854,7 @@ body {
     }
   
     div {
-      &#main, &#transaction, &#block {
+      &#main, &#transaction, &#block, #contract-transaction {
         padding-top: 3.5rem;
   
         /* padding-bottom: 4.8rem; */
@@ -1221,7 +1221,7 @@ tr:nth-of-type(odd) {
   //max-width: 45% !important;
 }
 
-#transaction {
+#contract-transaction {
       padding-top: 15px !important;
       padding-bottom: 15px !important;
     float: left;
@@ -1231,7 +1231,7 @@ tr:nth-of-type(odd) {
       clear: both;
 }
 
-#transaction > h4 > span:nth-child(1) {
+#contract-transaction > h4 > span:nth-child(1) {
   display: inline-block;
     font-size: 1.5rem;
     margin-bottom: 5px;

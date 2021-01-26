@@ -65,7 +65,7 @@ const  isContractTransaction = (tx) => {
           {
             isContractTransaction(tx) ?
            <> <i className="fas fa-hashtag d-lg-none" />
-          <Link to={`/transactions/${tx.txhash}`}>
+          <Link to={`/contracts/transactions/${tx.txhash}`}>
             {tx.txhash}
           </Link></>
  :
