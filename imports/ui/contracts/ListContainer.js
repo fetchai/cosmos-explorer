@@ -47,7 +47,6 @@ export default ValidatorDetailsContainer = withTracker((props) => {
     if(props.contractAddress) {
       contract = Contracts.find({ contract_address: props.contractAddress }, { sort: { starting_height: -1 }, limit: props.limit }).fetch()[0];
 
-
       if(typeof contract === "undefined"){
         transactionsExist = false
       } else {
