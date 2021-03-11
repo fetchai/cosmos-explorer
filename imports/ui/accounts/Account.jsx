@@ -52,7 +52,7 @@ export default class AccountDetails extends Component {
             user: localStorage.getItem(CURRENTUSERADDR),
             commission: [defaultCoin],
             denom: '',
-            rewardsForEachDel: [defaultCoin],
+            rewardsForEachDel: {defaultCoin},
             rewardDenomType: [defaultCoin],
         }
     }
@@ -184,7 +184,7 @@ export default class AccountDetails extends Component {
                             this.state.total[i].amount = parseFloat(this.state.total[i].amount) + parseFloat(commissions.amount);
 
                         this.setState({
-                            operator_address: result.operator_address,
+                            operatorAddress: result.operatorAddress,
                             commission: [...this.state.commission, commissionAmount],
                             total: [...this.state.total]
                         })
@@ -220,7 +220,7 @@ export default class AccountDetails extends Component {
                 price: 0,
                 reward: [],
                 denom: '',
-                rewardsForEachDel: [],
+                rewardsForEachDel: {},
                 rewardDenomType: [],
             }, () => {
                 this.getBalance();

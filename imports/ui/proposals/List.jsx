@@ -5,7 +5,8 @@ import i18n from 'meteor/universe:i18n';
 import { ProposalStatusIcon } from '../components/Icons.jsx';
 import Coin from '/both/utils/coins.js';
 import TimeStamp from '../components/TimeStamp.jsx';
-import { SubmitProposalButton } from '../ledger/LedgerActions.jsx';
+// import { SubmitProposalButton } from '../ledger/LedgerActions.jsx';
+import voca from 'voca';
 
 const T = i18n.createComponent();
 

@@ -10,7 +10,9 @@ TXSYNCING = false;
 COUNTMISSEDBLOCKS = false;
 COUNTMISSEDBLOCKSSTATS = false;
 RPC = Meteor.settings.remote.rpc;
-LCD = Meteor.settings.remote.lcd;
+API = Meteor.settings.remote.api;
+GRPC = Meteor.settings.remote.grpc;
+
 timerBlocks = 0;
 timerTransactions = 0;
 timerChain = 0;
@@ -59,10 +61,10 @@ updateTransactions = () => {
 updateTransactions = () => {
     Meteor.call('Transactions.updateTransactions', (error, result) => {
         if (error){
-            console.log("updateTransactions: "+error);
+            console.log("updateTransactions: %o",error);
         }
         else{
-            console.log("updateTransactions: "+result);
+            console.log("updateTransactions: %o",result);
         }
     })
 }

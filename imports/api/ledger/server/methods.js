@@ -1,9 +1,10 @@
 import { HTTP } from 'meteor/http';
+import { Validators } from '../../validators/validators';
 
 Meteor.methods({
     'transaction.submit': function (txInfo) {
         this.unblock();
-        const url = `${LCD}/txs`;
+        const url = `${API}/txs`;
         data = {
             "tx": txInfo.value,
             "mode": "sync"
@@ -22,7 +23,7 @@ Meteor.methods({
     },
     'transaction.execute': function (body, path) {
         this.unblock();
-        const url = `${LCD}/${path}`;
+        const url = `${API}/${path}`;
         data = {
             "base_req": {
                 ...body,
@@ -44,6 +45,8 @@ Meteor.methods({
                 "from": from,
                 "chain_id": Meteor.settings.public.chainId,
                 "gas_adjustment": adjustment,
+                "account_number": accountNumber,
+                "sequence": sequence,
                 "simulate": true
             }
         };

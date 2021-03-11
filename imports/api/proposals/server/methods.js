@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { Proposals } from '../proposals.js';
+import { Chain } from '../../chain/chain.js';
 import { Validators } from '../../validators/validators.js';
-// import { Promise } from 'meteor/promise';
 
 Meteor.methods({
   'proposals.getProposals'() {

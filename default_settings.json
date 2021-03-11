@@ -27,13 +27,19 @@
                 "fraction": 1000000
             }
         ],
+        "ledger":{
+            "coinType": 118,
+            "appName": "Cosmos",
+            "appVersion": "2.16.0",
+            "gasPrice": 0.02
+        },
         "modules": {
+            "bank": true,
             "supply": true,
             "minting": false,
             "gov": true,
             "distribution": false
         },
-        "gasPrice": 0.02,
         "coingeckoId": "cosmos"
     },
     "remote": {

@@ -2,13 +2,11 @@
 // https://github.com/zondax/cosmos-delegation-js/
 // https://github.com/cosmos/ledger-cosmos-js/blob/master/src/index.js
 import 'babel-polyfill';
-import Cosmos from "@lunie/cosmos-js"
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import CosmosApp from "ledger-cosmos-js"
 import { signatureImport } from "secp256k1"
 import semver from "semver"
 import bech32 from "bech32";
-import secp256k1 from "secp256k1";
 import sha256 from "crypto-js/sha256"
 import ripemd160 from "crypto-js/ripemd160"
 import CryptoJS from "crypto-js"
@@ -26,7 +24,9 @@ HD wallet derivation path (BIP44)
 DerivationPath{44, 118, account, 0, index}
 */
 
-const HDPATH = [44, 118, 0, 0, 0]
+const COINTYPE = Meteor.settings.public.ledger.coinType || 118;
+
+const HDPATH = [44, COINTYPE, 0, 0, 0]
 const BECH32PREFIX = Meteor.settings.public.bech32PrefixAccAddr
 
 function bech32ify(address, prefix) {
@@ -403,7 +403,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgSubmitProposal',
             value: {
                 content: {
-                    type: "cosmos-sdk/TextProposal",
+                    type: "/cosmos.TextProposal",
                     value: {
                         description: description,
                         title: title

@@ -48,7 +48,7 @@ export default class Validator extends Component {
             identity: "",
             records: "",
             history: "",
-            updateTime: "",
+            update_time: "",
             user: localStorage.getItem(CURRENTUSERADDR),
             denom: "",
         }
@@ -105,7 +105,7 @@ export default class Validator extends Component {
             if (this.props.validator.commission) {
                 if (this.props.validator.commission.update_time == Meteor.settings.public.genesisTime) {
                     this.setState({
-                        updateTime: "Never changed"
+                        update_time: "Never changed"
                     });
                 }
                 else {
@@ -117,7 +117,7 @@ export default class Validator extends Component {
                             if (result) {
                                 if (result == this.props.validator.commission.update_time) {
                                     this.setState({
-                                        updateTime: "Never changed"
+                                        update_time: "Never changed"
                                     });
                                 }
                                 else {
@@ -149,7 +149,7 @@ export default class Validator extends Component {
                             votingPower={history.voting_power}
                             time={history.block_time}
                             height={history.height}
-                            address={this.props.validator.operator_address}
+                            address={this.props.validator.operator_adddress}
                         />
                     })
                 })
@@ -212,7 +212,7 @@ export default class Validator extends Component {
                             <SentryBoundary>
                                 <CardBody>
                                     <Row>
-                                        <Col xs={8} className="label"><T numBlocks={Meteor.settings.public.uptimeWindow}>validators.lastNumBlocks</T></Col>
+                                        <Col xs={8} className="label"><T numBlocks={Meteor.settings.public.slashingWindow}>validators.lastNumBlocks</T></Col>
                                         <Col xs={4} className="value text-right">{this.props.validator.uptime}%</Col>
                                         <Col md={12} className="blocks-list">{this.state.records}</Col>
                                     </Row>
