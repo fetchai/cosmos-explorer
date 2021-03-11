@@ -12,7 +12,7 @@ This project is a fork from the excellent [Big Dipper](https://github.com/forbol
 
 ### Requirements
 
-* [Meteor v1.12.x](https://www.meteor.com/install)
+* [Meteor v2.x](https://www.meteor.com/install)
 
 ### Run in local
 
@@ -29,7 +29,7 @@ METEOR_SETTINGS=$(cat settings.json) docker-compose up
 ### Run in production
 
 ```sh
-./build.sh
+./scripts/build.sh
 ```
 
 It will create a packaged Node JS tarball in `Linux x86_64` architecture at `../output`. Deploy that packaged Node JS project with process manager like [PM2](https://github.com/Unitech/pm2) or [Phusion Passenger](https://www.phusionpassenger.com/library/walkthroughs/basics/nodejs/fundamental_concepts.html).
