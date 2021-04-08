@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { Proposals } from '../proposals.js';
 import { Validators } from '../../validators/validators.js';
-import { LCD } from '../../../../server/main';
 // import { Promise } from 'meteor/promise';
 
 Meteor.methods({
@@ -144,7 +143,7 @@ const getVoteDetail = (votes) => {
           }
         }
       } catch (e) {
-        console.log(e);
+        console.log(e.response.content);
       }
       votingPowerMap[voter] = { votingPower };
     }

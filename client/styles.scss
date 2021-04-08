@@ -87,8 +87,19 @@ body {
       color: $gray-600;
     }
   }
+  
+  .ledger-sign-in .error-message, .ledger-modal .error-message {
+    color: red;
+  }
 
   #header {
+    .sign-in-btn {
+      margin-top: 5px;
+    }
+
+    a.navbar-brand span {
+      font-family: 'Red Hat Display', sans-serif;
+    }
     .dropdown-header img {
       height: 2em;
       margin-right: 0.25em;
@@ -106,16 +117,6 @@ body {
 
     .sign-in-btn {
       color: rgba(255, 255, 255, 0.75);
-    }
-  }
-
-  .ledger-sign-in .error-message, .ledger-modal .error-message {
-    color: red;
-  }
-
-  #header {
-    .sign-in-btn {
-      margin-top: 5px;
     }
 
     #user-acconut-icon {
@@ -222,11 +223,16 @@ body {
       height: 30px;
     }
   }
-
-  img.moniker-avatar-list {
+  
+  .moniker-avatar-list {
     height: 24px;
     margin-right: 5px;
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    float: left;
+
+    .paper {
+      width: 24px !important;
+      height: 24px !important;
+    }
   }
 
 
@@ -376,7 +382,7 @@ body {
   }
 
   .progress {
-    height: inherit !important;
+    height: 1.5rem !important;
     font-size: inherit !important;
     border: 1px solid #ddd !important;
   }
@@ -740,9 +746,14 @@ body {
     }
 
     div.validator-list div.validator-info {
-      img.moniker-avatar-list {
+      .moniker-avatar-list {
         height: 48px;
         float: left;
+        
+        .paper {
+          height: 48px !important;
+          width: 48px !important;
+        }
       }
 
       div.data {

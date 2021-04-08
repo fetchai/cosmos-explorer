@@ -1,5 +1,5 @@
 import qs from 'querystring';
-import React,{ Component } from 'react';
+import React, { Component } from 'react';
 import { HTTP } from 'meteor/http'
 import {
     Badge,
@@ -46,6 +46,7 @@ export default class Header extends Component {
         super(props);
 
         this.toggle = this.toggle.bind(this);
+
         this.state = {
             isOpen: false,
             networks: "",
@@ -56,14 +57,14 @@ export default class Header extends Component {
     toggle() {
         this.setState({
             isOpen: !this.state.isOpen
-        }, ()=>{
+        }, () => {
             // console.log(this.state.isOpen);
         });
     }
 
     toggleSignIn = (value) => {
-        this.setState(( prevState) => {
-            return {isSignInOpen: value!=undefined?value:!prevState.isSignInOpen}
+        this.setState((prevState) => {
+            return { isSignInOpen: value != undefined ? value : !prevState.isSignInOpen }
         })
     }
 
@@ -71,14 +72,14 @@ export default class Header extends Component {
         i18n.setLocale(lang)
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const url = Meteor.settings.public.networks
-        if (url){
-            try{
+        if (url) {
+            try {
                 HTTP.get(url, null, (error, result) => {
-                    if (result.statusCode == 200){
+                    if (result.statusCode == 200) {
                         let networks = JSON.parse(result.content);
-                        if (networks.length > 0){
+                        if (networks.length > 0) {
                             this.setState({
                                 networks: <DropdownMenu>{
                                     networks.map((network, i) => {
@@ -87,8 +88,9 @@ export default class Header extends Component {
                                             {network.links.map((link, k) => {
                                                 return <DropdownItem key={k} disabled={link.chain_id == Meteor.settings.public.chainId}>
                                                     <a href={link.url} target="_blank">{link.chain_id} <Badge size="xs" color="secondary">{link.name}</Badge></a>
-                                                </DropdownItem>})}
-                                            {(i < networks.length - 1)?<DropdownItem divider />:''}
+                                                </DropdownItem>
+                                            })}
+                                            {(i < networks.length - 1) ? <DropdownItem divider /> : ''}
                                         </span>
 
                                     })
@@ -98,7 +100,7 @@ export default class Header extends Component {
                     }
                 })
             }
-            catch(e){
+            catch (e) {
                 console.warn(e);
             }
         }
@@ -106,13 +108,13 @@ export default class Header extends Component {
         Meteor.call('getVersion', (error, result) => {
             if (result) {
                 this.setState({
-                    version:result
+                    version: result
                 })
             }
         })
     }
 
-    signOut () {
+    signOut = () => {
         localStorage.removeItem(CURRENTUSERADDR);
         localStorage.removeItem(CURRENTUSERPUBKEY);
         this.props.refreshApp();
@@ -121,12 +123,12 @@ export default class Header extends Component {
     shouldLogin = () => {
         let pathname = this.props.location.pathname
         let groups;
-        let match = pathname.match(SendPath) || pathname.match(DelegatePath)|| pathname.match(WithdrawPath);
+        let match = pathname.match(SendPath) || pathname.match(DelegatePath) || pathname.match(WithdrawPath);
         if (match) {
             if (match[0] === '/account/withdraw') {
-                groups = {action: 'withdraw'}
+                groups = { action: 'withdraw' }
             } else {
-                groups = {address: match[1], action: match[2]}
+                groups = { address: match[1], action: match[2] }
             }
         }
         let params = qs.parse(this.props.location.search.substr(1))
@@ -140,28 +142,28 @@ export default class Header extends Component {
         let params;
         if (groups) {
             let { action, address } = groups;
-            params = {action}
+            params = { action }
             switch (groups.action) {
-            case 'send':
-                params.transferTarget = address
-                redirectUrl = `/account/${address}`
-                break
-            case 'withdraw':
-                redirectUrl = `/account/${getUser()}`
-                break;
-            case 'delegate':
-                redirectUrl = `/validators/${address}`
-                break;
+                case 'send':
+                    params.transferTarget = address
+                    redirectUrl = `/account/${address}`
+                    break
+                case 'withdraw':
+                    redirectUrl = `/account/${getUser()}`
+                    break;
+                case 'delegate':
+                    redirectUrl = `/validators/${address}`
+                    break;
             }
         } else {
             let location = this.props.location;
             params = qs.parse(location.search.substr(1))
-            redirectUrl = params.redirect?params.redirect:location.pathname;
+            redirectUrl = params.redirect ? params.redirect : location.pathname;
             delete params['redirectUrl']
             delete params['signin']
         }
 
-        let query = success?`?${qs.stringify(params)}`:'';
+        let query = success ? `?${qs.stringify(params)}` : '';
         this.props.history.push(redirectUrl + query)
     }
 
@@ -172,14 +174,14 @@ export default class Header extends Component {
         return (
             <Navbar color="primary" dark expand="lg" fixed="top" id="header">
                 <NavbarBrand tag={Link} to="/">
-                  <img src="/img/fetch-logo.svg" className="img-fluid logo"/>
-                       {' '}
-            <Badge color="secondary">
-              <T>navbar.version</T>
-            </Badge>
-            {' '}
+                    <img src="/img/fetch-logo.svg" className="img-fluid logo" />
+                    {' '}
+                    <Badge color="secondary">
+                        <T>navbar.version</T>
+                    </Badge>
+                    {' '}
                 </NavbarBrand>
-              <UncontrolledDropdown className="d-inline text-nowrap">
+                <UncontrolledDropdown className="d-inline text-nowrap">
                     <DropdownToggle caret={(this.state.networks !== "")} tag="span" size="sm" id="network-nav">{Meteor.settings.public.chainId}</DropdownToggle>
                     {this.state.networks}
                 </UncontrolledDropdown>
@@ -203,12 +205,12 @@ export default class Header extends Component {
                             <NavLink tag={Link} to="/voting-power-distribution"><T>navbar.votingPower</T></NavLink>
                         </NavItem>
                         <NavItem id="user-acconut-icon">
-                            {!signedInAddress?<Button className="sign-in-btn" color="link" size="lg" onClick={() => {this.setState({isSignInOpen: true})}}><i className="material-icons">vpn_key</i></Button>:
+                            {!signedInAddress ? <Button className="sign-in-btn" color="link" size="lg" onClick={() => { this.setState({ isSignInOpen: true }) }}><i className="material-icons">vpn_key</i></Button> :
                                 <span>
                                     <span className="d-lg-none">
                                         <i className="material-icons large d-inline">account_circle</i>
                                         <Link to={`/account/${signedInAddress}`}> {signedInAddress}</Link>
-                                        <Button className="float-right" color="link" size="sm" onClick={this.signOut.bind(this)}><i className="material-icons">exit_to_app</i></Button>
+                                        <Button className="float-right" color="link" size="sm" onClick={this.signOut}><i className="material-icons">exit_to_app</i></Button>
                                     </span>
                                     <span className="d-none d-lg-block">
                                         <i className="material-icons large">account_circle</i>
@@ -217,13 +219,13 @@ export default class Header extends Component {
                                                 <div className="text-center">
                                                     <p><T>accounts.signInText</T></p>
                                                     <p><Link className="text-nowrap" to={`/account/${signedInAddress}`}>{signedInAddress}</Link></p>
-                                                    <Button className="float-right" color="link" onClick={this.signOut.bind(this)}><i className="material-icons">exit_to_app</i><span> <T>accounts.signOut</T></span></Button>
+                                                    <Button className="float-right" color="link" onClick={this.signOut}><i className="material-icons">exit_to_app</i><span> <T>accounts.signOut</T></span></Button>
                                                 </div>
                                             </PopoverBody>
                                         </UncontrolledPopover>
                                     </span>
                                 </span>}
-                            <LedgerModal isOpen={this.state.isSignInOpen} toggle={this.toggleSignIn} refreshApp={this.props.refreshApp} handleLoginConfirmed={this.shouldLogin()?this.handleLoginConfirmed:null}/>
+                            <LedgerModal isOpen={this.state.isSignInOpen} toggle={this.toggleSignIn} refreshApp={this.props.refreshApp} handleLoginConfirmed={this.shouldLogin() ? this.handleLoginConfirmed : null} />
                         </NavItem>
                         <NavItem>
                             <UncontrolledDropdown inNavbar>

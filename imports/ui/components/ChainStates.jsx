@@ -9,8 +9,8 @@ import Coin from '/both/utils/coins.js'
 const T = i18n.createComponent();
 
 
-export default class ChainStates extends Component{
-    constructor(props){
+export default class ChainStates extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             price: "-",
@@ -20,20 +20,20 @@ export default class ChainStates extends Component{
         }
 
 
-        if (Meteor.isServer){
-                         
-            if (this.props.chainStates.communityPool){
+        if (Meteor.isServer) {
+
+            if (this.props.chainStates.communityPool) {
                 let commPool = []
                 this.props.chainStates.communityPool.forEach((pool, i) => {
                     commPool[i] = pool;
-                },)   
+                })
                 this.setState({
                     communityPool: [...commPool],
-                    inflation: numbro(this.props.chainStates.inflation).format("0.00%")
+                    inflation: this.props.chainStates.inflation ? numbro(this.props.chainStates.inflation).format("0.00%") : '0%'
                 })
             }
 
-            if (this.props.coinStats.usd){
+            if (this.props.coinStats.usd) {
                 this.setState({
                     price: this.props.coinStats.usd,
                     marketCap: numbro(this.props.coinStats.usd_market_cap).format("$0,0.00")
@@ -44,22 +44,22 @@ export default class ChainStates extends Component{
 
     }
 
-    componentDidUpdate(prevProps){
+    componentDidUpdate(prevProps) {
         let communityPools = []
-        if (this.props.chainStates != prevProps.chainStates){
-            if (this.props.chainStates.communityPool){
+        if (this.props.chainStates != prevProps.chainStates) {
+            if (this.props.chainStates.communityPool) {
                 this.props.chainStates.communityPool.forEach((pool, i) => {
                     communityPools[i] = pool;
-                },)   
+                })
                 this.setState({
                     communityPool: [...communityPools],
-                    inflation: numbro(this.props.chainStates.inflation).format("0.00%")
+                    inflation: this.props.chainStates.inflation ? numbro(this.props.chainStates.inflation).format("0.00%") : '0%'
                 })
             }
         }
 
-        if (this.props.coinStats != prevProps.coinStats){
-            if (this.props.coinStats.usd){
+        if (this.props.coinStats != prevProps.coinStats) {
+            if (this.props.coinStats.usd) {
                 this.setState({
                     price: this.props.coinStats.usd,
                     marketCap: numbro(this.props.coinStats.usd_market_cap).format("$0,0.00")
@@ -67,18 +67,18 @@ export default class ChainStates extends Component{
             }
         }
     }
- 
 
-    renderValues(propsValue){
+
+    renderValues(propsValue) {
         let poolValues = [];
-        propsValue.map((pool,i) => {
-            poolValues[i] = new Coin(pool.amount, pool.denom).toString(4)  
+        propsValue.map((pool, i) => {
+            poolValues[i] = new Coin(pool.amount, pool.denom).toString(4)
         })
 
         return poolValues.join(', ')
-           
+
     }
-    render(){
+    render() {
 
 
         return <Card className="d-lg-inline-block">

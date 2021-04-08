@@ -1,28 +1,21 @@
 import { Meteor } from 'meteor/meteor';
-import _ from 'lodash';
-import {
-  Analytics,
-  AverageData,
-  AverageValidatorData,
-  MissedBlocks,
-  MissedBlocksStats,
-  ValidatorRecords,
-} from '../records.js';
+import { ValidatorRecords, Analytics, AverageData, AverageValidatorData } from '../records.js';
 import { Validators } from '../../validators/validators.js';
 import { ValidatorSets } from '/imports/api/validator-sets/validator-sets.js';
 import { Status } from '../../status/status.js';
+import { MissedBlocksStats } from '../records.js';
+import { MissedBlocks } from '../records.js';
 import { Blockscon } from '../../blocks/blocks.js';
 import { Chain } from '../../chain/chain.js';
-import { COUNTMISSEDBLOCKS } from '../../../../server/main';
-
+import _ from 'lodash';
 const BULKUPDATEMAXSIZE = 1000;
 
 const getBlockStats = (startHeight, latestHeight) => {
-  const blockStats = {};
+  let blockStats = {};
   const cond = {
     $and: [
       { height: { $gt: startHeight } },
-      { height: { $lte: latestHeight } }],
+      { height: { $lte: latestHeight } }]
   };
   const options = { sort: { height: 1 } };
   Blockscon.find(cond, options).forEach((block) => {
@@ -32,8 +25,8 @@ const getBlockStats = (startHeight, latestHeight) => {
       precommitsCount: block.precommitsCount,
       validatorsCount: block.validatorsCount,
       validators: block.validators,
-      time: block.time,
-    };
+      time: block.time
+    }
   });
 
   Analytics.find(cond, options).forEach((block) => {
@@ -41,72 +34,72 @@ const getBlockStats = (startHeight, latestHeight) => {
       blockStats[block.height] = { height: block.height };
       console.log(`block ${block.height} does not have an entry`);
     }
-    console.log(`*********** ${JSON.stringify(block)}`);
     _.assign(blockStats[block.height], {
       precommits: block.precommits,
       averageBlockTime: block.averageBlockTime,
       timeDiff: block.timeDiff,
-      voting_power: block.voting_power,
+      voting_power: block.voting_power
     });
   });
   return blockStats;
-};
+}
 
 const getPreviousRecord = (voterAddress, proposerAddress) => {
-  const previousRecord = MissedBlocks.findOne(
-    { voter: voterAddress, proposer: proposerAddress, blockHeight: -1 },
-  );
-  const lastUpdatedHeight = Meteor.settings.params.startHeight;
+  let previousRecord = MissedBlocks.findOne(
+    { voter: voterAddress, proposer: proposerAddress, blockHeight: -1 });
+  let lastUpdatedHeight = Meteor.settings.params.startHeight;
   let prevStats = {};
   if (previousRecord) {
     prevStats = _.pick(previousRecord, ['missCount', 'totalCount']);
   } else {
     prevStats = {
       missCount: 0,
-      totalCount: 0,
-    };
+      totalCount: 0
+    }
   }
   return prevStats;
-};
+}
 
 Meteor.methods({
-  'ValidatorRecords.calculateMissedBlocks'() {
+  'ValidatorRecords.calculateMissedBlocks': function () {
+    this.unblock();
     if (!COUNTMISSEDBLOCKS) {
       try {
-        const startTime = Date.now();
+        let startTime = Date.now();
         COUNTMISSEDBLOCKS = true;
         console.log('calulate missed blocks count');
         this.unblock();
-        const validators = Validators.find({}).fetch();
+        let validators = Validators.find({}).fetch();
         let latestHeight = Meteor.call('blocks.getCurrentHeight');
-        const explorerStatus = Status.findOne({ chainId: Meteor.settings.public.chainId });
-        const startHeight = (explorerStatus && explorerStatus.lastProcessedMissedBlockHeight) ? explorerStatus.lastProcessedMissedBlockHeight : Meteor.settings.params.startHeight;
+        let explorerStatus = Status.findOne({ chainId: Meteor.settings.public.chainId });
+        let startHeight = (explorerStatus && explorerStatus.lastProcessedMissedBlockHeight) ? explorerStatus.lastProcessedMissedBlockHeight : Meteor.settings.params.startHeight;
         latestHeight = Math.min(startHeight + BULKUPDATEMAXSIZE, latestHeight);
         const bulkMissedStats = MissedBlocks.rawCollection().initializeOrderedBulkOp();
 
-        const validatorsMap = {};
+        let validatorsMap = {};
         validators.forEach((validator) => validatorsMap[validator.address] = validator);
 
         // a map of block height to block stats
-        const blockStats = getBlockStats(startHeight, latestHeight);
+        let blockStats = getBlockStats(startHeight, latestHeight);
 
         // proposerVoterStats is a proposer-voter map counting numbers of proposed blocks of which voter is an active validator
-        const proposerVoterStats = {};
+        let proposerVoterStats = {}
 
         _.forEach(blockStats, (block, blockHeight) => {
-          const { proposerAddress } = block;
-          const votedValidators = new Set(block.validators);
-          const validatorSets = ValidatorSets.findOne({ block_height: block.height });
+          let proposerAddress = block.proposerAddress;
+          let votedValidators = new Set(block.validators);
+          let validatorSets = ValidatorSets.findOne({ block_height: block.height });
           let votedVotingPower = 0;
 
           validatorSets.validators.forEach((activeValidator) => {
-            if (votedValidators.has(activeValidator.address)) { votedVotingPower += parseFloat(activeValidator.voting_power); }
-          });
+            if (votedValidators.has(activeValidator.address))
+              votedVotingPower += parseFloat(activeValidator.voting_power)
+          })
 
           validatorSets.validators.forEach((activeValidator) => {
-            const currentValidator = activeValidator.address;
+            let currentValidator = activeValidator.address
             if (!_.has(proposerVoterStats, [proposerAddress, currentValidator])) {
-              const prevStats = getPreviousRecord(currentValidator, proposerAddress);
+              let prevStats = getPreviousRecord(currentValidator, proposerAddress);
               _.set(proposerVoterStats, [proposerAddress, currentValidator], prevStats);
             }
 
@@ -127,10 +120,10 @@ Meteor.methods({
                 votedVotingPower,
                 updatedAt: latestHeight,
                 missCount: _.get(proposerVoterStats, [proposerAddress, currentValidator, 'missCount']),
-                totalCount: _.get(proposerVoterStats, [proposerAddress, currentValidator, 'totalCount']),
+                totalCount: _.get(proposerVoterStats, [proposerAddress, currentValidator, 'totalCount'])
               });
             }
-          });
+          })
         });
 
         _.forEach(proposerVoterStats, (voters, proposerAddress) => {
@@ -138,7 +131,7 @@ Meteor.methods({
             bulkMissedStats.find({
               voter: voterAddress,
               proposer: proposerAddress,
-              blockHeight: -1,
+              blockHeight: -1
             }).upsert().updateOne({
               $set: {
                 voter: voterAddress,
@@ -146,19 +139,19 @@ Meteor.methods({
                 blockHeight: -1,
                 updatedAt: latestHeight,
                 missCount: _.get(stats, 'missCount'),
-                totalCount: _.get(stats, 'totalCount'),
-              },
+                totalCount: _.get(stats, 'totalCount')
+              }
             });
           });
         });
 
         let message = '';
         if (bulkMissedStats.length > 0) {
-          const { client } = MissedBlocks._driver.mongo;
+          const client = MissedBlocks._driver.mongo.client;
           // TODO: add transaction back after replica set(#146) is set up
           // let session = client.startSession();
           // session.startTransaction();
-          const bulkPromise = bulkMissedStats.execute(null/* , {session} */).then(
+          let bulkPromise = bulkMissedStats.execute(null/*, {session}*/).then(
             Meteor.bindEnvironment((result, err) => {
               if (err) {
                 COUNTMISSEDBLOCKS = false;
@@ -167,12 +160,11 @@ Meteor.methods({
               }
               if (result) {
                 // Promise.await(session.commitTransaction());
-                message = `(${result.result.nInserted} inserted, `
-                                           + `${result.result.nUpserted} upserted, `
-                                           + `${result.result.nModified} modified)`;
+                message = `(${result.result.nInserted} inserted, ` +
+                  `${result.result.nUpserted} upserted, ` +
+                  `${result.result.nModified} modified)`;
               }
-            }),
-          );
+            }));
 
           Promise.await(bulkPromise);
         }
@@ -184,61 +176,66 @@ Meteor.methods({
         COUNTMISSEDBLOCKS = false;
         throw e;
       }
-    } else {
-      return 'updating...';
+    }
+    else {
+      return "updating...";
     }
   },
-  'ValidatorRecords.calculateMissedBlocksStats'() {
+  'ValidatorRecords.calculateMissedBlocksStats': function () {
+    this.unblock();
     // TODO: deprecate this method and MissedBlocksStats collection
     // console.log("ValidatorRecords.calculateMissedBlocks: "+COUNTMISSEDBLOCKS);
     if (!COUNTMISSEDBLOCKSSTATS) {
       COUNTMISSEDBLOCKSSTATS = true;
       console.log('calulate missed blocks stats');
       this.unblock();
-      const validators = Validators.find({}).fetch();
-      const latestHeight = Meteor.call('blocks.getCurrentHeight');
-      const explorerStatus = Status.findOne({ chainId: Meteor.settings.public.chainId });
-      const startHeight = (explorerStatus && explorerStatus.lastMissedBlockHeight) ? explorerStatus.lastMissedBlockHeight : Meteor.settings.params.startHeight;
+      let validators = Validators.find({}).fetch();
+      let latestHeight = Meteor.call('blocks.getCurrentHeight');
+      let explorerStatus = Status.findOne({ chainId: Meteor.settings.public.chainId });
+      let startHeight = (explorerStatus && explorerStatus.lastMissedBlockHeight) ? explorerStatus.lastMissedBlockHeight : Meteor.settings.params.startHeight;
       // console.log(latestHeight);
       // console.log(startHeight);
       const bulkMissedStats = MissedBlocksStats.rawCollection().initializeUnorderedBulkOp();
       for (i in validators) {
         // if ((validators[i].address == "B8552EAC0D123A6BF609123047A5181D45EE90B5") || (validators[i].address == "69D99B2C66043ACBEAA8447525C356AFC6408E0C") || (validators[i].address == "35AD7A2CD2FC71711A675830EC1158082273D457")){
-        const voterAddress = validators[i].address;
-        const missedRecords = ValidatorRecords.find({
+        let voterAddress = validators[i].address;
+        let missedRecords = ValidatorRecords.find({
           address: voterAddress,
           exists: false,
-          $and: [{ height: { $gt: startHeight } }, { height: { $lte: latestHeight } }],
+          $and: [{ height: { $gt: startHeight } }, { height: { $lte: latestHeight } }]
         }).fetch();
 
-        const counts = {};
+        let counts = {};
 
         // console.log("missedRecords to process: "+missedRecords.length);
         for (b in missedRecords) {
-          const block = Blockscon.findOne({ height: missedRecords[b].height });
-          const existingRecord = MissedBlocksStats.findOne({ voter: voterAddress, proposer: block.proposerAddress });
+          let block = Blockscon.findOne({ height: missedRecords[b].height });
+          let existingRecord = MissedBlocksStats.findOne({ voter: voterAddress, proposer: block.proposerAddress });
 
           if (typeof counts[block.proposerAddress] === 'undefined') {
             if (existingRecord) {
               counts[block.proposerAddress] = existingRecord.count + 1;
-            } else {
+            }
+            else {
               counts[block.proposerAddress] = 1;
             }
-          } else {
+          }
+          else {
             counts[block.proposerAddress]++;
           }
         }
 
         for (address in counts) {
-          const data = {
+          let data = {
             voter: voterAddress,
             proposer: address,
-            count: counts[address],
-          };
+            count: counts[address]
+          }
 
           bulkMissedStats.find({ voter: voterAddress, proposer: address }).upsert().updateOne({ $set: data });
         }
         // }
+
       }
 
       if (bulkMissedStats.length > 0) {
@@ -250,123 +247,125 @@ Meteor.methods({
           if (result) {
             Status.upsert({ chainId: Meteor.settings.public.chainId }, { $set: { lastMissedBlockHeight: latestHeight, lastMissedBlockTime: new Date() } });
             COUNTMISSEDBLOCKSSTATS = false;
-            console.log('done');
+            console.log("done");
           }
         }));
-      } else {
+      }
+      else {
         COUNTMISSEDBLOCKSSTATS = false;
       }
 
       return true;
     }
-
-    return 'updating...';
+    else {
+      return "updating...";
+    }
   },
-  'Analytics.aggregateBlockTimeAndVotingPower'(time) {
+  'Analytics.aggregateBlockTimeAndVotingPower': function (time) {
     this.unblock();
-    const now = new Date();
+    let now = new Date();
 
     if (time == 'm') {
       let averageBlockTime = 0;
       let averageVotingPower = 0;
 
-      const analytics = Analytics.find({ time: { $gt: new Date(Date.now() - 60 * 1000) } }).fetch();
+      let analytics = Analytics.find({ "time": { $gt: new Date(Date.now() - 60 * 1000) } }).fetch();
       if (analytics.length > 0) {
         for (i in analytics) {
           averageBlockTime += analytics[i].timeDiff;
           averageVotingPower += analytics[i].voting_power;
         }
-        averageBlockTime /= analytics.length;
-        averageVotingPower /= analytics.length;
+        averageBlockTime = averageBlockTime / analytics.length;
+        averageVotingPower = averageVotingPower / analytics.length;
 
         Chain.update({ chainId: Meteor.settings.public.chainId }, { $set: { lastMinuteVotingPower: averageVotingPower, lastMinuteBlockTime: averageBlockTime } });
         AverageData.insert({
-          averageBlockTime,
-          averageVotingPower,
+          averageBlockTime: averageBlockTime,
+          averageVotingPower: averageVotingPower,
           type: time,
-          createdAt: now,
-        });
+          createdAt: now
+        })
       }
     }
     if (time == 'h') {
       let averageBlockTime = 0;
       let averageVotingPower = 0;
-      const analytics = Analytics.find({ time: { $gt: new Date(Date.now() - 60 * 60 * 1000) } }).fetch();
+      let analytics = Analytics.find({ "time": { $gt: new Date(Date.now() - 60 * 60 * 1000) } }).fetch();
       if (analytics.length > 0) {
         for (i in analytics) {
           averageBlockTime += analytics[i].timeDiff;
           averageVotingPower += analytics[i].voting_power;
         }
-        averageBlockTime /= analytics.length;
-        averageVotingPower /= analytics.length;
+        averageBlockTime = averageBlockTime / analytics.length;
+        averageVotingPower = averageVotingPower / analytics.length;
 
         Chain.update({ chainId: Meteor.settings.public.chainId }, { $set: { lastHourVotingPower: averageVotingPower, lastHourBlockTime: averageBlockTime } });
         AverageData.insert({
-          averageBlockTime,
-          averageVotingPower,
+          averageBlockTime: averageBlockTime,
+          averageVotingPower: averageVotingPower,
           type: time,
-          createdAt: now,
-        });
+          createdAt: now
+        })
       }
     }
 
     if (time == 'd') {
       let averageBlockTime = 0;
       let averageVotingPower = 0;
-      const analytics = Analytics.find({ time: { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) } }).fetch();
+      let analytics = Analytics.find({ "time": { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) } }).fetch();
       if (analytics.length > 0) {
         for (i in analytics) {
           averageBlockTime += analytics[i].timeDiff;
           averageVotingPower += analytics[i].voting_power;
         }
-        averageBlockTime /= analytics.length;
-        averageVotingPower /= analytics.length;
+        averageBlockTime = averageBlockTime / analytics.length;
+        averageVotingPower = averageVotingPower / analytics.length;
 
         Chain.update({ chainId: Meteor.settings.public.chainId }, { $set: { lastDayVotingPower: averageVotingPower, lastDayBlockTime: averageBlockTime } });
         AverageData.insert({
-          averageBlockTime,
-          averageVotingPower,
+          averageBlockTime: averageBlockTime,
+          averageVotingPower: averageVotingPower,
           type: time,
-          createdAt: now,
-        });
+          createdAt: now
+        })
       }
     }
 
     // return analytics.length;
   },
-  'Analytics.aggregateValidatorDailyBlockTime'() {
+  'Analytics.aggregateValidatorDailyBlockTime': function () {
     this.unblock();
-    const validators = Validators.find({}).fetch();
-    const now = new Date();
+    let validators = Validators.find({}).fetch();
+    let now = new Date();
     for (i in validators) {
       let averageBlockTime = 0;
 
-      const blocks = Blockscon.find({ proposerAddress: validators[i].address, time: { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) } }, { fields: { height: 1 } }).fetch();
+      let blocks = Blockscon.find({ proposerAddress: validators[i].address, "time": { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) } }, { fields: { height: 1 } }).fetch();
 
       if (blocks.length > 0) {
-        const blockHeights = [];
+        let blockHeights = [];
         for (b in blocks) {
           blockHeights.push(blocks[b].height);
         }
 
-        const analytics = Analytics.find({ height: { $in: blockHeights } }, { fields: { height: 1, timeDiff: 1 } }).fetch();
+        let analytics = Analytics.find({ height: { $in: blockHeights } }, { fields: { height: 1, timeDiff: 1 } }).fetch();
 
 
         for (a in analytics) {
           averageBlockTime += analytics[a].timeDiff;
         }
 
-        averageBlockTime /= analytics.length;
+        averageBlockTime = averageBlockTime / analytics.length;
       }
 
       AverageValidatorData.insert({
         proposerAddress: validators[i].address,
-        averageBlockTime,
+        averageBlockTime: averageBlockTime,
         type: 'ValidatorDailyAverageBlockTime',
-        createdAt: now,
-      });
+        createdAt: now
+      })
     }
 
     return true;
-  },
-});
+  }
+})
