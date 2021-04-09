@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { Transactions } from '../../transactions/transactions.js';
 import { Validators } from '../../validators/validators.js';
-import { LCD } from '../../../../server/main';
 
 const AddressLength = 40;
 
