@@ -7,7 +7,7 @@ const port = 4000;
 
 const PWD = process.env.PWD + "/tests/mockServer";
 
-console.log("PWD",  PWD);
+console.log("PWD", PWD);
 
 const dumpConsensusState = loadJSON(`${PWD}/public/dump-consensus-state`);
 const status = loadJSON(`${PWD}/public/status`);
@@ -32,8 +32,8 @@ const distributionDelegatorsUnbonding = loadJSON(`${PWD}/public/account/staking-
 
 
 function loadJSON(file) {
-    var data = fs.readFileSync(file);
-    return JSON.parse(data);
+  var data = fs.readFileSync(file);
+  return JSON.parse(data);
 }
 
 
@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname, './public')));
 
 app.get('/rpc/dump_consensus_state', (req, res) => {
   console.log("dump_consensus_state22222", JSON.stringify(req.originalUrl))
-    res.end(JSON.stringify(dumpConsensusState))
+  res.end(JSON.stringify(dumpConsensusState))
 })
 
 app.get('/rpc/status', (req, res) => {
@@ -52,37 +52,37 @@ app.get('/rpc/status', (req, res) => {
 
 app.get(`/lcd/bank/balances/${testAddress}`, (req, res) => {
   console.log("lcd/bank/balances", JSON.stringify(req.originalUrl))
-    res.end(JSON.stringify(bankBalances))
+  res.end(JSON.stringify(bankBalances))
 })
 
 app.get(`/lcd/auth/accounts/${testAddress}`, (req, res) => {
   console.log("lcd/auth/accounts", JSON.stringify(req.originalUrl))
-    res.end(JSON.stringify(authAccount))
+  res.end(JSON.stringify(authAccount))
 })
 
 app.get(`/lcd/staking/delegators/${testAddress}/delegations`, (req, res) => {
   console.log("lcdstaking/delegators", JSON.stringify(req.originalUrl))
-    res.end(JSON.stringify(stakingDelegators))
+  res.end(JSON.stringify(stakingDelegators))
 })
 
 app.get(`/lcd/distribution/delegators/${testAddress}/rewards`, (req, res) => {
   console.log("lcd distribution/delegators", JSON.stringify(req.originalUrl))
-    res.end(JSON.stringify(distributionDelegators))
+  res.end(JSON.stringify(distributionDelegators))
 })
 
 app.get(`/lcd/staking/delegators/${testAddress}/unbonding_delegations`, (req, res) => {
   console.log("lcd delegators/delegators", JSON.stringify(req.originalUrl))
-    res.end(JSON.stringify(distributionDelegatorsUnbonding))
+  res.end(JSON.stringify(distributionDelegatorsUnbonding))
 })
 
 app.get('/lcd/gov/proposals', (req, res) => {
   console.log("/lcd/gov/proposals", JSON.stringify(req.originalUrl))
-    res.end(JSON.stringify(proposals))
+  res.end(JSON.stringify(proposals))
 })
 
 app.get('/lcd/staking/pool', (req, res) => {
   console.log("/lcd/staking/pool", JSON.stringify(req.originalUrl))
-    res.end(JSON.stringify(stakingPool))
+  res.end(JSON.stringify(stakingPool))
 })
 
 app.get('/lcd/txs/:hash', (req, res) => {
@@ -90,45 +90,45 @@ app.get('/lcd/txs/:hash', (req, res) => {
 
   let response
 
-  if(typeof req.param === "undefined"){
+  if (typeof req.param === "undefined") {
     console.log("ERROR AS UNDEFINED PARAM")
   } else {
-        console.log("PARMAS IS", req.params.hash)
-       response = loadJSON(`${PWD}/public/transactions/${req.params.hash}`);
+    console.log("PARMAS IS", req.params.hash)
+    response = loadJSON(`${PWD}/public/transactions/${req.params.hash}`);
   }
-      res.end(JSON.stringify(response))
+  res.end(JSON.stringify(response))
 })
 
 app.get('/rpc/validators', (req, res) => {
   console.log("/rpc/validators  22222", JSON.stringify(req.originalUrl))
   const queryKeys = Object.keys(req.query)
 
-  if(!queryKeys.length){
-        return res.end(JSON.stringify(validators))
+  if (!queryKeys.length) {
+    return res.end(JSON.stringify(validators))
   }
 
   let result;
 
-  if(queryKeys.includes("status")){
+  if (queryKeys.includes("status")) {
     if (req.query.status === "bonded") {
       console.log("bonded")
       result = JSON.stringify(bondedValidators)
-    } else if(req.query.status === "unbonding"){
-            console.log("unbonding")
+    } else if (req.query.status === "unbonding") {
+      console.log("unbonding")
       result = JSON.stringify(unbondedValidators)
     }
   }
 
-  if(queryKeys.includes("height")){
-          console.log("height")
+  if (queryKeys.includes("height")) {
+    console.log("height")
 
-      console.log("/rpc/validators  with height ", JSON.stringify(req.originalUrl))
+    console.log("/rpc/validators  with height ", JSON.stringify(req.originalUrl))
 
-       result = loadJSON(`${PWD}/public/validators/height${req.query.height}`);
+    result = loadJSON(`${PWD}/public/validators/height${req.query.height}`);
   }
 
-  if(typeof result === "undefined"){
-     console.log("unmatched url params")
+  if (typeof result === "undefined") {
+    console.log("unmatched url params")
   }
 
   return res.end(JSON.stringify(result))
@@ -136,49 +136,49 @@ app.get('/rpc/validators', (req, res) => {
 
 app.get('/lcd/staking/validators', (req, res) => {
   console.log("/lcd/staking/validators  77777", JSON.stringify(req.originalUrl))
-    res.end(JSON.stringify(stakingValidators))
+  res.end(JSON.stringify(stakingValidators))
 })
 
 app.get('/lcd/supply/total/atestfet', (req, res) => {
   console.log("/lcd/supply/total/atestfet  22222", JSON.stringify(req.originalUrl))
-    res.end(JSON.stringify(supply))
+  res.end(JSON.stringify(supply))
 })
 
 app.get('/lcd/minting/inflation', (req, res) => {
   console.log("/lcd/minting/inflation  22222", JSON.stringify(req.originalUrl))
-    res.end(JSON.stringify(inflation))
+  res.end(JSON.stringify(inflation))
 })
 
 app.get('/lcd/distribution/community_pool', (req, res) => {
   console.log("/lcd/distribution/community_pool  22222", JSON.stringify(req.originalUrl))
-    res.end(JSON.stringify(communityPool))
+  res.end(JSON.stringify(communityPool))
 })
 
 app.get('/lcd/minting/annual-provisions', (req, res) => {
   console.log("/lcd/distribution/annualProvisions  22222", JSON.stringify(req.originalUrl))
-    res.end(JSON.stringify(annualProvisions))
+  res.end(JSON.stringify(annualProvisions))
 })
 
 
 app.get('/rpc/block', (req, res) => {
   console.log("block  22222", JSON.stringify(req.originalUrl))
-  const {height} = req.query
+  const { height } = req.query
 
   let response;
-try {
+  try {
     console.log("and height to search for is ", height)
-   response = loadJSON(`${PWD}/public/blocks/block${height}`);
-}  catch (error) {
-        console.log("it throws")
+    response = loadJSON(`${PWD}/public/blocks/block${height}`);
+  } catch (error) {
+    console.log("it throws")
     response = loadJSON(`${PWD}/public/blocks/error`);
-}
-    console.log("after block")
-    res.end(JSON.stringify(response))
+  }
+  console.log("after block")
+  res.end(JSON.stringify(response))
 })
 
 app.get('/*', (req, res) => {
   console.log("URL BLOCK EXPLORER REQUESTED NOT FOUND BY MOCK SERVER : " + req.originalUrl);
-  process.exit("URL BLOCK EXPLORER REQUESTED NOT FOUND BY MOCK SERVER : " + req.originalUrl);
+  // process.exit("URL BLOCK EXPLORER REQUESTED NOT FOUND BY MOCK SERVER : " + req.originalUrl);
 })
 
 app.listen(port, function () {

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import qs from 'querystring';
 import Cosmos from "@lunie/cosmos-js"
 import React, { Component } from 'react';
@@ -395,8 +396,8 @@ class LedgerButton extends Component {
     }
 
     getSimulateBody (txMsg) {
-        return txMsg && txMsg.value && txMsg.value.msg &&
-            txMsg.value.msg.length && txMsg.value.msg[0].value || {}
+        return (txMsg && txMsg.value && txMsg.value.msg &&
+            txMsg.value.msg.length && txMsg.value.msg[0].value) || {}
     }
 
     getPath = () => {
@@ -527,7 +528,7 @@ class LedgerButton extends Component {
             {"sort":{"description.moniker":1}}
         );
         let redelegations = this.state.redelegations || {};
-        let maxEntries = this.props.stakingParams.max_entries;
+        let maxEntries = (this.props.stakingParams&&this.props.stakingParams.max_entries)?this.props.stakingParams.max_entries:7;
         return <UncontrolledDropdown direction='down' size='sm' className='redelegate-validators'>
             <DropdownToggle caret={true}>
                 {this.state.targetValidator?this.state.targetValidator.moniker:'Select a Validator'}
@@ -712,7 +713,7 @@ class DelegationButtons extends LedgerButton {
         if (!delegation) return null;
         let completionTime = delegation.redelegationCompletionTime;
         let isCompleted = !completionTime || new Date() >= completionTime;
-        let maxEntries = this.props.stakingParams.max_entries;
+        let maxEntries = this.props.stakingParams?this.props.stakingParams.max_entries:7;
         let canUnbond = !delegation.unbonding || maxEntries > delegation.unbonding;
         return <span>
             <div id='redelegate-button' className={`disabled-btn-wrapper${isCompleted?'':' disabled'}`}>
@@ -895,8 +896,8 @@ class SubmitProposalButton extends LedgerButton {
     }
 
     getSimulateBody (txMsg) {
-        txMsg = txMsg && txMsg.value && txMsg.value.msg &&
-            txMsg.value.msg.length && txMsg.value.msg[0].value || {}
+        txMsg = (txMsg && txMsg.value && txMsg.value.msg &&
+            txMsg.value.msg.length && txMsg.value.msg[0].value) || {}
         return {...txMsg.content.value,
             initial_deposit: txMsg.initial_deposit,
             proposer: txMsg.proposer,

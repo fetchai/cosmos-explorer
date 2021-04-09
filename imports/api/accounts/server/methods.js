@@ -1,27 +1,27 @@
 import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 import { Validators } from '/imports/api/validators/validators.js';
-import { LCD } from '../../../../server/main'
+
 const fetchFromUrl = (url) => {
-    try{
+    try {
         let res = HTTP.get(LCD + url);
-        if (res.statusCode == 200){
+        if (res.statusCode == 200) {
             return res
         };
     }
-    catch (e){
+    catch (e) {
         console.log(res);
         console.log(e);
     }
 }
 
 Meteor.methods({
-    'accounts.getAccountDetail': function(address){
+    'accounts.getAccountDetail': function (address) {
         this.unblock();
-        let url = LCD + '/auth/accounts/'+ address;
-        try{
+        let url = LCD + '/auth/accounts/' + address;
+        try {
             let available = HTTP.get(url);
-            if (available.statusCode == 200){
+            if (available.statusCode == 200) {
                 let response = JSON.parse(available.content).result;
                 let account;
                 if (response.type === 'cosmos-sdk/Account')
@@ -33,81 +33,81 @@ Meteor.methods({
                 return null
             }
         }
-        catch (e){
+        catch (e) {
             console.log(url);
             console.log(e)
         }
     },
-    'accounts.getBalance': function(address){
+    'accounts.getBalance': function (address) {
         this.unblock();
         let balance = {}
-           console.log("GET BALANCE CALLED")
+        console.log("GET BALANCE CALLED")
         // process.exit("here exited")
         // get available atoms
-        let url = LCD + '/bank/balances/'+ address;
-        try{
+        let url = LCD + '/bank/balances/' + address;
+        try {
             let available = HTTP.get(url);
-            if (available.statusCode == 200){
+            if (available.statusCode == 200) {
                 balance.available = JSON.parse(available.content).result;
 
             }
         }
-        catch (e){
+        catch (e) {
             console.log(url);
             console.log(e)
         }
 
         // get delegated amnounts
-        url = LCD + '/staking/delegators/'+address+'/delegations';
-        try{
+        url = LCD + '/staking/delegators/' + address + '/delegations';
+        try {
             let delegations = HTTP.get(url);
-            if (delegations.statusCode == 200){
+            if (delegations.statusCode == 200) {
                 balance.delegations = JSON.parse(delegations.content).result;
             }
         }
-        catch (e){
+        catch (e) {
             console.log(url);
             console.log(e);
         }
         // get unbonding
-        url = LCD + '/staking/delegators/'+address+'/unbonding_delegations';
-        try{
+        url = LCD + '/staking/delegators/' + address + '/unbonding_delegations';
+        try {
             let unbonding = HTTP.get(url);
-            if (unbonding.statusCode == 200){
+            if (unbonding.statusCode == 200) {
                 balance.unbonding = JSON.parse(unbonding.content).result;
             }
         }
-        catch (e){
+        catch (e) {
             console.log(url);
             console.log(e);
         }
 
         // get rewards
-        url = LCD + '/distribution/delegators/'+address+'/rewards';
-        try{
+        url = LCD + '/distribution/delegators/' + address + '/rewards';
+        try {
             let rewards = HTTP.get(url);
-            if (rewards.statusCode == 200){
+            if (rewards.statusCode == 200) {
                 //get seperate rewards value
                 balance.rewards = JSON.parse(rewards.content).result.rewards;
                 //get total rewards value
-                balance.total_rewards= JSON.parse(rewards.content).result.total;
-                
+                balance.total_rewards = JSON.parse(rewards.content).result.total;
+
             }
         }
-        catch (e){
+        catch (e) {
             console.log(url);
             console.log(e);
         }
 
         // get commission
         let validator = Validators.findOne(
-            {$or: [{operator_address:address}, {delegator_address:address}, {address:address}]})
+            { $or: [{ operator_address: address }, { delegator_address: address }, { address: address }] })
         if (validator) {
             let url = LCD + '/distribution/validators/' + validator.operator_address;
             balance.operator_address = validator.operator_address;
             try {
                 let rewards = HTTP.get(url);
-                if (rewards.statusCode == 200){
+                if (rewards.statusCode == 200) {
                     let content = JSON.parse(rewards.content).result;
                     if (content.val_commission && content.val_commission.length > 0)
                         balance.commission = content.val_commission;
@@ -115,7 +115,7 @@ Meteor.methods({
                 }
 
             }
-            catch (e){
+            catch (e) {
                 console.log(url);
                 console.log(e)
             }
@@ -123,7 +123,8 @@ Meteor.methods({
 
         return balance;
     },
-    'accounts.getDelegation'(address, validator){
+    'accounts.getDelegation'(address, validator) {
+        this.unblock();
         let url = `/staking/delegators/${address}/delegations/${validator}`;
         let delegations = fetchFromUrl(url);
         delegations = delegations && delegations.data.result;
@@ -137,7 +138,7 @@ Meteor.methods({
         if (relegations) {
             relegations.forEach((relegation) => {
                 let entries = relegation.entries
-                let time = new Date(entries[entries.length-1].completion_time)
+                let time = new Date(entries[entries.length - 1].completion_time)
                 if (!completionTime || time > completionTime)
                     completionTime = time
             })
@@ -153,14 +154,15 @@ Meteor.methods({
         }
         return delegations;
     },
-    'accounts.getAllDelegations'(address){
-        let url = LCD + '/staking/delegators/'+address+'/delegations';
+    'accounts.getAllDelegations'(address) {
+        this.unblock();
+        let url = LCD + '/staking/delegators/' + address + '/delegations';
 
-        try{
+        try {
             let delegations = HTTP.get(url);
-            if (delegations.statusCode == 200){
+            if (delegations.statusCode == 200) {
                 delegations = JSON.parse(delegations.content).result;
-                if (delegations && delegations.length > 0){
+                if (delegations && delegations.length > 0) {
                     delegations.forEach((delegation, i) => {
                         if (delegations[i] && delegations[i].shares)
                             delegations[i].shares = parseFloat(delegations[i].shares);
@@ -170,27 +172,29 @@ Meteor.methods({
                 return delegations;
             };
         }
-        catch (e){
+        catch (e) {
             console.log(url);
             console.log(e);
         }
     },
-    'accounts.getAllUnbondings'(address){
-        let url = LCD + '/staking/delegators/'+address+'/unbonding_delegations';
+    'accounts.getAllUnbondings'(address) {
+        this.unblock();
+        let url = LCD + '/staking/delegators/' + address + '/unbonding_delegations';
 
-        try{
+        try {
             let unbondings = HTTP.get(url);
-            if (unbondings.statusCode == 200){
+            if (unbondings.statusCode == 200) {
                 unbondings = JSON.parse(unbondings.content).result;
                 return unbondings;
             };
         }
-        catch (e){
+        catch (e) {
             console.log(url);
             console.log(e);
         }
     },
-    'accounts.getAllRedelegations'(address, validator){
+    'accounts.getAllRedelegations'(address, validator) {
+        this.unblock();
         let url = `/staking/redelegations?delegator=${address}&validator_from=${validator}`;
         let result = fetchFromUrl(url);
         if (result && result.data) {
@@ -206,7 +210,7 @@ Meteor.methods({
         }
     },
     'accounts.getRedelegations'(address) {
-
+        this.unblock();
         let url = LCD + '/staking/redelegations?delegator=' + address;
 
         try {
@@ -221,4 +225,4 @@ Meteor.methods({
             console.log(e.response.content);
         }
     },
-}) 
+})

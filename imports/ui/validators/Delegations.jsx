@@ -28,28 +28,23 @@ export default class ValidatorDelegations extends Component {
       if (result) {
         // console.log(result);
         // Delegations.remove({});
-        const Delegations = new Mongo.Collection(null);
+        let Delegations = new Mongo.Collection(null);
         result.forEach((delegation, i) => {
           Delegations.insert(delegation);
-        });
-        const delegations = Delegations.find({}, { sort: { shares: -1 } }).fetch();
+        })
+        let delegations = Delegations.find({}, { sort: { shares: -1 } }).fetch();
         this.setState({
           loading: false,
           numDelegatiors: delegations.length,
-          delegations: delegations.map((d, i) => (
-            <Row key={i} className="delegation-info">
-              <Col md={8} className="text-nowrap overflow-auto">
-                <Account address={d.delegator_address} />
-              </Col>
-              <Col md={4}>
-                {new Coin((d.shares / this.props.shares * this.props.tokens), this.props.denom).stakeString()}
-                s
-              </Col>
+          delegations: delegations.map((d, i) => {
+            return <Row key={i} className="delegation-info">
+              <Col md={8} className="text-nowrap overflow-auto"><Account address={d.delegator_address} /></Col>
+              <Col md={4}>{new Coin((d.shares / this.props.shares * this.props.tokens), this.props.denom).stakeString()}</Col>
             </Row>
-          )),
-        });
+          })
+        })
       }
-    });
+    })
   }
 
   render() {
