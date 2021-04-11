@@ -107,8 +107,8 @@ export class Ledger {
         this.checkLedgerErrors(response)
         const { appName } = response
 
-        if (appName.toLowerCase() !== `cosmos`) {
-            throw new Error(`Close ${appName} and open the Cosmos app`)
+        if (appName.toLowerCase() !== Meteor.settings.public.ledger.appName.toLowerCase()) {
+            throw new Error(`Close ${appName} and open the ${Meteor.settings.public.ledger.appName} app`)
         }
     }
     async getPubKey() {
@@ -466,7 +466,7 @@ function versionString({ major, minor, patch }) {
 export const checkAppMode = (testModeAllowed, testMode) => {
     if (testMode && !testModeAllowed) {
         throw new Error(
-            `DANGER: The Cosmos Ledger app is in test mode and shouldn't be used on mainnet!`
+            `DANGER: The ${Meteor.settings.public.ledger.appName} Ledger app is in test mode and shouldn't be used on mainnet!`
         )
     }
 }
