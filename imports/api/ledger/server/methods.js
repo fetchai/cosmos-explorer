@@ -1,5 +1,4 @@
 import { HTTP } from 'meteor/http';
-import { LCD } from '../../../../server/main';
 
 Meteor.methods({
     'transaction.submit': function (txInfo) {

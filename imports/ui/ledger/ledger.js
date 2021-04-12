@@ -65,7 +65,7 @@ export class Ledger {
         })
     }
     async isReady() {
-    // check if the version is supported
+        // check if the version is supported
         const version = await this.getCosmosAppVersion()
 
         if (!semver.gte(version, REQUIRED_COSMOS_APP_VERSION)) {
@@ -122,7 +122,7 @@ export class Ledger {
         await this.connect()
 
         const pubKey = await this.getPubKey(this.cosmosApp)
-        return {pubKey, address:createCosmosAddress(pubKey)}
+        return { pubKey, address: createCosmosAddress(pubKey) }
     }
     async confirmLedgerAddress() {
         await this.connect()
@@ -164,31 +164,31 @@ export class Ledger {
             throw new Error(`Ledger's screensaver mode is on`)
         }
         switch (error_message) {
-        case `U2F: Timeout`:
-            throw new Error(timeoutMessag)
-        case `Cosmos app does not seem to be open`:
-            // hack:
-            // It seems that when switching app in Ledger, WebUSB will disconnect, disabling further action.
-            // So we clean up here, and re-initialize this.cosmosApp next time when calling `connect`
-            this.cosmosApp.transport.close()
-            this.cosmosApp = undefined
-            throw new Error(`Cosmos app is not open`)
-        case `Command not allowed`:
-            throw new Error(`Transaction rejected`)
-        case `Transaction rejected`:
-            throw new Error(rejectionMessage)
-        case `Unknown error code`:
-            throw new Error(`Ledger's screensaver mode is on`)
-        case `Instruction not supported`:
-            throw new Error(
-                `Your Cosmos Ledger App is not up to date. ` +
-                `Please update to version ${REQUIRED_COSMOS_APP_VERSION}.`
-            )
-        case `No errors`:
-            // do nothing
-            break
-        default:
-            throw new Error(error_message)
+            case `U2F: Timeout`:
+                throw new Error(timeoutMessag)
+            case `Cosmos app does not seem to be open`:
+                // hack:
+                // It seems that when switching app in Ledger, WebUSB will disconnect, disabling further action.
+                // So we clean up here, and re-initialize this.cosmosApp next time when calling `connect`
+                this.cosmosApp.transport.close()
+                this.cosmosApp = undefined
+                throw new Error(`Cosmos app is not open`)
+            case `Command not allowed`:
+                throw new Error(`Transaction rejected`)
+            case `Transaction rejected`:
+                throw new Error(rejectionMessage)
+            case `Unknown error code`:
+                throw new Error(`Ledger's screensaver mode is on`)
+            case `Instruction not supported`:
+                throw new Error(
+                    `Your Cosmos Ledger App is not up to date. ` +
+                    `Please update to version ${REQUIRED_COSMOS_APP_VERSION}.`
+                )
+            case `No errors`:
+                // do nothing
+                break
+            default:
+                throw new Error(error_message)
         }
     }
 
@@ -218,7 +218,7 @@ export class Ledger {
         return JSON.stringify(canonicalizeJson(txFieldsToSign));
     }
 
-    static applyGas(unsignedTx, gas, gasPrice=DEFAULT_GAS_PRICE, denom=DEFAULT_DENOM) {
+    static applyGas(unsignedTx, gas, gasPrice = DEFAULT_GAS_PRICE, denom = DEFAULT_DENOM) {
         if (typeof unsignedTx === 'undefined') {
             throw new Error('undefined unsignedTx');
         }
@@ -229,10 +229,10 @@ export class Ledger {
         // eslint-disable-next-line no-param-reassign
         unsignedTx.value.fee = {
             amount: [{
-                amount: Math.ceil(gas * gasPrice).toString(),
+                amount: Math.ceil(gas * gasPrice).toLocaleString('fullwide', { useGrouping: false }),
                 denom: denom,
             }],
-            gas: gas.toString(),
+            gas: gas.toLocaleString('fullwide', { useGrouping: false }),
         };
 
         return unsignedTx;
@@ -272,7 +272,7 @@ export class Ledger {
     }
 
     // Creates a new tx skeleton
-    static createSkeleton(txContext, msgs=[]) {
+    static createSkeleton(txContext, msgs = []) {
         if (typeof txContext === 'undefined') {
             throw new Error('undefined txContext');
         }
@@ -314,7 +314,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgDelegate',
             value: {
                 amount: {
-                    amount: uatomAmount.toString(),
+                    amount: uatomAmount.toLocaleString('fullwide', { useGrouping: false }),
                     denom: txContext.denom,
                 },
                 delegator_address: txContext.bech32,
@@ -336,7 +336,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgUndelegate',
             value: {
                 amount: {
-                    amount: uatomAmount.toString(),
+                    amount: uatomAmount.toLocaleString('fullwide', { useGrouping: false }),
                     denom: txContext.denom,
                 },
                 delegator_address: txContext.bech32,
@@ -359,7 +359,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgBeginRedelegate',
             value: {
                 amount: {
-                    amount: uatomAmount.toString(),
+                    amount: uatomAmount.toLocaleString('fullwide', { useGrouping: false }),
                     denom: txContext.denom,
                 },
                 delegator_address: txContext.bech32,
@@ -382,7 +382,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgSend',
             value: {
                 amount: [{
-                    amount: amount.toString(),
+                    amount: amount.toLocaleString('fullwide', { useGrouping: false }),
                     denom: txContext.denom
                 }],
                 from_address: txContext.bech32,
@@ -410,7 +410,7 @@ export class Ledger {
                     }
                 },
                 initial_deposit: [{
-                    amount: deposit.toString(),
+                    amount: deposit.toLocaleString('fullwide', { useGrouping: false }),
                     denom: txContext.denom
                 }],
                 proposer: txContext.bech32
@@ -446,7 +446,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgDeposit',
             value: {
                 amount: [{
-                    amount: amount.toString(),
+                    amount: amount.toLocaleString('fullwide', { useGrouping: false }),
                     denom: txContext.denom
                 }],
                 depositor: txContext.bech32,
