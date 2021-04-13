@@ -8,7 +8,7 @@ export default TransactionsContainer = withTracker((props) => {
     transactionsExist;
   let loading = true;
   if (Meteor.isClient) {
-    transactionsHandle = Meteor.subscribe('transactions.address', props.validator, props.delegator, props.limit);
+    transactionsHandle = Meteor.subscribe('transactions.validator', props.validator, props.delegator, props.limit);
     loading = !transactionsHandle.ready();
   }
 
