@@ -491,6 +491,9 @@ body {
     .validator-avatar {
       max-width: 150px;
       margin: 0 auto;
+      img.img-fluid {
+        max-width: 100% !important;
+      }
     }
 
     .card {
