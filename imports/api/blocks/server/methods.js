@@ -562,8 +562,9 @@ Meteor.methods({
                                     try {
                                         if (validator.description && validator.description.identity) {
                                             let profileUrl = getValidatorProfileUrl(validator.description.identity)
-                                            if (profileUrl) {
-                                                bulkValidators.find({ address: validator.address }).upsert().updateOne({ $set: { 'profile_url': profileUrl } });
+                                            if (profileUrl && profileUrl != validator.profile_url) {
+                                                console.log("new profile picture for " + validator.address + " : " + profileUrl)
+                                                Validators.upsert({ address: validator.address }, { $set: { 'profile_url': profileUrl } })
                                             }
                                         }
                                     } catch (e) {
