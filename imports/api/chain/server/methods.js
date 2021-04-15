@@ -71,6 +71,21 @@ Meteor.methods({
       }
       chain.activeVotingPower = activeVP;
 
+      // Staking parameters must be fetched since removal of 
+      // readGenesis setting. They are needed for delegate button
+      // from a Ledger on validator page.
+      url = LCD + '/staking/parameters';
+      try {
+        response = HTTP.get(url);
+        let params = JSON.parse(response.content).result;
+        chain.staking = {
+          params: params
+        };
+      }
+      catch (e) {
+        console.log(url);
+        console.log(e);
+      }
 
       Chain.update({ chainId: chain.chainId }, { $set: chain }, { upsert: true });
       // Get chain states
