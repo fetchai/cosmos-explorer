@@ -3,6 +3,7 @@
 // https://github.com/cosmos/ledger-cosmos-js/blob/master/src/index.js
 import 'babel-polyfill';
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
+import BluetoothTransport from "@ledgerhq/hw-transport-web-ble";
 import CosmosApp from "ledger-cosmos-js"
 import { signatureImport } from "secp256k1"
 import semver from "semver"
@@ -55,7 +56,7 @@ export class Ledger {
     async testDevice() {
         // poll device with low timeout to check if the device is connected
         const secondsTimeout = 3 // a lower value always timeouts
-        await this.connect(secondsTimeout)
+        await this.connect(secondsTimeout, false)
     }
     async isSendingData() {
         // check if the device is connected or on screensaver mode
@@ -74,23 +75,46 @@ export class Ledger {
         }
 
         // throws if not open
-        await this.isCosmosAppOpen()
+        await this.isCosmosAppOpen(transportBLE)
     }
     // connects to the device and checks for compatibility
-    async connect(timeout = INTERACTION_TIMEOUT) {
+    async connect(timeout = INTERACTION_TIMEOUT, transportBLE) {
         // assume well connection if connected once
         if (this.cosmosApp) return
-
-        const transport = await TransportWebUSB.create(timeout)
+        let transport;
+        if(transportBLE === true || transportBLE === 'true'){
+            transport = await BluetoothTransport.create(timeout)
+        }
+        else{
+            transport= await TransportWebUSB.create(timeout)
+        }
         const cosmosLedgerApp = new CosmosApp(transport)
 
         this.cosmosApp = cosmosLedgerApp
 
         await this.isSendingData()
-        await this.isReady()
+        await this.isReady(transportBLE)
     }
-    async getCosmosAppVersion() {
-        await this.connect()
+
+    async getDevice(){
+        return new Promise((resolve, reject) => {
+            const subscription = BluetoothTransport.listen({
+                next(event) {
+                    if (event.type === 'add') {
+                        subscription.unsubscribe();
+                        resolve(event.descriptor);
+                    }
+                },
+                error(error) {
+                    reject(error);
+                },
+                complete() {
+                }
+            });
+        });
+    }
+    async getCosmosAppVersion(transportBLE) {
+        await this.connect(INTERACTION_TIMEOUT, transportBLE)
 
         const response = await this.cosmosApp.getVersion()
         this.checkLedgerErrors(response)
@@ -100,8 +124,8 @@ export class Ledger {
 
         return version
     }
-    async isCosmosAppOpen() {
-        await this.connect()
+    async isCosmosAppOpen(transportBLE) {
+        await this.connect(INTERACTION_TIMEOUT, transportBLE)
 
         const response = await this.cosmosApp.appInfo()
         this.checkLedgerErrors(response)
@@ -111,21 +135,21 @@ export class Ledger {
             throw new Error(`Close ${appName} and open the ${Meteor.settings.public.ledger.appName} app`)
         }
     }
-    async getPubKey() {
-        await this.connect()
+    async getPubKey(transportBLE) {
+        await this.connect(INTERACTION_TIMEOUT, transportBLE)
 
         const response = await this.cosmosApp.publicKey(HDPATH)
         this.checkLedgerErrors(response)
         return response.compressed_pk
     }
-    async getCosmosAddress() {
-        await this.connect()
+    async getCosmosAddress(transportBLE) {
+        await this.connect(INTERACTION_TIMEOUT, transportBLE)
 
         const pubKey = await this.getPubKey(this.cosmosApp)
         return { pubKey, address: createCosmosAddress(pubKey) }
     }
-    async confirmLedgerAddress() {
-        await this.connect()
+    async confirmLedgerAddress(transportBLE) {
+        await this.connect(INTERACTION_TIMEOUT, transportBLE)
         const cosmosAppVersion = await this.getCosmosAppVersion()
 
         if (semver.lt(cosmosAppVersion, REQUIRED_COSMOS_APP_VERSION)) {
@@ -142,8 +166,8 @@ export class Ledger {
         })
     }
 
-    async sign(signMessage) {
-        await this.connect()
+    async sign(signMessage, transportBLE) {
+        await this.connect(INTERACTION_TIMEOUT, transportBLE)
 
         const response = await this.cosmosApp.sign(HDPATH, signMessage)
         this.checkLedgerErrors(response)
