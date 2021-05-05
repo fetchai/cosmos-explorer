@@ -34,6 +34,7 @@ common:
     retry: 'Retry'
     rewards: 'Rewards'
     bondedTokens: 'Bonded Tokens'
+    totalNumOfDelegations: 'Total Number of Delegations'
 navbar:
     siteName: 'BIG DIPPER'
     version: 'beta'
