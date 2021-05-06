@@ -3,6 +3,7 @@
         "chainName": "Cosmos Testnet",
         "chainId": "{Chain ID}",
         "gtm": "{Add your Google Tag Manager ID here}",
+        "genesisTime": "2021-05-05T13:55:24.316066163Z",
         "slashingWindow": 10000,
         "uptimeWindow": 250,
         "initialPageSize": 30,
@@ -27,7 +28,7 @@
                 "fraction": 1000000
             }
         ],
-        "ledger":{
+        "ledger": {
             "coinType": 118,
             "appName": "Cosmos",
             "appVersion": "2.16.0",
