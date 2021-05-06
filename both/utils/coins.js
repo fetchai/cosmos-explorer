@@ -1,6 +1,7 @@
 /* eslint-disable no-tabs */
 import { Meteor } from 'meteor/meteor';
 import numbro from 'numbro';
+import Big from 'big.js';
 
 autoformat = (value) => {
     let formatter = '0,0.0000';
