@@ -203,17 +203,18 @@ Meteor.methods({
                         }
                     }
 
-                    if (Meteor.settings.public.modules.gov) {
-                        // update mint params
-                        try {
-                            url = API + '/cosmos/gov/v1beta1/params';
-                            response = HTTP.get(url);
-                            chain.gov = JSON.parse(response.content);
-                        }
-                        catch (e) {
-                            console.log(e);
-                        }
-                    }
+                    // disabled as it throws "Not implemented" errors
+                    // if (Meteor.settings.public.modules.gov) {
+                    //     // update mint params
+                    //     try {
+                    //         url = API + '/cosmos/gov/v1beta1/params';
+                    //         response = HTTP.get(url);
+                    //         chain.gov = JSON.parse(response.content);
+                    //     }
+                    //     catch (e) {
+                    //         console.log(e);
+                    //     }
+                    // }
                 }
 
                 ChainStates.insert(chainStates);

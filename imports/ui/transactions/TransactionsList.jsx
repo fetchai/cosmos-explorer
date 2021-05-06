@@ -31,6 +31,9 @@ export default class Transactions extends Component {
     }
 
     isBottom(el) {
+        if (!el) {
+            return false;
+        }
         return el.getBoundingClientRect().bottom <= window.innerHeight;
     }
 
@@ -115,35 +118,7 @@ export default class Transactions extends Component {
         </div> : <Card className="h-100 overflow-auto">
             <div className="card-header"><T>transactions.transactions</T></div>
             <CardBody className="tx-list-homepage">
-                <Table striped className="tx-home">
-                    <thead>
-                        <tr>
-                            <Switch>
-                                <Route path="/transactions/:txId" render={(props) => <Sidebar
-                                    sidebar={<Transaction {...props} />}
-                                    open={this.state.sidebarOpen}
-                                    onSetOpen={this.onSetSidebarOpen}
-                                    styles={{
-                                        sidebar: {
-                                            background: "white",
-                                            position: "fixed",
-                                            width: '85%',
-                                            zIndex: 4
-                                        }, overlay: {
-                                            zIndex: 3
-                                        }
-                                    }}
-                                >
-                                </Sidebar>} />
-
-                            </Switch>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <List limit={this.state.limit} /></tbody>
-
-
-                </Table>
+                <List limit={this.state.limit} />
             </CardBody>
         </Card>;
     }

@@ -13,49 +13,52 @@ import {
 
 const T = i18n.createComponent();
 export default class BlocksTable extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             limit: props.homepage ? 20 : Meteor.settings.public.initialPageSize,
             sidebarOpen: (props?.location?.pathname.split("/blocks/").length == 2)
         };
 
-    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
-  }
+        this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
+    }
 
-  isBottom(el) {
-    return el.getBoundingClientRect().bottom <= window.innerHeight;
-  }
+    isBottom(el) {
+        if (!el) {
+            return false;
+        }
+        return el.getBoundingClientRect().bottom <= window.innerHeight;
+    }
 
-  componentDidMount() {
-    document.addEventListener('scroll', this.trackScrolling);
-  }
+    componentDidMount() {
+        document.addEventListener('scroll', this.trackScrolling);
+    }
 
-  componentWillUnmount() {
-    document.removeEventListener('scroll', this.trackScrolling);
-  }
+    componentWillUnmount() {
+        document.removeEventListener('scroll', this.trackScrolling);
+    }
 
     trackScrolling = () => {
-      const wrappedElement = document.getElementById('block-table');
-      if (this.isBottom(wrappedElement)) {
-        // console.log('header bottom reached');
-        document.removeEventListener('scroll', this.trackScrolling);
-        this.setState({ loadmore: true });
-        this.setState({
-          limit: this.state.limit + 10,
-        }, (err, result) => {
-          if (!err) {
-            document.addEventListener('scroll', this.trackScrolling);
-          }
-          if (result) {
-            this.setState({ loadmore: false });
-          }
-        });
-      }
+        const wrappedElement = document.getElementById('block-table');
+        if (this.isBottom(wrappedElement)) {
+            // console.log('header bottom reached');
+            document.removeEventListener('scroll', this.trackScrolling);
+            this.setState({ loadmore: true });
+            this.setState({
+                limit: this.state.limit + 10,
+            }, (err, result) => {
+                if (!err) {
+                    document.addEventListener('scroll', this.trackScrolling);
+                }
+                if (result) {
+                    this.setState({ loadmore: false });
+                }
+            });
+        }
     };
 
-    componentDidUpdate(prevProps){
-        if (this.props?.location?.pathname != prevProps?.location?.pathname){
+    componentDidUpdate(prevProps) {
+        if (this.props?.location?.pathname != prevProps?.location?.pathname) {
             this.setState({
                 sidebarOpen: (this.props.location.pathname.split("/blocks/").length == 2)
             })
@@ -63,18 +66,18 @@ export default class BlocksTable extends Component {
     }
 
     onSetSidebarOpen(open) {
-      // console.log(open);
-      this.setState({ sidebarOpen: open }, (error, result) => {
-        const timer = Meteor.setTimeout(() => {
-          if (!open) {
-            this.props.history.push('/blocks');
-          }
-          Meteor.clearTimeout(timer);
-        }, 500);
-      });
+        // console.log(open);
+        this.setState({ sidebarOpen: open }, (error, result) => {
+            const timer = Meteor.setTimeout(() => {
+                if (!open) {
+                    this.props.history.push('/blocks');
+                }
+                Meteor.clearTimeout(timer);
+            }, 500);
+        });
     }
 
-    render(){
+    render() {
 
         return !this.props.homepage ? <div>
             <Helmet>
@@ -86,18 +89,20 @@ export default class BlocksTable extends Component {
                 <Col md={9} xs={12} className="text-md-right"><ChainStates /></Col>
             </Row>
             <Switch>
-                <Route path="/blocks/:blockId" render={(props)=> <Sidebar 
+                <Route path="/blocks/:blockId" render={(props) => <Sidebar
                     sidebar={<Block {...props} />}
                     open={this.state.sidebarOpen}
                     onSetOpen={this.onSetSidebarOpen}
-                    styles={{ sidebar: { 
-                        background: "white", 
-                        position: "fixed",
-                        width: '85%',
-                        zIndex: 4
-                    }, overlay:{
-                        zIndex: 3
-                    } }}
+                    styles={{
+                        sidebar: {
+                            background: "white",
+                            position: "fixed",
+                            width: '85%',
+                            zIndex: 4
+                        }, overlay: {
+                            zIndex: 3
+                        }
+                    }}
                 >
                 </Sidebar>} />
             </Switch>
@@ -111,34 +116,7 @@ export default class BlocksTable extends Component {
             : <Card className="h-100 overflow-auto">
                 <div className="card-header"><T>blocks.latestBlocks</T></div>
                 <CardBody className="overflow-auto">
-                    <Table striped className="random-validators">
-                        <thead>
-                            <tr>
-                                <HeaderRecord homepage={true}/>
-                                <Switch>
-                                    <Route path="/blocks/:blockId" render={(props) => <Sidebar
-                                        sidebar={<Block {...props} />}
-                                        open={this.state.sidebarOpen}
-                                        onSetOpen={this.onSetSidebarOpen}
-                                        styles={{
-                                            sidebar: {
-                                                background: "white",
-                                                position: "fixed",
-                                                width: '85%',
-                                                zIndex: 4
-                                            }, overlay: {
-                                                zIndex: 3
-                                            }
-                                        }}
-                                    >
-                                    </Sidebar>} />
-                                    
-                                </Switch>
-                            </tr>
-                        </thead>
-                        <tbody> 
-                            <Blocks limit={this.state.limit} /></tbody>
-                    </Table>
+                    <Blocks limit={this.state.limit} />
                 </CardBody>
             </Card>;
     }
