@@ -20,38 +20,41 @@ export default class BlocksTable extends Component {
       sidebarOpen: (props.location.pathname.split('/blocks/').length === 2),
     };
 
-    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
-  }
+        this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
+    }
 
-  isBottom(el) {
-    return el.getBoundingClientRect().bottom <= window.innerHeight;
-  }
+    isBottom(el) {
+        if (!el) {
+            return false;
+        }
+        return el.getBoundingClientRect().bottom <= window.innerHeight;
+    }
 
-  componentDidMount() {
-    document.addEventListener('scroll', this.trackScrolling);
-  }
+    componentDidMount() {
+        document.addEventListener('scroll', this.trackScrolling);
+    }
 
-  componentWillUnmount() {
-    document.removeEventListener('scroll', this.trackScrolling);
-  }
+    componentWillUnmount() {
+        document.removeEventListener('scroll', this.trackScrolling);
+    }
 
     trackScrolling = () => {
-      const wrappedElement = document.getElementById('block-table');
-      if (this.isBottom(wrappedElement)) {
-        // console.log('header bottom reached');
-        document.removeEventListener('scroll', this.trackScrolling);
-        this.setState({ loadmore: true });
-        this.setState({
-          limit: this.state.limit + 10,
-        }, (err, result) => {
-          if (!err) {
-            document.addEventListener('scroll', this.trackScrolling);
-          }
-          if (result) {
-            this.setState({ loadmore: false });
-          }
-        });
-      }
+        const wrappedElement = document.getElementById('block-table');
+        if (this.isBottom(wrappedElement)) {
+            // console.log('header bottom reached');
+            document.removeEventListener('scroll', this.trackScrolling);
+            this.setState({ loadmore: true });
+            this.setState({
+                limit: this.state.limit + 10,
+            }, (err, result) => {
+                if (!err) {
+                    document.addEventListener('scroll', this.trackScrolling);
+                }
+                if (result) {
+                    this.setState({ loadmore: false });
+                }
+            });
+        }
     };
 
     componentDidUpdate(prevProps) {
@@ -63,15 +66,15 @@ export default class BlocksTable extends Component {
     }
 
     onSetSidebarOpen(open) {
-      // console.log(open);
-      this.setState({ sidebarOpen: open }, (error, result) => {
-        const timer = Meteor.setTimeout(() => {
-          if (!open) {
-            this.props.history.push('/blocks');
-          }
-          Meteor.clearTimeout(timer);
-        }, 500);
-      });
+        // console.log(open);
+        this.setState({ sidebarOpen: open }, (error, result) => {
+            const timer = Meteor.setTimeout(() => {
+                if (!open) {
+                    this.props.history.push('/blocks');
+                }
+                Meteor.clearTimeout(timer);
+            }, 500);
+        });
     }
 
     render() {
