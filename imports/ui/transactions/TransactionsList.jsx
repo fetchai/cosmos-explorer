@@ -2,19 +2,17 @@ import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
 import { Meteor } from 'meteor/meteor';
 import { Route, Switch } from 'react-router-dom';
-import Sidebar from 'react-sidebar';
+import Transaction from './TransactionContainer.js';
+import Sidebar from "react-sidebar";
+import ChainStates from '../components/ChainStatesContainer.js'
 import { Helmet } from 'react-helmet';
 import i18n from 'meteor/universe:i18n';
-import ChainStates from '../components/ChainStatesContainer.js';
-import Transaction from './TransactionContainer.js';
-import { LoadMore } from '../components/LoadMore.jsx';
-import List from './ListContainer.js';
 
 const T = i18n.createComponent();
 
 export default class Transactions extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
     this.state = {
       limit: Meteor.settings.public.initialPageSize,
@@ -27,8 +25,8 @@ export default class Transactions extends Component {
       sidebarOpen: (props.location.pathname.split('/transactions/').length == 2),
     };
 
-    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
-  }
+        this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
+    }
 
   isBottom(el) {
     return el.getBoundingClientRect().bottom <= window.innerHeight;
@@ -48,37 +46,37 @@ export default class Transactions extends Component {
         sidebarOpen: (this.props.location.pathname.split('/transactions/').length == 2),
       });
     }
-  }
 
     trackScrolling = () => {
-      const wrappedElement = document.getElementById('transactions');
-      if (this.isBottom(wrappedElement)) {
-        // console.log('header bottom reached');
-        document.removeEventListener('scroll', this.trackScrolling);
-        this.setState({ loadmore: true });
-        this.setState({
-          limit: this.state.limit + 10,
-        }, (err, result) => {
-          if (!err) {
-            document.addEventListener('scroll', this.trackScrolling);
-          }
-          if (result) {
-            this.setState({ loadmore: false });
-          }
-        });
-      }
+        const wrappedElement = document.getElementById('transactions');
+        if (this.isBottom(wrappedElement)) {
+            // console.log('header bottom reached');
+            document.removeEventListener('scroll', this.trackScrolling);
+            this.setState({ loadmore: true });
+            this.setState({
+                limit: this.state.limit + 10
+            }, (err, result) => {
+                if (!err) {
+                    document.addEventListener('scroll', this.trackScrolling);
+                }
+                if (result) {
+                    this.setState({ loadmore: false });
+                }
+            })
+        }
     };
 
     onSetSidebarOpen(open) {
-      // console.log(open);
-      this.setState({ sidebarOpen: open }, (error, result) => {
-        const timer = Meteor.setTimeout(() => {
-          if (!open) {
-            this.props.history.push('/transactions');
-          }
-          Meteor.clearTimeout(timer);
-        }, 500);
-      });
+        // console.log(open);
+        this.setState({ sidebarOpen: open }, (error, result) => {
+            let timer = Meteor.setTimeout(() => {
+                if (!open) {
+                    this.props.history.push('/transactions');
+                }
+                Meteor.clearTimeout(timer);
+            }, 500)
+        });
+
     }
 
     render() {

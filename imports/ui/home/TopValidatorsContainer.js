@@ -26,15 +26,17 @@ export default TopValidatorsContainer = withTracker(() => {
     if (Meteor.isServer) {
       // loading = false;
       validatorsExist = !!validators && !!status;
-    } else {
+    }
+    else {
       validatorsExist = !loading && !!validators && !!status;
     }
+
   }
 
   return {
     loading,
     validatorsExist,
     status: validatorsExist ? status : {},
-    validators: validatorsExist ? validators : {},
+    validators: validatorsExist ? validators : {}
   };
 })(TopValidators);

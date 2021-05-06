@@ -1,29 +1,16 @@
 import React, { Component } from 'react';
-import {
-    Card,
-    CardBody,
-    CardHeader,
-    Col,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
-    Progress,
-    Row,
-    Spinner,
-    UncontrolledDropdown,
-} from 'reactstrap';
+import { Spinner, UncontrolledTooltip, Row, Col, Card, CardHeader, CardBody, Progress, UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap';
 import numbro from 'numbro';
-import { Helmet } from 'react-helmet';
-import { Meteor } from 'meteor/meteor';
-import i18n from 'meteor/universe:i18n';
 import AccountCopy from '../components/AccountCopy.jsx';
 import LinkIcon from '../components/LinkIcon.jsx';
 import Delegations from './Delegations.jsx';
 import Unbondings from './Unbondings.jsx';
 import AccountTransactions from '../components/TransactionsContainer.js';
-import ChainStates from '../components/ChainStatesContainer.js';
-import { TransferButton, WithdrawButton } from '../ledger/LedgerActions.jsx';
-import Coin from '/both/utils/coins.js';
+import ChainStates from '../components/ChainStatesContainer.js'
+import { Helmet } from 'react-helmet';
+import { WithdrawButton, TransferButton } from '../ledger/LedgerActions.jsx';
+import i18n from 'meteor/universe:i18n';
+import Coin from '/both/utils/coins.js'
 
 const T = i18n.createComponent();
 
@@ -52,7 +39,7 @@ export default class AccountDetails extends Component {
             user: localStorage.getItem(CURRENTUSERADDR),
             commission: [defaultCoin],
             denom: '',
-            rewardsForEachDel: {defaultCoin},
+            rewardsForEachDel: { defaultCoin },
             rewardDenomType: [defaultCoin],
         }
     }

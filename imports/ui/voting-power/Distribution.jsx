@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Col, Row } from 'reactstrap';
-import { Helmet } from 'react-helmet';
-import { Meteor } from 'meteor/meteor';
-import i18n from 'meteor/universe:i18n';
+import { Row, Col } from 'reactstrap';
 import TwentyEighty from './TwentyEightyContainer.js';
 import ThirtyFour from './ThirtyFourContainer.js';
 import VotingPower from './VotingPowerContainer.js';
-import ChainStates from '../components/ChainStatesContainer.js';
+import ChainStates from '../components/ChainStatesContainer.js'
+import { Helmet } from 'react-helmet';
+import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
 
@@ -46,7 +45,6 @@ export default class Distribution extends Component {
           </Col>
         </Row>
 
-      </div>
-    );
+    </div>
   }
 }

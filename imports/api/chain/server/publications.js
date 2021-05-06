@@ -1,18 +1,16 @@
 import { Meteor } from 'meteor/meteor';
-import { publishComposite } from 'meteor/reywood:publish-composite';
 import { Chain, ChainStates } from '../chain.js';
 import { CoinStats } from '../../coin-stats/coin-stats.js';
 import { Validators } from '../../validators/validators.js';
 
-
 Meteor.publish('chainStates.latest', function () {
   return [
     ChainStates.find({}, { sort: { height: -1 }, limit: 1 }),
-    CoinStats.find({}, { sort: { last_updated_at: -1 }, limit: 1 }),
+    CoinStats.find({}, { sort: { last_updated_at: -1 }, limit: 1 })
   ];
 });
 
-publishComposite('chain.status', function() {
+publishComposite('chain.status', function () {
   return {
     find() {
       return Chain.find({ chainId: Meteor.settings.public.chainId });

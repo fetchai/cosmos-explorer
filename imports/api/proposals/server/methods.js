@@ -89,11 +89,9 @@ Meteor.methods({
 
           }
         }
-      }
+        return true
     }
-    return true;
-  },
-});
+})
 
 const getVoteDetail = (votes) => {
   if (!votes) {
@@ -142,19 +140,6 @@ const getVoteDetail = (votes) => {
             });
           }
         }
-      } catch (e) {
-        console.log(e.response.content);
-      }
-      votingPowerMap[voter] = { votingPower };
-    }
-  });
-  return votes.map((vote) => {
-    const voter = votingPowerMap[vote.voter];
-    let { votingPower } = voter;
-    if (votingPower == undefined) {
-      // voter is a validator
-      votingPower = voter.delegatorShares ? ((voter.deductedShares / voter.delegatorShares) * voter.tokens) : 0;
-    }
-    return { ...vote, votingPower };
-  });
-};
+        return { ...vote, votingPower };
+    });
+}

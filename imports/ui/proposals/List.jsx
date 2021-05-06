@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Spinner, Table } from 'reactstrap';
+import { Table, Spinner } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { DenomSymbol, ProposalStatusIcon } from '../components/Icons.jsx';
+import numbro from 'numbro';
 import i18n from 'meteor/universe:i18n';
-import { ProposalStatusIcon } from '../components/Icons.jsx';
-import Coin from '/both/utils/coins.js';
+import Coin from '/both/utils/coins.js'
 import TimeStamp from '../components/TimeStamp.jsx';
 // import { SubmitProposalButton } from '../ledger/LedgerActions.jsx';
 import voca from 'voca';
@@ -48,13 +49,16 @@ export default class List extends Component {
     if (Meteor.isServer) {
       if (this.props.proposals.length > 0) {
         this.state = {
-          proposals: this.props.proposals.map((proposal, i) => <ProposalRow key={i} index={i} proposal={proposal} />),
-        };
+          proposals: this.props.proposals.map((proposal, i) => {
+            return <ProposalRow key={i} index={i} proposal={proposal} />
+          })
+        }
       }
-    } else {
+    }
+    else {
       this.state = {
-        proposals: null,
-      };
+        proposals: null
+      }
     }
   }
 
@@ -69,8 +73,10 @@ export default class List extends Component {
     if (this.props.proposals != prevState.proposals) {
       if (this.props.proposals.length > 0) {
         this.setState({
-          proposals: this.props.proposals.map((proposal, i) => <ProposalRow key={i} index={i} proposal={proposal} />),
-        });
+          proposals: this.props.proposals.map((proposal, i) => {
+            return <ProposalRow key={i} index={i} proposal={proposal} />
+          })
+        })
       }
     }
   }
@@ -79,64 +85,5 @@ export default class List extends Component {
     if (this.props.loading) {
       return <Spinner type="grow" color="primary" />;
     }
-
-    return (
-      <div>
-        {this.state.user ? <SubmitProposalButton history={this.props.history} /> : null}
-        <Table striped className="proposal-list">
-          <thead>
-            <tr>
-              <th className="d-none d-sm-table-cell counter">
-                <i className="fas fa-hashtag" />
-                {' '}
-                <T>proposals.proposalID</T>
-              </th>
-              <th className="title">
-                <i className="material-icons">view_headline</i>
-                {' '}
-                <span className="d-none d-sm-inline">
-                  <T>proposals.title</T>
-                </span>
-              </th>
-              <th className="status">
-                <i className="fas fa-toggle-on" />
-                {' '}
-                <span className="d-none d-sm-inline">
-                  <T>proposals.status</T>
-                </span>
-              </th>
-              <th className="submit-block">
-                <i className="fas fa-box" />
-                {' '}
-                <span className="d-none d-sm-inline">
-                  <T>proposals.submitTime</T>
-                  {' '}
-                  (UTC)
-                </span>
-              </th>
-              <th className="voting-start">
-                <i className="fas fa-box-open" />
-                {' '}
-                <span className="d-none d-sm-inline">
-                  <T>proposals.votingStartTime</T>
-                  {' '}
-                  (UTC)
-                </span>
-              </th>
-              <th className="deposit text-right">
-                <i className="material-icons">attach_money</i>
-                {' '}
-                <span className="d-none d-sm-inline">
-                  <T>proposals.totalDeposit</T>
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.proposals}
-          </tbody>
-        </Table>
-      </div>
-    );
   }
 }
