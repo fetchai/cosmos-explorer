@@ -4,8 +4,6 @@ import { Row, Col } from 'reactstrap';
 import ChainStatus from './ChainStatusContainer.js';
 import ChainInfo from '../components/ChainInfo.jsx'
 import Consensus from './ConsensusContainer.js';
-import TopValidators from './TopValidatorsContainer.js';
-import Chart from './ChartContainer.js';
 import { Helmet } from "react-helmet";
 import BlocksTable from '/imports/ui/blocks/BlocksTable.jsx'
 import Transactions from '/imports/ui/transactions/TransactionsList.jsx'
@@ -18,8 +16,7 @@ export default class Home extends Component {
   render() {
     return <div id="home">
       <Helmet>
-        <title>Big Dipper | Cosmos Explorer presented by Forbole</title>
-        <meta name="description" content="Cosmos is a decentralized network of independent parallel blockchains, each powered by BFT consensus algorithms like Tendermint consensus." />
+        <title>Fetch.ai | Cosmos Explorer</title>
       </Helmet>
       <ChainInfo />
       <Consensus />
