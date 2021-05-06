@@ -1,8 +1,9 @@
 {
-    "public":{
+    "public": {
         "chainName": "Cosmos",
         "chainId": "{Chain ID}",
         "gtm": "{Add your Google Tag Manager ID here}",
+        "genesisTime": "2021-05-05T13:55:24.316066163Z",
         "slashingWindow": 10000,
         "uptimeWindow": 250,
         "initialPageSize": 30,
@@ -27,7 +28,7 @@
                 "fraction": 1000000
             }
         ],
-        "ledger":{
+        "ledger": {
             "coinType": 118,
             "appName": "Cosmos",
             "appVersion": "2.16.0",
@@ -44,9 +45,9 @@
         "networks": "https://gist.githubusercontent.com/kwunyeung/8be4598c77c61e497dfc7220a678b3ee/raw/bd-networks.json",
         "banners": false
     },
-    "remote":{
-        "rpc":"https://rpc.stargate.forbole.com:443",
-        "api":"https://api.stargate.forbole.com:443"
+    "remote": {
+        "rpc": "https://rpc.stargate.forbole.com:443",
+        "api": "https://api.stargate.forbole.com:443"
     },
     "debug": {
         "startTimer": true
