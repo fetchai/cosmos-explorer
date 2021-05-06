@@ -22,50 +22,39 @@ export default ValidatorDetailsContainer = withTracker((props) => {
   let options = { address: props.address };
 
   let chainStatus;
+  let stakingParams;
   let validatorExist;
   let validator;
   let validatorRecords;
 
   if (Meteor.isServer || !loading) {
     if (props.address.indexOf(Meteor.settings.public.bech32PrefixValAddr) != -1) {
-      options = { operator_address: props.address };
+      options = { operator_address: props.address }
     }
     validator = Validators.findOne(options);
 
-    let options = {address:props.address};
-
-    let chainStatus;
-    let stakingParams;
-    let validatorExist;
-    let validator;
-    let validatorRecords;
-
-    if (Meteor.isServer || !loading){
-        if (props.address.indexOf(Meteor.settings.public.bech32PrefixValAddr) != -1){
-            options = {operator_address:props.address}
-        }
-        validator = Validators.findOne(options);
-
-        if (validator){
-            validatorRecords = ValidatorRecords.find({address:validator.address}, {sort:{height:-1}}).fetch();
-        }
-
-        chainStatus = Chain.findOne({chainId:Meteor.settings.public.chainId});
+    if (validator) {
+      validatorRecords = ValidatorRecords.find({ address: validator.address }, { sort: { height: -1 } }).fetch();
+    }
 
     chainStatus = Chain.findOne({ chainId: Meteor.settings.public.chainId });
 
     if (Meteor.isServer) {
       loading = false;
       validatorExist = !!validator && !!validatorRecords && !!chainStatus;
-    } else {
+    }
+    else {
       validatorExist = !loading && !!validator && !!validatorRecords && !!chainStatus;
     }
-    // console.log(props.state.limit);
-    return {
-        loading,
-        validatorExist,
-        validator: validatorExist ? validator : {},
-        records: validatorExist ? validatorRecords : {},
-        chainStatus: validatorExist ? chainStatus : {},
-    };
+
+    // loading = false;
+  }
+  // console.log(props.state.limit);
+  return {
+    loading,
+    validatorExist,
+    validator: validatorExist ? validator : {},
+    records: validatorExist ? validatorRecords : {},
+    chainStatus: validatorExist ? chainStatus : {},
+  };
 })(Validator);
