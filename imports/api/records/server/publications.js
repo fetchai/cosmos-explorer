@@ -66,7 +66,15 @@ publishComposite('missedrecords.validator', function(address, type) {
             { fields: { address: 1, description: 1, operator_address: 1 } },
           );
         },
-      },
-    ],
-  };
+        children: [
+            {
+                find(){
+                    return Validators.find(
+                        {},
+                        {fields:{address:1, description:1, operatorAddress:1}}
+                    )
+                }
+            }
+        ]
+    }
 });

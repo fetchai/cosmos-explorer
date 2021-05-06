@@ -15,10 +15,34 @@ export default class MissedBlocks extends Component {
     return this.props.match.path.indexOf('/missed/blocks') > 0;
   }
 
-  render() {
-    if (this.props.loading) {
-      return <Spinner type="grow" color="primary" />;
-    }
+    render() {
+        if (this.props.loading){
+            return <Spinner type="grow" color="primary" />
+        }
+        else{
+            if (this.props.validatorExist){
+                return <div>
+                    <Helmet>
+                        <title>{ this.props.validator.description.moniker } - Missed Blocks | Big Dipper</title>
+                        <meta name="description" content={"The missed blocks and precommits of "+this.props.validator.description.moniker} />
+                    </Helmet>
+                    <Link to={"/validator/"+this.props.validator.address} className="btn btn-link"><i className="fas fa-caret-left"></i> <T>validators.backToValidator</T></Link>
+                    <h2><T moniker={this.props.validator.description.moniker}>validators.missedBlocksTitle</T></h2>
+                    <Nav pills>
+                        <NavItem>
+                            <NavLink tag={Link} to={"/validator/"+this.props.validator.address+"/missed/blocks"} active={this.isVoter()}><T>validators.missedBlocks</T></NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink tag={Link} to={"/validator/"+this.props.validator.address+"/missed/precommits"} active={!this.isVoter()}><T>validators.missedPrecommits</T></NavLink>
+                        </NavItem>
+                    </Nav>
+                    {(this.props.missedRecords&&this.props.missedRecords.length>0)?
+                        <div className="mt-3">
+                            <p className="lead"><T>validators.totalMissed</T> {this.isVoter()?<T>common.blocks</T>:<T>common.precommits</T>}: {this.props.missedRecords.length}</p>
+                            <CardDeck>
+                                <TimeDistubtionChart missedRecords={this.props.missedRecords} type={this.isVoter()?'blocks':'precommits'}/>
+                            </CardDeck>
+                            <MissedBlocksTable missedStats={this.props.missedRecordsStats} missedRecords={this.props.missedRecords} type={this.isVoter()?'proposer':'voter'}/>
 
     if (this.props.validatorExist) {
       return (

@@ -3,16 +3,14 @@ import { Transactions } from '../../transactions/transactions.js';
 import { Blockscon } from '../../blocks/blocks.js';
 
 Meteor.methods({
-    'Validators.findCreateValidatorTime': function (address) {
+    'Validators.findCreateValidatorTime': function(address){
         this.unblock();
         // look up the create validator time to consider if the validator has never updated the commission
-        let tx = Transactions.findOne({
-            $and: [
-                { "tx.value.msg.value.delegator_address": address },
-                { "tx.value.msg.type": "cosmos-sdk/MsgCreateValidator" },
-                { code: { $exists: false } }
-            ]
-        });
+        let tx = Transactions.findOne({$and:[
+            {"tx.body.messages.delegator_address":address},
+            {"tx.body.messages.@type":"/cosmos.staking.v1beta1.MsgCreateValidator"},
+            {"tx_response.code":0}
+        ]});
 
         if (tx) {
             let block = Blockscon.findOne({ height: tx.height });
@@ -25,25 +23,20 @@ Meteor.methods({
             return false;
         }
     },
-    // async 'Validators.getAllDelegations'(address){
-    'Validators.getAllDelegations'(address) {
+    'Validators.getAllDelegations'(address){
         this.unblock();
-        let url = LCD + '/staking/validators/' + address + '/delegations';
+        let url = `${API}/cosmos/staking/v1beta1/validators/${address}/delegations?pagination.limit=10&pagination.count_total=true`;
 
         try {
             let delegations = HTTP.get(url);
             if (delegations.statusCode == 200) {
-                delegations = JSON.parse(delegations.content).result;
-                delegations.forEach((delegation, i) => {
-                    if (delegations[i] && delegations[i].shares)
-                        delegations[i].shares = parseFloat(delegations[i].shares);
-                })
-
-                return delegations;
+                let delegationsCount = JSON.parse(delegations.content)?.pagination?.total;
+                return delegationsCount;
             };
         }
         catch (e) {
-            console.log("Getting error: %o when fetching from %o", e, url);
+            console.log(url);
+            console.log("Getting error: %o when getting delegations count from %o", e, url);
         }
     }
 });

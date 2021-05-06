@@ -52,7 +52,7 @@ export default class AccountDetails extends Component {
             user: localStorage.getItem(CURRENTUSERADDR),
             commission: [defaultCoin],
             denom: '',
-            rewardsForEachDel: [defaultCoin],
+            rewardsForEachDel: {defaultCoin},
             rewardDenomType: [defaultCoin],
         }
     }
@@ -68,6 +68,8 @@ export default class AccountDetails extends Component {
 
         let numRewards = {};
 
+        let numRewards = {};
+        
         Meteor.call('coinStats.getStats', (error, result) => {
             if (result) {
                 this.setState({
@@ -83,9 +85,8 @@ export default class AccountDetails extends Component {
                 })
             }
 
-            if (result) {
-
-                if (result.available && (result.available.length > 0)) {
+            if (result){
+                if (result.available && (result.available.length > 0)){
 
                     this.setState({
                         available: cloneDeep(result.available),
@@ -104,7 +105,7 @@ export default class AccountDetails extends Component {
                     }, this)
 
                     this.state.total.forEach((total, i) => {
-                        if (total.denom === Meteor.settings.public.bondDenom)
+                        if(total.denom === Meteor.settings.public.bondDenom )
                             this.state.total[i].amount = parseFloat(this.state.total[i].amount) + parseFloat(this.state.delegated);
                     }, this)
 
@@ -128,8 +129,8 @@ export default class AccountDetails extends Component {
                     this.state.total.forEach((total, i) => {
                         if (total.denom === Meteor.settings.public.bondDenom)
                             this.state.total[i].amount = parseFloat(this.state.total[i].amount) + parseFloat(this.state.unbonding);
-
-
+                        
+                
                     }, this)
 
                     this.setState({
@@ -143,8 +144,8 @@ export default class AccountDetails extends Component {
                     const totalRewards = cloneDeep(result.total_rewards);
 
                     totalRewards.forEach((rewardNum, i) => {
-                        if (this.state.total[i] && (rewardNum.denom === this.state.total[i].denom))
-                            this.state.total[i].amount = parseFloat(this.state.total[i].amount) + parseFloat(rewardNum.amount);
+                        if(this.state.total[i] && (rewardNum.denom === this.state.total[i].denom))
+                            this.state.total[i].amount = parseFloat(this.state.total[i].amount) + parseFloat(rewardNum.amount);                       
                     }, this)
 
 
@@ -153,38 +154,37 @@ export default class AccountDetails extends Component {
                         rewards: [...totalRewards],
                         total: [...this.state.total]
                     })
-
+    
                 }
+ 
 
-
-                if (result.rewards && result.rewards.length > 0) {
-
-                    for (let c = 0; c < result.rewards.length; c++) {
-                        if (result.rewards[c].reward != null) {
+                if (result.rewards && result.rewards.length > 0){
+                    for(let c = 0; c < result.rewards.length; c++){
+                        if(result.rewards[c].reward != null){
                             numRewards[result.rewards[c]["validator_address"]] = result.rewards[c].reward;
                         }
                     }
-                    for (let e in numRewards) {
-                        for (let f in numRewards[e]) {
-                            if (this.state.denom === numRewards[e][f].denom) {
+                    for(let e in numRewards){
+                        for(let f in numRewards[e]){
+                            if(this.state.denom === numRewards[e][f].denom){
                                 this.setState({
                                     rewardDenomType: numRewards[e][f].denom,
                                     rewardsForEachDel: numRewards,
                                 })
                             }
-
+                                
                         }
-                    }
+                    }   
                 }
 
                 if (result.commission) {
                     result.commission.forEach((commissions, i) => {
                         const commissionAmount = commissions;
-                        if (this.state.total[i] && (commissions.denom === this.state.total[i].denom))
+                        if(this.state.total[i] && (commissions.denom === this.state.total[i].denom))
                             this.state.total[i].amount = parseFloat(this.state.total[i].amount) + parseFloat(commissions.amount);
 
                         this.setState({
-                            operator_address: result.operator_address,
+                            operatorAddress: result.operatorAddress,
                             commission: [...this.state.commission, commissionAmount],
                             total: [...this.state.total]
                         })
@@ -220,7 +220,7 @@ export default class AccountDetails extends Component {
                 price: 0,
                 reward: [],
                 denom: '',
-                rewardsForEachDel: [],
+                rewardsForEachDel: {},
                 rewardDenomType: [],
             }, () => {
                 this.getBalance();
@@ -238,9 +238,9 @@ export default class AccountDetails extends Component {
                 break;
         }
     }
-
-    displayStakingDenom(denomType) {
-        let findCoinType = Meteor.settings.public.coins.find(({ denom }) => denom === denomType);
+   
+    displayStakingDenom(denomType){
+        let findCoinType = Meteor.settings.public.coins.find(({denom}) => denom === denomType);
         let currentCoinType = findCoinType ? findCoinType.displayName : null;
         return currentCoinType
     }
@@ -248,7 +248,7 @@ export default class AccountDetails extends Component {
     renderDropDown() {
         return <UncontrolledDropdown direction='down' size="sm" className='account-dropdown'>
             <DropdownToggle caret>
-                &nbsp;{this.displayStakingDenom(this.state.denom)}
+             &nbsp;{this.displayStakingDenom(this.state.denom)}
             </DropdownToggle>
             <DropdownMenu>
                 {this.state.available.map((option, k) => (
@@ -257,6 +257,7 @@ export default class AccountDetails extends Component {
             </DropdownMenu>
         </UncontrolledDropdown>
     }
+ 
     renderShareLink() {
         let primaryLink = `/account/${this.state.address}`
         let otherLinks = [
@@ -282,9 +283,10 @@ export default class AccountDetails extends Component {
 
     render() {
 
-        let findCurrentCoin = this.state.total.find(({ denom }) => denom === this.state.denom)
+        let findCurrentCoin = this.state.total.find(({denom}) => denom === this.state.denom)
         let currentCoinTotal = findCurrentCoin ? findCurrentCoin.amount : null;
-        if (this.state.loading) {
+          
+        if (this.state.loading){
             return <div id="account">
                 <h1 className="d-none d-lg-block"><T>accounts.accountDetails</T></h1>
                 <Spinner type="grow" color="primary" />
@@ -293,8 +295,8 @@ export default class AccountDetails extends Component {
         else if (this.state.accountExists) {
             return <div id="account">
                 <Helmet>
-                    <title>Account Details of {this.state.address} on the Fetch.ai Network Explorer</title>
-                    <meta name="description" content={"Account Details of " + this.state.address + " on the Fetch.ai Network Explorer"} />
+                    <title>Account Details of {this.state.address} on {Meteor.settings.public.chainName} | Big Dipper</title>
+                    <meta name="description" content={"Account Details of "+this.state.address+" on {Meteor.settings.public.chainName}"} />
                 </Helmet>
                 <Row>
                     <Col md={3} xs={12}><h1 className="d-none d-lg-block"><T>accounts.accountDetails</T></h1></Col>
@@ -346,10 +348,10 @@ export default class AccountDetails extends Component {
                                     </Row> : null}
                                 </Col>
                                 <Col md={6} lg={4} className="total d-flex flex-column justify-content-end">
-                                    {this.state.user ? <Row>
-                                        <Col xs={12}><TransferButton history={this.props.history} address={this.state.address} denom={this.state.denom} /></Col>
-                                        {this.state.user === this.state.address ? <Col xs={12}><WithdrawButton history={this.props.history} rewards={this.state.rewards} commission={this.state.commission} address={this.state.operator_address} denom={this.state.denom} /></Col> : null}
-                                    </Row> : null}
+                                    {this.state.user?<Row>
+                                        <Col xs={12}><TransferButton history={this.props.history} address={this.state.address} denom={this.state.denom}/></Col>
+                                        {this.state.user===this.state.address?<Col xs={12}><WithdrawButton  history={this.props.history} rewards={this.state.rewards} commission={this.state.commission} address={this.state.operatorAddress} denom={this.state.denom}/></Col>:null}
+                                    </Row>:null}
                                     <Row>
                                         <Col xs={4} className="label d-flex align-self-end"><div className="infinity" /><T>accounts.total</T></Col>
                                         <Col xs={8} className="value text-right">{this.findCoin(this.state.total)}</Col>
@@ -376,7 +378,7 @@ export default class AccountDetails extends Component {
                 </Row>
                 <Row>
                     <Col>
-                        <AccountTransactions delegator={this.state.address} denom={this.state.denom} limit={100} />
+                        <AccountTransactions delegator={this.state.address} denom={this.state.denom} limit={100}/>
                     </Col>
                 </Row>
             </div>

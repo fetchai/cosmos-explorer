@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col, Container, Row } from 'reactstrap';
+import HeaderRecord from './HeaderRecord.jsx';
+import Blocks from '/imports/ui/blocks/ListContainer.js'
+import { LoadMore } from '../components/LoadMore.jsx';
 import { Route, Switch } from 'react-router-dom';
 import Sidebar from 'react-sidebar';
 import { Helmet } from 'react-helmet';
 import i18n from 'meteor/universe:i18n';
-import HeaderRecord from './HeaderRecord.jsx';
-import Blocks from '/imports/ui/blocks/ListContainer.js';
-import { LoadMore } from '../components/LoadMore.jsx';
-import Block from './BlockContainer.js';
-import ChainStates from '../components/ChainStatesContainer.js';
+import {
+    Table, Row, Col, Card, CardBody, Container
+} from 'reactstrap';
 
 const T = i18n.createComponent();
 export default class BlocksTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      limit: Meteor.settings.public.initialPageSize,
-      sidebarOpen: (props.location.pathname.split('/blocks/').length === 2),
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            limit: props.homepage ? 20 : Meteor.settings.public.initialPageSize,
+            sidebarOpen: (props?.location?.pathname.split("/blocks/").length == 2)
+        };
 
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
@@ -54,12 +54,12 @@ export default class BlocksTable extends Component {
       }
     };
 
-    componentDidUpdate(prevProps) {
-      if (this.props.location.pathname !== prevProps.location.pathname) {
-        this.setState({
-          sidebarOpen: (this.props.location.pathname.split('/blocks/').length === 2),
-        });
-      }
+    componentDidUpdate(prevProps){
+        if (this.props?.location?.pathname != prevProps?.location?.pathname){
+            this.setState({
+                sidebarOpen: (this.props.location.pathname.split("/blocks/").length == 2)
+            })
+        }
     }
 
     onSetSidebarOpen(open) {
@@ -74,52 +74,72 @@ export default class BlocksTable extends Component {
       });
     }
 
-    render() {
-      return (
-        <div>
-          <Helmet>
-            <title>Latest Blocks on The {Meteor.settings.public.networkDisplayName} Explorer</title>
-            <meta name="description" content="Latest blocks committed by validators on Cosmos Hub" />
-          </Helmet>
-          <Row>
-            <Col md={3} xs={12}>
-              <h1 className="d-none d-lg-block">
-                <T>blocks.latestBlocks</T>
-              </h1>
-            </Col>
-            <Col md={9} xs={12} className="text-md-right">
-              <ChainStates />
-            </Col>
-          </Row>
-          <Switch>
-            <Route
-              path="/blocks/:blockId"
-              render={(props) => (
-                <Sidebar
-                  sidebar={<Block {...props} />}
-                  open={this.state.sidebarOpen}
-                  onSetOpen={this.onSetSidebarOpen}
-                  styles={{
-                    sidebar: {
-                      background: 'white',
-                      position: 'fixed',
-                      width: '85%',
-                      zIndex: 4,
-                    },
-                    overlay: {
-                      zIndex: 3,
-                    },
-                  }}
-                />
-              )}
-            />
-          </Switch>
-          <Container fluid id="block-table">
-            <HeaderRecord />
-            <Blocks limit={this.state.limit} />
-          </Container>
-          <LoadMore show={this.state.loadmore} />
+    render(){
+
+        return !this.props.homepage ? <div>
+            <Helmet>
+                <title>Latest Blocks | Big Dipper</title>
+                <meta name="description" content="Latest blocks committed by validators" />
+            </Helmet>
+            <Row>
+                <Col md={3} xs={12}><h1 className="d-none d-lg-block"><T>blocks.latestBlocks</T></h1></Col>
+                <Col md={9} xs={12} className="text-md-right"><ChainStates /></Col>
+            </Row>
+            <Switch>
+                <Route path="/blocks/:blockId" render={(props)=> <Sidebar 
+                    sidebar={<Block {...props} />}
+                    open={this.state.sidebarOpen}
+                    onSetOpen={this.onSetSidebarOpen}
+                    styles={{ sidebar: { 
+                        background: "white", 
+                        position: "fixed",
+                        width: '85%',
+                        zIndex: 4
+                    }, overlay:{
+                        zIndex: 3
+                    } }}
+                >
+                </Sidebar>} />
+            </Switch>
+            <Container fluid id="block-table">
+                <HeaderRecord />
+                <Blocks limit={this.state.limit} />
+            </Container>
+            <LoadMore show={this.state.loadmore} />
         </div>
-      );
+
+            : <Card className="h-100 overflow-auto">
+                <div className="card-header"><T>blocks.latestBlocks</T></div>
+                <CardBody className="overflow-auto">
+                    <Table striped className="random-validators">
+                        <thead>
+                            <tr>
+                                <HeaderRecord homepage={true}/>
+                                <Switch>
+                                    <Route path="/blocks/:blockId" render={(props) => <Sidebar
+                                        sidebar={<Block {...props} />}
+                                        open={this.state.sidebarOpen}
+                                        onSetOpen={this.onSetSidebarOpen}
+                                        styles={{
+                                            sidebar: {
+                                                background: "white",
+                                                position: "fixed",
+                                                width: '85%',
+                                                zIndex: 4
+                                            }, overlay: {
+                                                zIndex: 3
+                                            }
+                                        }}
+                                    >
+                                    </Sidebar>} />
+                                    
+                                </Switch>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            <Blocks limit={this.state.limit} /></tbody>
+                    </Table>
+                </CardBody>
+            </Card>;
     }
 }

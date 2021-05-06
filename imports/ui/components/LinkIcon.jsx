@@ -21,17 +21,17 @@ export default class LinkIcon extends Component {
     }
 
     toggleModal = () => {
-        this.setState({ isOpen: !this.state.isOpen })
+        this.setState({isOpen: !this.state.isOpen})
     }
 
     copyLink = (e) => {
         e.currentTarget.select()
         document.execCommand('copy');
-        this.setState({ message: 'Link copied' })
+        this.setState({message: 'Link copied'})
     }
 
     renderTextarea(name, value) {
-        return <Input type='url' name={name} value={getFullUrl(value)} onClick={this.copyLink} readOnly />
+        return <Input type='url' name={name} value={getFullUrl(value)} onClick={this.copyLink} readOnly/>
     }
 
     renderLink = (link, i) => {

@@ -26,10 +26,10 @@ export default class ChainStates extends Component {
                 let commPool = []
                 this.props.chainStates.communityPool.forEach((pool, i) => {
                     commPool[i] = pool;
-                })
+                },)   
                 this.setState({
                     communityPool: [...commPool],
-                    inflation: this.props.chainStates.inflation ? numbro(this.props.chainStates.inflation).format("0.00%") : '0%'
+                    inflation: this.props.chainStates.inflation?numbro(this.props.chainStates.inflation).format("0.00%"):'0%'
                 })
             }
 
@@ -50,10 +50,10 @@ export default class ChainStates extends Component {
             if (this.props.chainStates.communityPool) {
                 this.props.chainStates.communityPool.forEach((pool, i) => {
                     communityPools[i] = pool;
-                })
+                },)   
                 this.setState({
                     communityPool: [...communityPools],
-                    inflation: this.props.chainStates.inflation ? numbro(this.props.chainStates.inflation).format("0.00%") : '0%'
+                    inflation: this.props.chainStates.inflation?numbro(this.props.chainStates.inflation).format("0.00%"):'0%'
                 })
             }
         }
@@ -68,15 +68,14 @@ export default class ChainStates extends Component {
         }
     }
 
-
-    renderValues(propsValue) {
+    renderValues(propsValue){
         let poolValues = [];
-        propsValue.map((pool, i) => {
-            poolValues[i] = new Coin(pool.amount, pool.denom).toString(4)
+        propsValue.map((pool,i) => {
+            poolValues[i] = new Coin(pool.amount, pool.denom).toString(4)  
         })
 
         return poolValues.join(', ')
-
+           
     }
     render() {
 

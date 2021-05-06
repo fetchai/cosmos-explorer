@@ -61,47 +61,178 @@ const getPreviousRecord = (voterAddress, proposerAddress) => {
 }
 
 Meteor.methods({
-  'ValidatorRecords.calculateMissedBlocks': function () {
-    this.unblock();
-    if (!COUNTMISSEDBLOCKS) {
-      try {
-        let startTime = Date.now();
-        COUNTMISSEDBLOCKS = true;
-        console.log('calulate missed blocks count');
+    'ValidatorRecords.calculateMissedBlocks': function(){
         this.unblock();
-        let validators = Validators.find({}).fetch();
-        let latestHeight = Meteor.call('blocks.getCurrentHeight');
-        let explorerStatus = Status.findOne({ chainId: Meteor.settings.public.chainId });
-        let startHeight = (explorerStatus && explorerStatus.lastProcessedMissedBlockHeight) ? explorerStatus.lastProcessedMissedBlockHeight : Meteor.settings.params.startHeight;
-        latestHeight = Math.min(startHeight + BULKUPDATEMAXSIZE, latestHeight);
-        const bulkMissedStats = MissedBlocks.rawCollection().initializeOrderedBulkOp();
+        if (!COUNTMISSEDBLOCKS){
+            try {
+                let startTime = Date.now();
+                COUNTMISSEDBLOCKS = true;
+                console.log('calulate missed blocks count');
+                this.unblock();
+                let validators = Validators.find({}).fetch();
+                let latestHeight = Meteor.call('blocks.getCurrentHeight');
+                let explorerStatus = Status.findOne({chainId: Meteor.settings.public.chainId});
+                let startHeight = (explorerStatus&&explorerStatus.lastProcessedMissedBlockHeight)?explorerStatus.lastProcessedMissedBlockHeight:Meteor.settings.params.startHeight;
+                latestHeight = Math.min(startHeight + BULKUPDATEMAXSIZE, latestHeight);
+                const bulkMissedStats = MissedBlocks.rawCollection().initializeOrderedBulkOp();
 
-        let validatorsMap = {};
-        validators.forEach((validator) => validatorsMap[validator.address] = validator);
+                let validatorsMap = {};
+                validators.forEach((validator) => validatorsMap[validator.address] = validator);
 
-        // a map of block height to block stats
-        let blockStats = getBlockStats(startHeight, latestHeight);
+                // a map of block height to block stats
+                let blockStats = getBlockStats(startHeight, latestHeight);
 
-        // proposerVoterStats is a proposer-voter map counting numbers of proposed blocks of which voter is an active validator
-        let proposerVoterStats = {}
+                // proposerVoterStats is a proposer-voter map counting numbers of proposed blocks of which voter is an active validator
+                let proposerVoterStats = {}
 
-        _.forEach(blockStats, (block, blockHeight) => {
-          let proposerAddress = block.proposerAddress;
-          let votedValidators = new Set(block.validators);
-          let validatorSets = ValidatorSets.findOne({ block_height: block.height });
-          let votedVotingPower = 0;
+                _.forEach(blockStats, (block, blockHeight) => {
+                    let proposerAddress = block.proposerAddress;
+                    let votedValidators = new Set(block.validators);
+                    let validatorSets = ValidatorSets.findOne({block_height:block.height});
+                    let votedVotingPower = 0;
 
-          validatorSets.validators.forEach((activeValidator) => {
-            if (votedValidators.has(activeValidator.address))
-              votedVotingPower += parseFloat(activeValidator.voting_power)
-          })
+                    validatorSets.validators.forEach((activeValidator) => {
+                        if (votedValidators.has(activeValidator.address))
+                            votedVotingPower += parseFloat(activeValidator.voting_power)
+                    })
 
-          validatorSets.validators.forEach((activeValidator) => {
-            let currentValidator = activeValidator.address
-            if (!_.has(proposerVoterStats, [proposerAddress, currentValidator])) {
-              let prevStats = getPreviousRecord(currentValidator, proposerAddress);
-              _.set(proposerVoterStats, [proposerAddress, currentValidator], prevStats);
+                    validatorSets.validators.forEach((activeValidator) => {
+                        let currentValidator = activeValidator.address
+                        if (!_.has(proposerVoterStats, [proposerAddress, currentValidator])) {
+                            let prevStats = getPreviousRecord(currentValidator, proposerAddress);
+                            _.set(proposerVoterStats, [proposerAddress, currentValidator], prevStats);
+                        }
+
+                        _.update(proposerVoterStats, [proposerAddress, currentValidator, 'totalCount'], (n) => n+1);
+                        if (!votedValidators.has(currentValidator)) {
+                            _.update(proposerVoterStats, [proposerAddress, currentValidator, 'missCount'], (n) => n+1);
+                            bulkMissedStats.insert({
+                                voter: currentValidator,
+                                blockHeight: block.height,
+                                proposer: proposerAddress,
+                                precommitsCount: block.precommitsCount,
+                                validatorsCount: block.validatorsCount,
+                                time: block.time,
+                                precommits: block.precommits,
+                                averageBlockTime: block.averageBlockTime,
+                                timeDiff: block.timeDiff,
+                                votingPower: block.voting_power,
+                                votedVotingPower,
+                                updatedAt: latestHeight,
+                                missCount: _.get(proposerVoterStats, [proposerAddress, currentValidator, 'missCount']),
+                                totalCount: _.get(proposerVoterStats, [proposerAddress, currentValidator, 'totalCount'])
+                            });
+                        }
+                    })
+                });
+
+                _.forEach(proposerVoterStats, (voters, proposerAddress) => {
+                    _.forEach(voters, (stats, voterAddress) => {
+                        bulkMissedStats.find({
+                            voter: voterAddress,
+                            proposer: proposerAddress,
+                            blockHeight: -1
+                        }).upsert().updateOne({$set: {
+                            voter: voterAddress,
+                            proposer: proposerAddress,
+                            blockHeight: -1,
+                            updatedAt: latestHeight,
+                            missCount: _.get(stats, 'missCount'),
+                            totalCount: _.get(stats, 'totalCount')
+                        }});
+                    });
+                });
+
+                let message = '';
+                if (bulkMissedStats.length > 0){
+                    const client = MissedBlocks._driver.mongo.client;
+                    // TODO: add transaction back after replica set(#146) is set up
+                    // let session = client.startSession();
+                    // session.startTransaction();
+                    let bulkPromise = bulkMissedStats.execute(null/*, {session}*/).then(
+                        Meteor.bindEnvironment((result, err) => {
+                            if (err){
+                                COUNTMISSEDBLOCKS = false;
+                                // Promise.await(session.abortTransaction());
+                                throw err;
+                            }
+                            if (result){
+                                // Promise.await(session.commitTransaction());
+                                message = `(${result.result.nInserted} inserted, ` +
+                                           `${result.result.nUpserted} upserted, ` +
+                                           `${result.result.nModified} modified)`;
+                            }
+                        }));
+
+                    Promise.await(bulkPromise);
+                }
+
+                COUNTMISSEDBLOCKS = false;
+                Status.upsert({chainId: Meteor.settings.public.chainId}, {$set:{lastProcessedMissedBlockHeight:latestHeight, lastProcessedMissedBlockTime: new Date()}});
+                return `done in ${Date.now() - startTime}ms ${message}`;
+            } catch (e) {
+                COUNTMISSEDBLOCKS = false;
+                throw e;
             }
+        }
+        else{
+            return "updating...";
+        }
+    },
+    'ValidatorRecords.calculateMissedBlocksStats': function(){
+        this.unblock();
+        // TODO: deprecate this method and MissedBlocksStats collection
+        // console.log("ValidatorRecords.calculateMissedBlocks: "+COUNTMISSEDBLOCKS);
+        if (!COUNTMISSEDBLOCKSSTATS){
+            COUNTMISSEDBLOCKSSTATS = true;
+            console.log('calulate missed blocks stats');
+            this.unblock();
+            let validators = Validators.find({}).fetch();
+            let latestHeight = Meteor.call('blocks.getCurrentHeight');
+            let explorerStatus = Status.findOne({chainId: Meteor.settings.public.chainId});
+            let startHeight = (explorerStatus&&explorerStatus.lastMissedBlockHeight)?explorerStatus.lastMissedBlockHeight:Meteor.settings.params.startHeight;
+            // console.log(latestHeight);
+            // console.log(startHeight);
+            const bulkMissedStats = MissedBlocksStats.rawCollection().initializeUnorderedBulkOp();
+            for (i in validators){
+                // if ((validators[i].address == "B8552EAC0D123A6BF609123047A5181D45EE90B5") || (validators[i].address == "69D99B2C66043ACBEAA8447525C356AFC6408E0C") || (validators[i].address == "35AD7A2CD2FC71711A675830EC1158082273D457")){
+                let voterAddress = validators[i].address;
+                let missedRecords = ValidatorRecords.find({
+                    address:voterAddress,
+                    exists:false,
+                    $and: [ { height: { $gt: startHeight } }, { height: { $lte: latestHeight } } ]
+                }).fetch();
+
+                let counts = {};
+
+                // console.log("missedRecords to process: "+missedRecords.length);
+                for (b in missedRecords){
+                    let block = Blockscon.findOne({height:missedRecords[b].height});
+                    let existingRecord = MissedBlocksStats.findOne({voter:voterAddress, proposer:block.proposerAddress});
+
+                    if (typeof counts[block.proposerAddress] === 'undefined'){
+                        if (existingRecord){
+                            counts[block.proposerAddress] = existingRecord.count+1;
+                        }
+                        else{
+                            counts[block.proposerAddress] = 1;
+                        }
+                    }
+                    else{
+                        counts[block.proposerAddress]++;
+                    }
+                }
+
+                for (address in counts){
+                    let data = {
+                        voter: voterAddress,
+                        proposer:address,
+                        count: counts[address]
+                    }
+
+                    bulkMissedStats.find({voter:voterAddress, proposer:address}).upsert().updateOne({$set:data});
+                }
+                // }
 
             _.update(proposerVoterStats, [proposerAddress, currentValidator, 'totalCount'], (n) => n + 1);
             if (!votedValidators.has(currentValidator)) {

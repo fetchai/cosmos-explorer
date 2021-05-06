@@ -1,5 +1,38 @@
 # Changelog
 
+## [UNRELEASED]
+* [#484] Replaced delegation list displayed under validator page with total number of delegations. 
+
+## v0.41.x-12
+* [#387] Added Bluetooth Ledger support
+* Fix transaction simulation bug
+
+## v0.41.x-11
+* Replaced Random Validators and Chart components with Latest Blocks and Latest Transactions components on homepage
+* Update meta data to align with setting values
+
+## v0.41.x-10
+* Bump Meteor to v2.2
+## v0.41.x-9
+* Added banner support. Banner settings are loading remotely from the url defined in settings.
+
+## v0.41.x-8
+
+* [#487] Fixed typo in the query which make validator power change tx lookup failed.
+* Fixed an issue on displaying individual transaction.
+* Updated Ledger app name checking so that it will follows the value defined in settings.
+* [#213] Updated `@ledgerhq/hw-transport-webusb` pkg to v5.49.0 to fix Ledger errors on Windows10
+## v0.41.x-7 (Stargate compatible)
+
+* [#472] Fix missing transactions
+* [#449] Migrate API to gRPC gateway
+* [#360] Update validator info correctly
+* [#311] Update validator status to display validators correctly
+* [#321] Enable module related components which will display 0 or hide the components when the Cosmos SDK modules are not implemented
+* [#485] Query proposal tally results correctly
+* Update transaction skeletons for Ledger to work properly
+* Config correct Ledger app and app version
+
 ## v0.39.x-7
 
 * [#452] Fix VP Chart not being shown
@@ -26,6 +59,7 @@
 * Simplify validator storing
 * Get data and show proposal based on enabled modules
 * Calculate validator uptime in async
+* Update validator status
 
 ## v0.39.x-3
 

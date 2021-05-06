@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { HTTP } from 'meteor/http';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Validators } from '/imports/api/validators/validators.js';
 import { ValidatorRecords } from '/imports/api/records/records.js';
@@ -31,9 +32,25 @@ export default ValidatorDetailsContainer = withTracker((props) => {
     }
     validator = Validators.findOne(options);
 
-    if (validator) {
-      validatorRecords = ValidatorRecords.find({ address: validator.address }, { sort: { height: -1 } }).fetch();
-    }
+    let options = {address:props.address};
+
+    let chainStatus;
+    let stakingParams;
+    let validatorExist;
+    let validator;
+    let validatorRecords;
+
+    if (Meteor.isServer || !loading){
+        if (props.address.indexOf(Meteor.settings.public.bech32PrefixValAddr) != -1){
+            options = {operator_address:props.address}
+        }
+        validator = Validators.findOne(options);
+
+        if (validator){
+            validatorRecords = ValidatorRecords.find({address:validator.address}, {sort:{height:-1}}).fetch();
+        }
+
+        chainStatus = Chain.findOne({chainId:Meteor.settings.public.chainId});
 
     chainStatus = Chain.findOne({ chainId: Meteor.settings.public.chainId });
 
@@ -43,15 +60,12 @@ export default ValidatorDetailsContainer = withTracker((props) => {
     } else {
       validatorExist = !loading && !!validator && !!validatorRecords && !!chainStatus;
     }
-
-    // loading = false;
-  }
-  // console.log(props.state.limit);
-  return {
-    loading,
-    validatorExist,
-    validator: validatorExist ? validator : {},
-    records: validatorExist ? validatorRecords : {},
-    chainStatus: validatorExist ? chainStatus : {},
-  };
+    // console.log(props.state.limit);
+    return {
+        loading,
+        validatorExist,
+        validator: validatorExist ? validator : {},
+        records: validatorExist ? validatorRecords : {},
+        chainStatus: validatorExist ? chainStatus : {},
+    };
 })(Validator);

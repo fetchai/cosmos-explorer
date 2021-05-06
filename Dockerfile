@@ -1,36 +1,43 @@
-FROM node:14-buster as base
+FROM geoffreybooth/meteor-base:1.12.1
 
-RUN apt update && \
-    apt install -y libusb-1.0-0-dev && \
-    apt clean
-############################################################
-FROM base as build
+COPY package*.json $APP_SOURCE_FOLDER/
 
-# Install meteor
-RUN curl https://install.meteor.com/ | sh
+RUN bash $SCRIPTS_FOLDER/build-app-npm-dependencies.sh
 
-WORKDIR /source/big-dipper
+COPY . $APP_SOURCE_FOLDER/
 
-# Copy in the application code.
+RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
-COPY . .
+FROM node:12.16.1-alpine
 
+ENV APP_BUNDLE_FOLDER /opt/bundle
+ENV SCRIPTS_FOLDER /docker
 
-# Install the updates
-RUN meteor npm install --save -f
-# Compile app, and Create tarball with the copmiled app
-RUN meteor build --allow-superuser ../output/ --architecture os.linux.x86_64 --server-only
+RUN apk --no-cache add \
+    bash \
+    g++ \
+    make \
+    python
 
-############################################################ß
-FROM base
+COPY --from=0 $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
 
-# # Copy the tarball from build container. Then untar it
-COPY --from=build /source/output/big-dipper.tar.gz /opt/big_dipper/big_dipper.tar.gz
-RUN cd /opt/big_dipper && tar -xvzf big_dipper.tar.gz
+COPY --from=0 $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
 
-# Copy entrypoint script
-COPY ./entrypoints/start.sh /opt/big_dipper
+RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh --build-from-source
 
-WORKDIR /opt/big_dipper
+FROM node:12.16.1-alpine
 
-ENTRYPOINT [ "bash", "/opt/big_dipper/start.sh" ]
+ENV APP_BUNDLE_FOLDER /opt/bundle
+ENV SCRIPTS_FOLDER /docker
+
+RUN apk --no-cache add \
+    bash \
+    ca-certificates
+
+COPY --from=1 $SCRIPTS_FOLDER $SCRIPTS_FOLDER/
+
+COPY --from=1 $APP_BUNDLE_FOLDER/bundle $APP_BUNDLE_FOLDER/bundle/
+
+ENTRYPOINT ["/docker/entrypoint.sh"]
+
+CMD ["node", "main.js"]

@@ -12,6 +12,7 @@ import { render } from 'react-dom';
 
 CURRENTUSERADDR = 'ledgerUserAddress';
 CURRENTUSERPUBKEY = 'ledgerUserPubKey';
+BLELEDGERCONNECTION = 'ledgerBLEConnection'
 
 // import { onPageLoad } from 'meteor/server-render';
 
