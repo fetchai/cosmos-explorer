@@ -141,10 +141,10 @@ Meteor.methods({
                             let pool = JSON.parse(response.content).pool;
                             if (pool && pool.length > 0) {
                                 chainStates.communityPool = [];
-                                pool.forEach((amount) => {
+                                pool.forEach((o) => {
                                     chainStates.communityPool.push({
-                                        denom: amount.denom,
-                                        amount: parseFloat(amount.amount)
+                                        denom: o.denom,
+                                        amount: o.amount,
                                     })
                                 })
                             }
