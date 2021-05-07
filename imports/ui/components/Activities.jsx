@@ -96,7 +96,13 @@ export default class Activites extends Component {
                 return <MsgType type={msg["@type"]} />
 
             default:
-                return <div><ReactJson src={msg} /></div>
+                return <div><ReactJson src={msg} enableClipboard={(copy) => {
+                    let src = copy.src
+                    if (typeof copy.src !== "string") {
+                        src = JSON.stringify(src)
+                    }
+                    navigator.clipboard.writeText(src)
+                }} /></div>
         }
     }
 }
