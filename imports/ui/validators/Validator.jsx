@@ -155,7 +155,6 @@ export default class Validator extends Component {
                 })
             }
         }
-
         if (this.props.records != prevProps.records) {
             if (this.props.records.length > 0) {
                 this.setState({
