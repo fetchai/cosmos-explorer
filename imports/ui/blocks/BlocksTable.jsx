@@ -4,7 +4,9 @@ import HeaderRecord from './HeaderRecord.jsx';
 import Blocks from '/imports/ui/blocks/ListContainer.js'
 import { LoadMore } from '../components/LoadMore.jsx';
 import { Route, Switch } from 'react-router-dom';
-import Sidebar from 'react-sidebar';
+import Sidebar from "react-sidebar";
+import Block from './BlockContainer.js';
+import ChainStates from '../components/ChainStatesContainer.js'
 import { Helmet } from 'react-helmet';
 import i18n from 'meteor/universe:i18n';
 import {
@@ -24,9 +26,6 @@ export default class BlocksTable extends Component {
     }
 
     isBottom(el) {
-        if (!el) {
-            return false;
-        }
         return el.getBoundingClientRect().bottom <= window.innerHeight;
     }
 
@@ -45,7 +44,7 @@ export default class BlocksTable extends Component {
             document.removeEventListener('scroll', this.trackScrolling);
             this.setState({ loadmore: true });
             this.setState({
-                limit: this.state.limit + 10,
+                limit: this.state.limit + 10
             }, (err, result) => {
                 if (!err) {
                     document.addEventListener('scroll', this.trackScrolling);
@@ -53,7 +52,7 @@ export default class BlocksTable extends Component {
                 if (result) {
                     this.setState({ loadmore: false });
                 }
-            });
+            })
         }
     };
 
@@ -68,12 +67,12 @@ export default class BlocksTable extends Component {
     onSetSidebarOpen(open) {
         // console.log(open);
         this.setState({ sidebarOpen: open }, (error, result) => {
-            const timer = Meteor.setTimeout(() => {
+            let timer = Meteor.setTimeout(() => {
                 if (!open) {
                     this.props.history.push('/blocks');
                 }
                 Meteor.clearTimeout(timer);
-            }, 500);
+            }, 500)
         });
     }
 
@@ -116,7 +115,34 @@ export default class BlocksTable extends Component {
             : <Card className="h-100 overflow-auto">
                 <div className="card-header"><T>blocks.latestBlocks</T></div>
                 <CardBody className="overflow-auto">
-                    <Blocks limit={this.state.limit} />
+                    <Table striped className="random-validators">
+                        <thead>
+                            <tr>
+                                <HeaderRecord homepage={true} />
+                                <Switch>
+                                    <Route path="/blocks/:blockId" render={(props) => <Sidebar
+                                        sidebar={<Block {...props} />}
+                                        open={this.state.sidebarOpen}
+                                        onSetOpen={this.onSetSidebarOpen}
+                                        styles={{
+                                            sidebar: {
+                                                background: "white",
+                                                position: "fixed",
+                                                width: '85%',
+                                                zIndex: 4
+                                            }, overlay: {
+                                                zIndex: 3
+                                            }
+                                        }}
+                                    >
+                                    </Sidebar>} />
+
+                                </Switch>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <Blocks limit={this.state.limit} /></tbody>
+                    </Table>
                 </CardBody>
             </Card>;
     }

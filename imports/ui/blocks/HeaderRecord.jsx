@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import i18n from 'meteor/universe:i18n';
 
 const T = i18n.createComponent();
@@ -9,8 +9,8 @@ class HeaderRecord extends Component {
     }
     render() {
         let homepage = window?.location?.pathname === '/' ? true : false;
-        return(
-            <Row className="header text-nowrap d-none d-sm-flex">                
+        return (
+            <Row className="header text-nowrap d-none d-sm-flex">
                 <Col sm={4} lg={homepage ? 4 : 3}><i className="far fa-clock"></i> <span className="d-none d-xl-inline"><T>common.time</T> (UTC)</span></Col>
                 <Col sm={2}><i className="fas fa-hashtag"></i> <span className="d-none d-xl-inline"><T>common.hash</T></span></Col>
                 <Col sm={3} md={2} lg={3}><i className="fas fa-portrait fa-lg"></i>  <span className="d-none d-xl-inline"><T>blocks.proposer</T></span></Col>
