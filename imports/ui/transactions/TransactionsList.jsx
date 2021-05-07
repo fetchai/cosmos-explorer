@@ -59,9 +59,8 @@ export default class Transactions extends Component {
                 if (!err) {
                     document.addEventListener('scroll', this.trackScrolling);
                 }
-                if (result) {
-                    this.setState({ loadmore: false });
-                }
+
+                this.setState({ loadmore: false });
             })
         }
     };
