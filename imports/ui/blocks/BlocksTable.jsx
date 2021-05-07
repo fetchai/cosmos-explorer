@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row } from 'reactstrap';
 import { Route, Switch } from 'react-router-dom';
-import Sidebar from 'react-sidebar';
+import Sidebar from "react-sidebar";
+import Block from './BlockContainer.js';
+import ChainStates from '../components/ChainStatesContainer.js'
 import { Helmet } from 'react-helmet';
 import i18n from 'meteor/universe:i18n';
 import HeaderRecord from './HeaderRecord.jsx';
@@ -24,9 +26,6 @@ export default class BlocksTable extends Component {
     }
 
     isBottom(el) {
-        if (!el) {
-            return false;
-        }
         return el.getBoundingClientRect().bottom <= window.innerHeight;
     }
 
@@ -45,7 +44,7 @@ export default class BlocksTable extends Component {
             document.removeEventListener('scroll', this.trackScrolling);
             this.setState({ loadmore: true });
             this.setState({
-                limit: this.state.limit + 10,
+                limit: this.state.limit + 10
             }, (err, result) => {
                 if (!err) {
                     document.addEventListener('scroll', this.trackScrolling);
@@ -53,7 +52,7 @@ export default class BlocksTable extends Component {
                 if (result) {
                     this.setState({ loadmore: false });
                 }
-            });
+            })
         }
     };
 
@@ -68,12 +67,12 @@ export default class BlocksTable extends Component {
     onSetSidebarOpen(open) {
         // console.log(open);
         this.setState({ sidebarOpen: open }, (error, result) => {
-            const timer = Meteor.setTimeout(() => {
+            let timer = Meteor.setTimeout(() => {
                 if (!open) {
                     this.props.history.push('/blocks');
                 }
                 Meteor.clearTimeout(timer);
-            }, 500);
+            }, 500)
         });
     }
 

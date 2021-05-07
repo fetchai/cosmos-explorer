@@ -1,43 +1,13 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Card, CardBody, Spinner, NavbarBrand } from 'reactstrap'
+import { Container, Row, Col, Card, CardBody, Spinner } from 'reactstrap';
 import { Link, } from 'react-router-dom';
 import numbro from 'numbro';
-import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 import Avatar from '../components/Avatar.jsx';
 import TranactionTabs from '../transactions/TransactionTabs.jsx';
 import { Helmet } from 'react-helmet';
 import i18n from 'meteor/universe:i18n';
 import TimeStamp from '../components/TimeStamp.jsx';
-import Tooltip from '@material-ui/core/Tooltip/Tooltip'
-
-/**
- * Get substring of address with three appended in middle of  dots; for UI display
- *
- * @param val subject
- * @param number number of chars to keep before and after dots
- * @returns {string} formatted string
- * @param dots how many dots in middle of string
- */
-
-function format(val, number = 12, dots = 5) {
-  if (val === '') return ''
-  return (
-    val.substring(0, number) +
-    '.'.repeat(dots) +
-    val.substring(val.length - number)
-  )
-}
-
-async function copyToClipboard(str) {
-  return new Promise((resolve) => {
-    navigator.clipboard.writeText(str).then(() => {
-      resolve(true)
-    }, () => {
-      resolve(false)
-    })
-  })
-}
 
 const T = i18n.createComponent();
 export default class Block extends Component {
@@ -62,18 +32,25 @@ export default class Block extends Component {
           stakingTxs: this.props.stakingTxs,
           distributionTxs: this.props.distributionTxs,
           governanceTxs: this.props.governanceTxs,
-          slashingTxs: this.props.slashingTxs,
-          copied: false
+          slashingTxs: this.props.slashingTxs
         })
       }
     }
   }
 
-  async copy() {
-    await copyToClipboard(this.state.DKG.groupSignature);
-    this.setState({ copied: true });
-  }
-
+  render() {
+    if (this.props.loading) {
+      return <Container id="block">
+        <Spinner type="grow" color="primary" />
+      </Container>
+    }
+    else {
+      if (this.props.blockExist) {
+        // console.log(this.props.block);
+        let block = this.props.block;
+        let proposer = block.proposer();
+        let moniker = proposer ? proposer.description.moniker : '';
+        let profileUrl = proposer ? proposer.profile_url : '';
 
   /**
    * we show dkg if settings files specifies it, and if we have dkg in this block,

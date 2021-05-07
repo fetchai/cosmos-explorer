@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+// import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Blockscon } from '/imports/api/blocks/blocks.js';
 
@@ -22,7 +23,8 @@ export default BlocksContainer = withTracker((props) => {
     if (Meteor.isServer) {
       // loading = false;
       blocksExist = !!blocks;
-    } else {
+    }
+    else {
       blocksExist = !loading && !!blocks;
     }
   }
@@ -30,6 +32,6 @@ export default BlocksContainer = withTracker((props) => {
   return {
     loading,
     blocksExist,
-    blocks: blocksExist ? blocks : {},
+    blocks: blocksExist ? blocks : {}
   };
 })(Blocks);

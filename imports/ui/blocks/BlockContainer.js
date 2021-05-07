@@ -5,8 +5,7 @@ import { Transactions } from '/imports/api/transactions/transactions.js';
 import Block from './Block.jsx';
 
 export default BlockContainer = withTracker((props) => {
-  let blockHandle; let
-    transactionHandle;
+  let blockHandle, transactionHandle;
   let loading = true;
 
   if (Meteor.isClient) {
@@ -15,8 +14,7 @@ export default BlockContainer = withTracker((props) => {
     loading = !blockHandle.ready() && !transactionHandle.ready();
   }
 
-  let block; let txs; let transactionsExist; let
-    blockExist;
+  let block, txs, transactionsExist, blockExist;
 
   if (Meteor.isServer || !loading) {
     block = Blockscon.findOne({ height: parseInt(props.match.params.blockId) });
@@ -26,10 +24,12 @@ export default BlockContainer = withTracker((props) => {
       loading = false;
       transactionsExist = !!txs;
       blockExist = !!block;
-    } else {
+    }
+    else {
       transactionsExist = !loading && !!txs;
       blockExist = !loading && !!block;
     }
+
   }
 
   return {
