@@ -118,26 +118,28 @@ export default class BlocksTable extends Component {
                     <Table striped className="random-validators">
                         <thead>
                             <tr>
-                                <HeaderRecord homepage={true} />
-                                <Switch>
-                                    <Route path="/blocks/:blockId" render={(props) => <Sidebar
-                                        sidebar={<Block {...props} />}
-                                        open={this.state.sidebarOpen}
-                                        onSetOpen={this.onSetSidebarOpen}
-                                        styles={{
-                                            sidebar: {
-                                                background: "white",
-                                                position: "fixed",
-                                                width: '85%',
-                                                zIndex: 4
-                                            }, overlay: {
-                                                zIndex: 3
-                                            }
-                                        }}
-                                    >
-                                    </Sidebar>} />
+                                <td>
+                                    <HeaderRecord homepage={true} />
+                                    <Switch>
+                                        <Route path="/blocks/:blockId" render={(props) => <Sidebar
+                                            sidebar={<Block {...props} />}
+                                            open={this.state.sidebarOpen}
+                                            onSetOpen={this.onSetSidebarOpen}
+                                            styles={{
+                                                sidebar: {
+                                                    background: "white",
+                                                    position: "fixed",
+                                                    width: '85%',
+                                                    zIndex: 4
+                                                }, overlay: {
+                                                    zIndex: 3
+                                                }
+                                            }}
+                                        >
+                                        </Sidebar>} />
 
-                                </Switch>
+                                    </Switch>
+                                </td>
                             </tr>
                         </thead>
                         <tbody>
