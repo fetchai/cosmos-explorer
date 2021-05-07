@@ -664,6 +664,10 @@ body {
   }
 
   .blocks-list {
+    @media only screen and (max-width: 767px) {
+      display: none; 
+    }
+    
     margin-top: 0.2em;
 
     .block {
