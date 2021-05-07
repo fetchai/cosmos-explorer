@@ -90,6 +90,7 @@ Meteor.methods({
                 chain.staking = JSON.parse(response.content);
             }
             catch (e) {
+                console.log(url);
                 console.log(e);
             }
 
@@ -107,6 +108,7 @@ Meteor.methods({
                     chainStates.notBondedTokens = parseInt(bonding.not_bonded_tokens);
                 }
                 catch (e) {
+                    console.log(url);
                     console.log(e);
                 }
 
@@ -119,6 +121,7 @@ Meteor.methods({
                             chainStates.totalSupply = parseInt(supply.amount.amount);
                         }
                         catch (e) {
+                            console.log(url);
                             console.log(e);
                         }
 
@@ -129,6 +132,7 @@ Meteor.methods({
                             chain.bank = JSON.parse(response.content);
                         }
                         catch (e) {
+                            console.log(url);
                             console.log(e);
                         }
 
@@ -150,6 +154,7 @@ Meteor.methods({
                             }
                         }
                         catch (e) {
+                            console.log(url);
                             console.log(e)
                         }
 
@@ -160,6 +165,7 @@ Meteor.methods({
                             chain.distribution = JSON.parse(response.content);
                         }
                         catch (e) {
+                            console.log(url);
                             console.log(e);
                         }
                     }
@@ -176,6 +182,7 @@ Meteor.methods({
                             }
                         }
                         catch (e) {
+                            console.log(url);
                             console.log(e);
                         }
 
@@ -189,6 +196,7 @@ Meteor.methods({
                             }
                         }
                         catch (e) {
+                            console.log(url);
                             console.log(e);
                         }
 
@@ -199,6 +207,7 @@ Meteor.methods({
                             chain.mint = JSON.parse(response.content);
                         }
                         catch (e) {
+                            console.log(url);
                             console.log(e);
                         }
                     }

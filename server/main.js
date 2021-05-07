@@ -26,10 +26,10 @@ const DEFAULTSETTINGS = '/default_settings.json';
 
 updateChainStatus = () => {
     Meteor.call('chain.updateStatus', (error, result) => {
-        if (error){
+        if (error) {
             console.log("updateStatus: %o", error);
         }
-        else{
+        else {
             console.log("updateStatus: %o", result);
         }
     })
@@ -37,10 +37,10 @@ updateChainStatus = () => {
 
 updateBlock = () => {
     Meteor.call('blocks.blocksUpdate', (error, result) => {
-        if (error){
+        if (error) {
             console.log("updateBlocks: %o", error);
         }
-        else{
+        else {
             console.log("updateBlocks: %o", result);
         }
     })
@@ -48,18 +48,18 @@ updateBlock = () => {
 
 updateTransactions = () => {
     Meteor.call('Transactions.updateTransactions', (error, result) => {
-        if (error){
-            console.log("updateTransactions: %o",error);
+        if (error) {
+            console.log("updateTransactions: %o", error);
         }
-        else{
-            console.log("updateTransactions: %o",result);
+        else {
+            console.log("updateTransactions: %o", result);
         }
     })
 }
 
 getConsensusState = () => {
     Meteor.call('chain.getConsensusState', (error, result) => {
-        if (error){
+        if (error) {
             console.log("get consensus: %o", error)
         }
     })
@@ -67,10 +67,10 @@ getConsensusState = () => {
 
 getProposals = () => {
     Meteor.call('proposals.getProposals', (error, result) => {
-        if (error){
+        if (error) {
             console.log("get proposal: %o", error);
         }
-        if (result){
+        if (result) {
             console.log("get proposal: %o", result);
         }
     });
@@ -78,21 +78,21 @@ getProposals = () => {
 
 getProposalsResults = () => {
     Meteor.call('proposals.getProposalResults', (error, result) => {
-        if (error){
+        if (error) {
             console.log("get proposals result: %o", error);
         }
-        if (result){
+        if (result) {
             console.log("get proposals result: %o", result);
         }
     });
 }
 
 updateMissedBlocks = () => {
-    Meteor.call('ValidatorRecords.calculateMissedBlocks', (error, result) =>{
-        if (error){
+    Meteor.call('ValidatorRecords.calculateMissedBlocks', (error, result) => {
+        if (error) {
             console.log("missed blocks error: %o", error)
         }
-        if (result){
+        if (result) {
             console.log("missed blocks ok: %o", result);
         }
     });
@@ -100,61 +100,61 @@ updateMissedBlocks = () => {
 
 getDelegations = () => {
     Meteor.call('delegations.getDelegations', (error, result) => {
-        if (error){
+        if (error) {
             console.log("get delegations error: %o", error)
         }
-        else{
+        else {
             console.log("get delegations ok: %o", result)
         }
     });
 }
 
-aggregateMinutely = () =>{
+aggregateMinutely = () => {
     // doing something every min
     Meteor.call('Analytics.aggregateBlockTimeAndVotingPower', "m", (error, result) => {
-        if (error){
+        if (error) {
             console.log("aggregate minutely block time error: %o", error)
         }
-        else{
+        else {
             console.log("aggregate minutely block time ok: %o", result)
         }
     });
 
     Meteor.call('coinStats.getCoinStats', (error, result) => {
-        if (error){
+        if (error) {
             console.log("get coin stats error: %o", error);
         }
-        else{
+        else {
             console.log("get coin stats ok: %o", result)
         }
     });
 }
 
-aggregateHourly = () =>{
+aggregateHourly = () => {
     // doing something every hour
     Meteor.call('Analytics.aggregateBlockTimeAndVotingPower', "h", (error, result) => {
-        if (error){
+        if (error) {
             console.log("aggregate hourly block time error: %o", error)
         }
-        else{
+        else {
             console.log("aggregate hourly block time ok: %o", result)
         }
     });
 }
 
-aggregateDaily = () =>{
+aggregateDaily = () => {
     // doing somthing every day
     Meteor.call('Analytics.aggregateBlockTimeAndVotingPower', "d", (error, result) => {
-        if (error){
+        if (error) {
             console.log("aggregate daily block time error: %o", error)
         }
-        else{
+        else {
             console.log("aggregate daily block time ok: %o", result)
         }
     });
 
     Meteor.call('Analytics.aggregateValidatorDailyBlockTime', (error, result) => {
-        if (error){
+        if (error) {
             console.log("aggregate validators block time error: %o", error)
         }
         else {
@@ -165,8 +165,8 @@ aggregateDaily = () =>{
 
 
 
-Meteor.startup(async function(){
-    if (Meteor.isDevelopment){
+Meteor.startup(async function () {
+    if (Meteor.isDevelopment) {
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
         import DEFAULTSETTINGSJSON from '../default_settings.json'
         Object.keys(DEFAULTSETTINGSJSON).forEach((key) => {
@@ -175,7 +175,7 @@ Meteor.startup(async function(){
                 Meteor.settings[key] = {};
             }
             Object.keys(DEFAULTSETTINGSJSON[key]).forEach((param) => {
-                if (Meteor.settings[key][param] == undefined){
+                if (Meteor.settings[key][param] == undefined) {
                     console.warn(`CHECK SETTINGS JSON: ${key}.${param} is missing from settings`)
                     Meteor.settings[key][param] = DEFAULTSETTINGSJSON[key][param]
                 }
@@ -183,20 +183,20 @@ Meteor.startup(async function(){
         })
     }
 
-    if (Meteor.settings.debug.startTimer){
-        timerConsensus = Meteor.setInterval(function(){
+    if (Meteor.settings.debug.startTimer) {
+        timerConsensus = Meteor.setInterval(function () {
             getConsensusState();
         }, Meteor.settings.params.consensusInterval);
 
-        timerBlocks = Meteor.setInterval(function(){
+        timerBlocks = Meteor.setInterval(function () {
             updateBlock();
         }, Meteor.settings.params.blockInterval);
 
-        timerTransactions = Meteor.setInterval(function(){
+        timerTransactions = Meteor.setInterval(function () {
             updateTransactions();
         }, Meteor.settings.params.transactionsInterval);
 
-        timerChain = Meteor.setInterval(function(){
+        timerChain = Meteor.setInterval(function () {
             updateChainStatus();
         }, Meteor.settings.params.statusInterval);
 
@@ -210,25 +210,25 @@ Meteor.startup(async function(){
             }, Meteor.settings.params.proposalInterval);
         }
 
-        timerMissedBlock = Meteor.setInterval(function(){
+        timerMissedBlock = Meteor.setInterval(function () {
             updateMissedBlocks();
         }, Meteor.settings.params.missedBlocksInterval);
 
-        // timerDelegation = Meteor.setInterval(function(){
-        //     getDelegations();
-        // }, Meteor.settings.params.delegationInterval);
+        timerDelegation = Meteor.setInterval(function () {
+            getDelegations();
+        }, Meteor.settings.params.delegationInterval);
 
-        timerAggregate = Meteor.setInterval(function(){
+        timerAggregate = Meteor.setInterval(function () {
             let now = new Date();
-            if ((now.getUTCSeconds() == 0)){
+            if ((now.getUTCSeconds() == 0)) {
                 aggregateMinutely();
             }
 
-            if ((now.getUTCMinutes() == 0) && (now.getUTCSeconds() == 0)){
+            if ((now.getUTCMinutes() == 0) && (now.getUTCSeconds() == 0)) {
                 aggregateHourly();
             }
 
-            if ((now.getUTCHours() == 0) && (now.getUTCMinutes() == 0) && (now.getUTCSeconds() == 0)){
+            if ((now.getUTCHours() == 0) && (now.getUTCMinutes() == 0) && (now.getUTCSeconds() == 0)) {
                 aggregateDaily();
             }
         }, 1000)
