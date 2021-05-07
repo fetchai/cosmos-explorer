@@ -26,6 +26,9 @@ export default class BlocksTable extends Component {
     }
 
     isBottom(el) {
+        if (!el) {
+            return false;
+        }
         return el.getBoundingClientRect().bottom <= window.innerHeight;
     }
 
@@ -115,36 +118,28 @@ export default class BlocksTable extends Component {
             : <Card className="h-100 overflow-auto">
                 <div className="card-header"><T>blocks.latestBlocks</T></div>
                 <CardBody className="overflow-auto">
-                    <Table striped className="random-validators">
-                        <thead>
-                            <tr>
-                                <td>
-                                    <HeaderRecord homepage={true} />
-                                    <Switch>
-                                        <Route path="/blocks/:blockId" render={(props) => <Sidebar
-                                            sidebar={<Block {...props} />}
-                                            open={this.state.sidebarOpen}
-                                            onSetOpen={this.onSetSidebarOpen}
-                                            styles={{
-                                                sidebar: {
-                                                    background: "white",
-                                                    position: "fixed",
-                                                    width: '85%',
-                                                    zIndex: 4
-                                                }, overlay: {
-                                                    zIndex: 3
-                                                }
-                                            }}
-                                        >
-                                        </Sidebar>} />
-
-                                    </Switch>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <Blocks limit={this.state.limit} /></tbody>
-                    </Table>
+                    <Container fluid id="block-table">
+                        <HeaderRecord homepage={true} />
+                        <Switch>
+                            <Route path="/blocks/:blockId" render={(props) => <Sidebar
+                                sidebar={<Block {...props} />}
+                                open={this.state.sidebarOpen}
+                                onSetOpen={this.onSetSidebarOpen}
+                                styles={{
+                                    sidebar: {
+                                        background: "white",
+                                        position: "fixed",
+                                        width: '85%',
+                                        zIndex: 4
+                                    }, overlay: {
+                                        zIndex: 3
+                                    }
+                                }}
+                            >
+                            </Sidebar>} />
+                        </Switch>
+                        <Blocks limit={this.state.limit} />
+                    </Container>
                 </CardBody>
             </Card>;
     }
