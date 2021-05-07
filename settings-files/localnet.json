@@ -3,7 +3,7 @@
     "chainName": "localnet",
     "chainId": "localnet",
     "gtm": "",
-    "genesisTime": "2021-05-05T13:55:24.316066163Z",
+    "genesisTime": "2021-05-06T15:55:24.316066163Z",
     "slashingWindow": 10000,
     "uptimeWindow": 250,
     "initialPageSize": 30,
@@ -14,12 +14,12 @@
     "bech32PrefixValPub": "fetchvaloperpub",
     "bech32PrefixConsAddr": "fetchvalcons",
     "bech32PrefixConsPub": "fetchvalconspub",
-    "bondDenom": "stake",
+    "bondDenom": "atestfet",
     "powerReduction": 1000000000000000000,
     "coins": [
       {
-        "denom": "stake",
-        "displayName": "STAKE",
+        "denom": "atestfet",
+        "displayName": "TESTFET",
         "fraction": 1000000000000000000
       }
     ],

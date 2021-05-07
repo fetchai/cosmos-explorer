@@ -65,7 +65,7 @@ export class Ledger {
         })
     }
     async isReady(transportBLE) {
-    // check if the version is supported
+        // check if the version is supported
         const version = await this.getCosmosAppVersion(transportBLE)
 
         if (!semver.gte(version, REQUIRED_COSMOS_APP_VERSION)) {
@@ -81,11 +81,11 @@ export class Ledger {
         // assume well connection if connected once
         if (this.cosmosApp) return
         let transport;
-        if(transportBLE === true || transportBLE === 'true'){
+        if (transportBLE === true || transportBLE === 'true') {
             transport = await BluetoothTransport.create(timeout)
         }
-        else{
-            transport= await TransportWebUSB.create(timeout)
+        else {
+            transport = await TransportWebUSB.create(timeout)
         }
         const cosmosLedgerApp = new CosmosApp(transport)
 
@@ -95,7 +95,7 @@ export class Ledger {
         await this.isReady(transportBLE)
     }
 
-    async getDevice(){
+    async getDevice() {
         return new Promise((resolve, reject) => {
             const subscription = BluetoothTransport.listen({
                 next(event) {
@@ -145,7 +145,7 @@ export class Ledger {
         await this.connect(INTERACTION_TIMEOUT, transportBLE)
 
         const pubKey = await this.getPubKey(this.cosmosApp)
-        return {pubKey, address:createCosmosAddress(pubKey)}
+        return { pubKey, address: createCosmosAddress(pubKey) }
     }
     async confirmLedgerAddress(transportBLE) {
         await this.connect(INTERACTION_TIMEOUT, transportBLE)
@@ -187,33 +187,33 @@ export class Ledger {
             throw new Error(`Ledger's screensaver mode is on`)
         }
         switch (error_message) {
-        case `U2F: Timeout`:
-            throw new Error(timeoutMessag)
-        case `${Meteor.settings.public.ledger.appName} app does not seem to be open`:
-            // hack:
-            // It seems that when switching app in Ledger, WebUSB will disconnect, disabling further action.
-            // So we clean up here, and re-initialize this.cosmosApp next time when calling `connect`
-            this.cosmosApp.transport.close()
-            this.cosmosApp = undefined
-            throw new Error(`${Meteor.settings.public.ledger.appName} app is not open`)
-        case `Command not allowed`:
-            throw new Error(`Transaction rejected`)
-        case `Transaction rejected`:
-            throw new Error(rejectionMessage)
-        case `Unknown error code`:
-            throw new Error(`Ledger's screensaver mode is on`)
-        case `Instruction not supported`:
-            throw new Error(
-                `Your ${Meteor.settings.public.ledger.appName} Ledger App is not up to date. ` +
-                `Please update to version ${REQUIRED_COSMOS_APP_VERSION}.`
-            )
-        case `Web Bluetooth API globally disabled`:
-            throw new Error(`Bluetooth not supported. Please use the latest version of Chrome browser.`)
-        case `No errors`:
-            // do nothing
-            break
-        default:
-            throw new Error(error_message)
+            case `U2F: Timeout`:
+                throw new Error(timeoutMessag)
+            case `${Meteor.settings.public.ledger.appName} app does not seem to be open`:
+                // hack:
+                // It seems that when switching app in Ledger, WebUSB will disconnect, disabling further action.
+                // So we clean up here, and re-initialize this.cosmosApp next time when calling `connect`
+                this.cosmosApp.transport.close()
+                this.cosmosApp = undefined
+                throw new Error(`${Meteor.settings.public.ledger.appName} app is not open`)
+            case `Command not allowed`:
+                throw new Error(`Transaction rejected`)
+            case `Transaction rejected`:
+                throw new Error(rejectionMessage)
+            case `Unknown error code`:
+                throw new Error(`Ledger's screensaver mode is on`)
+            case `Instruction not supported`:
+                throw new Error(
+                    `Your ${Meteor.settings.public.ledger.appName} Ledger App is not up to date. ` +
+                    `Please update to version ${REQUIRED_COSMOS_APP_VERSION}.`
+                )
+            case `Web Bluetooth API globally disabled`:
+                throw new Error(`Bluetooth not supported. Please use the latest version of Chrome browser.`)
+            case `No errors`:
+                // do nothing
+                break
+            default:
+                throw new Error(error_message)
         }
     }
 
@@ -257,7 +257,7 @@ export class Ledger {
                 amount: Math.ceil(gas * gasPrice).toString(),
                 denom: denom,
             }],
-            gas: gas.toLocaleString('fullwide', { useGrouping: false }),
+            gas: gas.toString(),
         };
 
         return unsignedTx;
@@ -339,7 +339,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgDelegate',
             value: {
                 amount: {
-                    amount: uatomAmount.toLocaleString('fullwide', { useGrouping: false }),
+                    amount: uatomAmount.toString(),
                     denom: txContext.denom,
                 },
                 delegator_address: txContext.bech32,
@@ -361,7 +361,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgUndelegate',
             value: {
                 amount: {
-                    amount: uatomAmount.toLocaleString('fullwide', { useGrouping: false }),
+                    amount: uatomAmount.toString(),
                     denom: txContext.denom,
                 },
                 delegator_address: txContext.bech32,
@@ -384,7 +384,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgBeginRedelegate',
             value: {
                 amount: {
-                    amount: uatomAmount.toLocaleString('fullwide', { useGrouping: false }),
+                    amount: uatomAmount.toString(),
                     denom: txContext.denom,
                 },
                 delegator_address: txContext.bech32,
@@ -407,7 +407,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgSend',
             value: {
                 amount: [{
-                    amount: amount.toLocaleString('fullwide', { useGrouping: false }),
+                    amount: amount.toString(),
                     denom: txContext.denom
                 }],
                 from_address: txContext.bech32,
@@ -435,7 +435,7 @@ export class Ledger {
                     }
                 },
                 initial_deposit: [{
-                    amount: deposit.toLocaleString('fullwide', { useGrouping: false }),
+                    amount: deposit.toString(),
                     denom: txContext.denom
                 }],
                 proposer: txContext.bech32
@@ -471,7 +471,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgDeposit',
             value: {
                 amount: [{
-                    amount: amount.toLocaleString('fullwide', { useGrouping: false }),
+                    amount: amount.toString(),
                     denom: txContext.denom
                 }],
                 depositor: txContext.bech32,

@@ -22,15 +22,29 @@ export default class Coin {
             throw "no coin with denom '" + denom + "' from settings"
         }
 
+        // denom => afet
+        // displayName => FET
+
+        // divider used to convert between denom or displayName representation
         this._coin.fraction = Big(this._coin.fraction)
-        this._displayDecimals = 6
-        this._fractionDisplayThreshold = this._coin.fraction.div(Big(10).pow((this._displayDecimals - 1)));
+        // threshold used to switch display of a coin between its denom or displayName representations.
+        // when amount is below this threshold, denom value will be used
+        // when above, it will be converted to displayName.
+        this._fractionDisplayThreshold = this._coin.fraction.div(Big(1000000));
+
+        if (!amount) {
+            amount = 0;
+        }
 
         if (lowerDenom === this._coin.denom.toLowerCase()) {
             this._amount = Big(amount);
         } else {
             this._amount = Big(amount).mul(this._coin.fraction);
         }
+    }
+
+    get amount() {
+        return this._amount
     }
 
     toString() {
@@ -41,11 +55,6 @@ export default class Coin {
             denom = this._coin.displayName;
         }
 
-        let displayDecimals = this._displayDecimals;
-        if (amount.round(this._displayDecimals, Big.roundDown).eq(amount)) {
-            displayDecimals = 0;
-        }
-
-        return `${amount.toFixed(displayDecimals)} ${denom}`
+        return `${numbro(amount.toString()).format("0,0")} ${denom}`
     }
 }
