@@ -82,11 +82,11 @@ export class Ledger {
         // assume well connection if connected once
         if (this.cosmosApp) return
         let transport;
-        if(transportBLE === true || transportBLE === 'true'){
+        if (transportBLE === true || transportBLE === 'true') {
             transport = await BluetoothTransport.create(timeout)
         }
-        else{
-            transport= await TransportWebUSB.create(timeout)
+        else {
+            transport = await TransportWebUSB.create(timeout)
         }
         const cosmosLedgerApp = new CosmosApp(transport)
 
@@ -96,7 +96,7 @@ export class Ledger {
         await this.isReady(transportBLE)
     }
 
-    async getDevice(){
+    async getDevice() {
         return new Promise((resolve, reject) => {
             const subscription = BluetoothTransport.listen({
                 next(event) {
@@ -256,7 +256,7 @@ export class Ledger {
                 amount: Math.ceil(gas * gasPrice).toLocaleString('fullwide', { useGrouping: false }),
                 denom: denom,
             }],
-            gas: gas.toLocaleString('fullwide', { useGrouping: false }),
+            gas: gas.toString(),
         };
 
         return unsignedTx;
@@ -338,7 +338,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgDelegate',
             value: {
                 amount: {
-                    amount: uatomAmount.toLocaleString('fullwide', { useGrouping: false }),
+                    amount: uatomAmount.toString(),
                     denom: txContext.denom,
                 },
                 delegator_address: txContext.bech32,
@@ -360,7 +360,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgUndelegate',
             value: {
                 amount: {
-                    amount: uatomAmount.toLocaleString('fullwide', { useGrouping: false }),
+                    amount: uatomAmount.toString(),
                     denom: txContext.denom,
                 },
                 delegator_address: txContext.bech32,
@@ -383,7 +383,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgBeginRedelegate',
             value: {
                 amount: {
-                    amount: uatomAmount.toLocaleString('fullwide', { useGrouping: false }),
+                    amount: uatomAmount.toString(),
                     denom: txContext.denom,
                 },
                 delegator_address: txContext.bech32,
@@ -406,7 +406,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgSend',
             value: {
                 amount: [{
-                    amount: amount.toLocaleString('fullwide', { useGrouping: false }),
+                    amount: amount.toString(),
                     denom: txContext.denom
                 }],
                 from_address: txContext.bech32,
@@ -434,7 +434,7 @@ export class Ledger {
                     }
                 },
                 initial_deposit: [{
-                    amount: deposit.toLocaleString('fullwide', { useGrouping: false }),
+                    amount: deposit.toString(),
                     denom: txContext.denom
                 }],
                 proposer: txContext.bech32
@@ -470,7 +470,7 @@ export class Ledger {
             type: 'cosmos-sdk/MsgDeposit',
             value: {
                 amount: [{
-                    amount: amount.toLocaleString('fullwide', { useGrouping: false }),
+                    amount: amount.toString(),
                     denom: txContext.denom
                 }],
                 depositor: txContext.bech32,
