@@ -59,11 +59,11 @@ updateTransactions = () => {
 
 updateTransactions = () => {
     Meteor.call('Transactions.updateTransactions', (error, result) => {
-        if (error){
-            console.log("updateTransactions: %o",error);
+        if (error) {
+            console.log("updateTransactions: %o", error);
         }
-        else{
-            console.log("updateTransactions: %o",result);
+        else {
+            console.log("updateTransactions: %o", result);
         }
     })
 }

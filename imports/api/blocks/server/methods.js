@@ -27,15 +27,15 @@ getRemovedValidators = (prevValidators, validators) => {
 }
 
 getValidatorFromConsensusKey = (validators, consensusKey) => {
-    for (v in validators){
+    for (v in validators) {
         try {
-            let pubkeyType = Meteor.settings.public.secp256k1?'tendermint/PubKeySecp256k1':'tendermint/PubKeyEd25519';
+            let pubkeyType = Meteor.settings.public.secp256k1 ? 'tendermint/PubKeySecp256k1' : 'tendermint/PubKeyEd25519';
             let pubkey = Meteor.call('bech32ToPubkey', consensusKey, pubkeyType);
-            if (validators[v].pub_key.value == pubkey){
+            if (validators[v].pub_key.value == pubkey) {
                 return validators[v]
             }
         }
-        catch (e){
+        catch (e) {
             console.log("Error converting pubkey: %o\n%o", consensusKey, e)
         }
     }
@@ -269,7 +269,7 @@ Meteor.methods({
                 console.log(url);
                 try {
                     let startGetHeightTime = new Date();
-                    
+
                     let response = HTTP.get(url);
                     if (response.statusCode == 200) {
                         let block = JSON.parse(response.content);
@@ -299,7 +299,7 @@ Meteor.methods({
                     let block = JSON.parse(response.content);
                     blockData.height = height;
                     blockData.hash = block.block_id.hash;
-                    blockData.transNum = block.block.data.txs?block.block.data.txs.length:0;
+                    blockData.transNum = block.block.data.txs ? block.block.data.txs.length : 0;
                     blockData.time = block.block.header.time;
                     blockData.lastBlockHash = block.block.header.last_block_id.hash;
                     blockData.proposerAddress = block.block.header.proposer_address;
@@ -307,8 +307,8 @@ Meteor.methods({
 
 
                     // save txs in database
-                    if (block.block.data.txs && block.block.data.txs.length > 0){
-                        for (t in block.block.data.txs){
+                    if (block.block.data.txs && block.block.data.txs.length > 0) {
+                        for (t in block.block.data.txs) {
                             bulkTransactions.insert({
                                 // hash has to be in uppercase
                                 txhash: sha256(Buffer.from(block.block.data.txs[t], 'base64')).toUpperCase(),
@@ -351,7 +351,7 @@ Meteor.methods({
                         while (validators.length < parseInt(result.total))
 
                     }
-                    catch(e){
+                    catch (e) {
                         console.log("Getting validator set at height %o: %o", height, e)
                     }
 
@@ -364,7 +364,7 @@ Meteor.methods({
 
                     // temporarily add bech32 concensus keys to the validator set list
                     let tempValidators = [];
-                    for (let v in validators){
+                    for (let v in validators) {
                         // validators[v].consensus_pubkey = Meteor.call('pubkeyToBech32Old', validators[v].pub_key, Meteor.settings.public.bech32PrefixConsPub);
                         // validators[v].valconsAddress = validators[v].address;
                         validators[v].valconsAddress = Meteor.call('hexToBech32', validators[v].address, Meteor.settings.public.bech32PrefixConsAddr);
@@ -450,8 +450,8 @@ Meteor.methods({
                             if (!valExist && valData.consensus_pubkey) {
 
                         // console.log(analyticsData.voting_power);
-                        if (!valExist && valData.consensus_pubkey){
-                                
+                        if (!valExist && valData.consensus_pubkey) {
+
                             // let val = getValidatorFromConsensusKey(validators, v);
                             // get the validator hex address and other bech32 addresses.
 
@@ -459,7 +459,7 @@ Meteor.methods({
 
                                 let pubkeyType = Meteor.settings.public.secp256k1 ? 'tendermint/PubKeySecp256k1' : 'tendermint/PubKeyEd25519';
 
-                            
+
                             valData.address = Meteor.call('getAddressFromPubkey', valData.consensus_pubkey);
                             valData.bech32ValConsAddress = Meteor.call('hexToBech32', valData.address, Meteor.settings.public.bech32PrefixConsAddr);
 
@@ -675,7 +675,7 @@ Meteor.methods({
                                 }
                             })
 
-                            Chain.update({chainId:block.block.header.chainId}, {$set:{lastKeybaseFetchTime:new Date().toUTCString()}});
+                            Chain.update({ chainId: block.block.header.chainId }, { $set: { lastKeybaseFetchTime: new Date().toUTCString() } });
                         }
 
                         let endVRTime = new Date();
@@ -693,7 +693,7 @@ Meteor.methods({
                     let startAnayticsInsertTime = new Date();
                     Analytics.insert(analyticsData);
                     let endAnalyticsInsertTime = new Date();
-                    console.log("Analytics insert time: "+((endAnalyticsInsertTime-startAnayticsInsertTime)/1000)+"seconds.");
+                    console.log("Analytics insert time: " + ((endAnalyticsInsertTime - startAnayticsInsertTime) / 1000) + "seconds.");
 
                         if (height % 60 == 1) {
                             calculateVPDist(analyticsData, blockData)
@@ -701,18 +701,18 @@ Meteor.methods({
                     }
 
                     let startVUpTime = new Date();
-                    if (bulkValidators.length > 0){
+                    if (bulkValidators.length > 0) {
                         console.log("############ Update validators ############");
                         bulkValidators.execute((err, result) => {
-                            if (err){
-                                console.log("Error while bulk insert validators: %o",err);
+                            if (err) {
+                                console.log("Error while bulk insert validators: %o", err);
                             }
-                            if (result){
+                            if (result) {
                                 bulkUpdateLastSeen.execute((err, result) => {
-                                    if (err){
-                                        console.log("Error while bulk update validator last seen: %o",err);
+                                    if (err) {
+                                        console.log("Error while bulk update validator last seen: %o", err);
                                     }
-                                    if (result){
+                                    if (result) {
                                     }
                                 })
                             }
@@ -720,24 +720,24 @@ Meteor.methods({
                     }
 
                     let endVUpTime = new Date();
-                    console.log("Validator update time: "+((endVUpTime-startVUpTime)/1000)+"seconds.");
+                    console.log("Validator update time: " + ((endVUpTime - startVUpTime) / 1000) + "seconds.");
 
                     let startVRTime = new Date();
-                    if (bulkValidatorRecords.length > 0){
+                    if (bulkValidatorRecords.length > 0) {
                         bulkValidatorRecords.execute((err) => {
-                            if (err){
-                                console.log(err);
+                            if (err) {
+                                console.log("failed to save bulkValidatorRecords", err);
                             }
                         });
                     }
 
                     let endVRTime = new Date();
-                    console.log("Validator records update time: "+((endVRTime-startVRTime)/1000)+"seconds.");
+                    console.log("Validator records update time: " + ((endVRTime - startVRTime) / 1000) + "seconds.");
 
-                    if (bulkVPHistory.length > 0){
+                    if (bulkVPHistory.length > 0) {
                         bulkVPHistory.execute((err) => {
-                            if (err){
-                                console.log(err);
+                            if (err) {
+                                console.log("failed to save bulkPHistory", err);
                             }
                         });
                     }
