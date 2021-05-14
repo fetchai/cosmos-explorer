@@ -1,8 +1,9 @@
 FROM node:16-buster as base
 
 RUN apt-get update && \
-    apt-get install -y libusb-1.0-0-dev libudev-dev && \
-    apt-get clean
+    apt-get install -y build-essential git gcc-4.8 g++-4.8 libusb-1.0-0 libusb-1.0-0-dev libudev-dev && \
+    apt-get clean && \
+    export CXX=g++-4.8
 ############################################################
 FROM base as build
 
