@@ -1,8 +1,8 @@
 FROM node:14-buster as base
 
-RUN apt update && \
-    apt install -y libusb-1.0-0-dev && \
-    apt clean
+RUN apt-get update && \
+    apt-get install -y libusb-1.0-0-dev libudev-dev && \
+    apt-get clean
 ############################################################
 FROM base as build
 
@@ -14,7 +14,6 @@ WORKDIR /source/big-dipper
 # Copy in the application code.
 
 COPY . .
-
 
 # Install the updates
 RUN meteor npm install --save -f
