@@ -14,6 +14,8 @@
     "bech32PrefixValPub": "fetchvaloperpub",
     "bech32PrefixConsAddr": "fetchvalcons",
     "bech32PrefixConsPub": "fetchvalconspub",
+    "tokenTap": true,
+    "tokenTapURL": "http://localhost:3000/api/v3/claims",
     "bondDenom": "atestfet",
     "powerReduction": 1000000000000000000,
     "coins": [
