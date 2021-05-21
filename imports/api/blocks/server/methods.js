@@ -580,7 +580,7 @@ Meteor.methods({
                                     console.log("Validator is in DB but not in validator set now. Add remove VP change.");
                                     bulkVPHistory.insert({
                                         address: valExist.address,
-                                        prev_voting_power: prevVotingPower,
+                                        prev_voting_power: prevVotingPower.voting_power,
                                         voting_power: 0,
                                         type: 'remove',
                                         height: blockData.height,
@@ -588,7 +588,7 @@ Meteor.methods({
                                     });
                                 }
 
-                                bulkValidatorRecords.insert(record);
+                                //bulkValidatorRecords.insert(record);
                                 // ValidatorRecords.update({height:height,address:record.address},record);
                             }
                         }
