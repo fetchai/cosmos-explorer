@@ -214,7 +214,7 @@ Meteor.methods({
             let validatorSet = [];
             // get latest validator candidate information
 
-            let url = API + '/cosmos/staking/v1beta1/validators?status=BOND_STATUS_BONDED&pagination.limit=200&pagination.count_total=true';
+            let url = API + '/cosmos/staking/v1beta1/validators?pagination.limit=200&pagination.count_total=true';
 
             try {
                 let response = HTTP.get(url);
@@ -224,28 +224,7 @@ Meteor.methods({
             catch (e) {
                 console.log(url);
                 console.log(e);
-            }
-
-            try {
-                url = API + '/cosmos/staking/v1beta1/validators?status=BOND_STATUS_UNBONDING&pagination.limit=200&pagination.count_total=true';
-                let response = HTTP.get(url);
-                let result = JSON.parse(response.content).validators;
-                result.forEach((validator) => validatorSet[validator.consensus_pubkey.key] = validator);
-            }
-            catch (e) {
-                console.log(url);
-                console.log(e);
-            }
-
-            try {
-                url = API + '/cosmos/staking/v1beta1/validators?status=BOND_STATUS_UNBONDED&pagination.limit=200&pagination.count_total=true';
-                let response = HTTP.get(url);
-                let result = JSON.parse(response.content).validators;
-                result.forEach((validator) => validatorSet[validator.consensus_pubkey.key] = validator);
-            }
-            catch (e) {
-                console.log(url);
-                console.log(e);
+                return "failed to sync: " + e;
             }
 
             // console.log("validaotor set: %o", validatorSet);
@@ -351,7 +330,8 @@ Meteor.methods({
 
                     }
                     catch (e) {
-                        console.log("Getting validator set at height %o: %o", height, e)
+                        console.log("failed to get validator set at height %o: %o", height, e)
+                        return "failed to get validator set"
                     }
 
                     // console.log(validators)
