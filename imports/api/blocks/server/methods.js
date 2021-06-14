@@ -352,7 +352,8 @@ Meteor.methods({
 
                     }
                     catch (e) {
-                        console.log("Getting validator set at height %o: %o", height, e)
+                        console.log("failed to get validator set at height %o: %o", height, e)
+                        return "failed to get validator set"
                     }
 
                     // console.log(validators)

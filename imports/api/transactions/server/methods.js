@@ -9,7 +9,7 @@ Meteor.methods({
     'Transactions.updateTransactions': async function () {
         this.unblock();
         if (TXSYNCING)
-            return "Syncing transactions...";
+            return "transactions sync already in progress...";
 
         const transactions = Transactions.find({ processed: false }, { limit: 500 }).fetch();
         try {
@@ -27,6 +27,13 @@ Meteor.methods({
                     bulkTransactions.find({ txhash: transactions[i].txhash }).updateOne({ $set: tx });
 
 
+                        bulkTransactions.find({ txhash: transactions[i].txhash }).updateOne({ $set: tx });
+                        totalUpdated++;
+                    }
+                    catch (e) {
+                        console.log("updateTransactions: failed to get transaction %o: %o", transactions[i].txhash, e);
+                        bulkTransactions.find({ txhash: transactions[i].txhash }).updateOne({ $set: { processed: false, missing: true } });
+                    }
                 }
                 catch (e) {
                     console.log("Getting transaction %o: %o", hash, e);
@@ -43,13 +50,12 @@ Meteor.methods({
                     }
                 });
             }
-        }
-        catch (e) {
-            TXSYNCING = false;
-            return e
-        }
+
+            totalProcessed += currentProcessed;
+        } while (currentProcessed >= queryLimit);
+
         TXSYNCING = false;
-        return transactions.length
+        return totalProcessed;
     },
     'Transactions.findDelegation': function (address, height) {
         this.unblock();
