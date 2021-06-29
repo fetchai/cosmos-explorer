@@ -69,7 +69,6 @@ export default class AccountDetails extends Component {
                     loading: false
                 })
             }
-
             if (result) {
 
                 if (result.available && (result.available.length > 0)) {
