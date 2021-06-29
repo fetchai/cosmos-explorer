@@ -69,16 +69,12 @@ export default class AccountDetails extends Component {
                     loading: false
                 })
             }
-
             if (result) {
-                if (result.available && (result.available.length > 0)) {
-
-                    this.setState({
-                        available: cloneDeep(result.available),
-                        denom: Coin.StakingCoin.denom,
-                        total: cloneDeep(result.available)
-                    })
-                }
+                this.setState({
+                    available: cloneDeep(result.available),
+                    denom: Coin.StakingCoin.denom,
+                    total: cloneDeep(result.available)
+                })
 
                 this.setState({ delegations: result.delegations || [] })
                 if (result.delegations && result.delegations.length > 0) {
