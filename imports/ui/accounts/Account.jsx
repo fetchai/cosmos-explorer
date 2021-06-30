@@ -1,29 +1,16 @@
 import React, { Component } from 'react';
-import {
-    Card,
-    CardBody,
-    CardHeader,
-    Col,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
-    Progress,
-    Row,
-    Spinner,
-    UncontrolledDropdown,
-} from 'reactstrap';
+import { Spinner, UncontrolledTooltip, Row, Col, Card, CardHeader, CardBody, Progress, UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap';
 import numbro from 'numbro';
-import { Helmet } from 'react-helmet';
-import { Meteor } from 'meteor/meteor';
-import i18n from 'meteor/universe:i18n';
 import AccountCopy from '../components/AccountCopy.jsx';
 import LinkIcon from '../components/LinkIcon.jsx';
 import Delegations from './Delegations.jsx';
 import Unbondings from './Unbondings.jsx';
 import AccountTransactions from '../components/TransactionsContainer.js';
-import ChainStates from '../components/ChainStatesContainer.js';
-import { TransferButton, WithdrawButton } from '../ledger/LedgerActions.jsx';
-import Coin from '/both/utils/coins.js';
+import ChainStates from '../components/ChainStatesContainer.js'
+import { Helmet } from 'react-helmet';
+import { WithdrawButton, TransferButton } from '../ledger/LedgerActions.jsx';
+import i18n from 'meteor/universe:i18n';
+import Coin from '/both/utils/coins.js'
 
 const T = i18n.createComponent();
 
@@ -52,7 +39,7 @@ export default class AccountDetails extends Component {
             user: localStorage.getItem(CURRENTUSERADDR),
             commission: [defaultCoin],
             denom: '',
-            rewardsForEachDel: [defaultCoin],
+            rewardsForEachDel: { defaultCoin },
             rewardDenomType: [defaultCoin],
         }
     }
@@ -82,17 +69,12 @@ export default class AccountDetails extends Component {
                     loading: false
                 })
             }
-
             if (result) {
-
-                if (result.available && (result.available.length > 0)) {
-
-                    this.setState({
-                        available: cloneDeep(result.available),
-                        denom: Coin.StakingCoin.denom,
-                        total: cloneDeep(result.available)
-                    })
-                }
+                this.setState({
+                    available: cloneDeep(result.available),
+                    denom: Coin.StakingCoin.denom,
+                    total: cloneDeep(result.available)
+                })
 
                 this.setState({ delegations: result.delegations || [] })
                 if (result.delegations && result.delegations.length > 0) {
@@ -158,7 +140,6 @@ export default class AccountDetails extends Component {
 
 
                 if (result.rewards && result.rewards.length > 0) {
-
                     for (let c = 0; c < result.rewards.length; c++) {
                         if (result.rewards[c].reward != null) {
                             numRewards[result.rewards[c]["validator_address"]] = result.rewards[c].reward;
@@ -184,7 +165,7 @@ export default class AccountDetails extends Component {
                             this.state.total[i].amount = parseFloat(this.state.total[i].amount) + parseFloat(commissions.amount);
 
                         this.setState({
-                            operator_address: result.operator_address,
+                            operatorAddress: result.operatorAddress,
                             commission: [...this.state.commission, commissionAmount],
                             total: [...this.state.total]
                         })
@@ -220,7 +201,7 @@ export default class AccountDetails extends Component {
                 price: 0,
                 reward: [],
                 denom: '',
-                rewardsForEachDel: [],
+                rewardsForEachDel: {},
                 rewardDenomType: [],
             }, () => {
                 this.getBalance();
@@ -257,6 +238,7 @@ export default class AccountDetails extends Component {
             </DropdownMenu>
         </UncontrolledDropdown>
     }
+
     renderShareLink() {
         let primaryLink = `/account/${this.state.address}`
         let otherLinks = [
@@ -284,6 +266,7 @@ export default class AccountDetails extends Component {
 
         let findCurrentCoin = this.state.total.find(({ denom }) => denom === this.state.denom)
         let currentCoinTotal = findCurrentCoin ? findCurrentCoin.amount : null;
+
         if (this.state.loading) {
             return <div id="account">
                 <h1 className="d-none d-lg-block"><T>accounts.accountDetails</T></h1>
@@ -293,8 +276,8 @@ export default class AccountDetails extends Component {
         else if (this.state.accountExists) {
             return <div id="account">
                 <Helmet>
-                    <title>Account Details of {this.state.address} on the Fetch.ai Network Explorer</title>
-                    <meta name="description" content={"Account Details of " + this.state.address + " on the Fetch.ai Network Explorer"} />
+                    <title>Account Details of {this.state.address} on {Meteor.settings.public.chainName} | Big Dipper</title>
+                    <meta name="description" content={"Account Details of " + this.state.address + " on {Meteor.settings.public.chainName}"} />
                 </Helmet>
                 <Row>
                     <Col md={3} xs={12}><h1 className="d-none d-lg-block"><T>accounts.accountDetails</T></h1></Col>
@@ -348,7 +331,7 @@ export default class AccountDetails extends Component {
                                 <Col md={6} lg={4} className="total d-flex flex-column justify-content-end">
                                     {this.state.user ? <Row>
                                         <Col xs={12}><TransferButton history={this.props.history} address={this.state.address} denom={this.state.denom} /></Col>
-                                        {this.state.user === this.state.address ? <Col xs={12}><WithdrawButton history={this.props.history} rewards={this.state.rewards} commission={this.state.commission} address={this.state.operator_address} denom={this.state.denom} /></Col> : null}
+                                        {this.state.user === this.state.address ? <Col xs={12}><WithdrawButton history={this.props.history} rewards={this.state.rewards} commission={this.state.commission} address={this.state.operatorAddress} denom={this.state.denom} /></Col> : null}
                                     </Row> : null}
                                     <Row>
                                         <Col xs={4} className="label d-flex align-self-end"><div className="infinity" /><T>accounts.total</T></Col>

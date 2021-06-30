@@ -5,8 +5,7 @@ import { Transactions } from '/imports/api/transactions/transactions.js';
 import Block from './Block.jsx';
 
 export default BlockContainer = withTracker((props) => {
-  let blockHandle; let
-    transactionHandle;
+  let blockHandle, transactionHandle;
   let loading = true;
 
   if (Meteor.isClient) {
@@ -15,8 +14,7 @@ export default BlockContainer = withTracker((props) => {
     loading = !blockHandle.ready() && !transactionHandle.ready();
   }
 
-  let block; let txs; let transactionsExist; let
-    blockExist;
+  let block, txs, transactionsExist, blockExist;
 
   if (Meteor.isServer || !loading) {
     block = Blockscon.findOne({ height: parseInt(props.match.params.blockId) });
@@ -26,10 +24,12 @@ export default BlockContainer = withTracker((props) => {
       loading = false;
       transactionsExist = !!txs;
       blockExist = !!block;
-    } else {
+    }
+    else {
       transactionsExist = !loading && !!txs;
       blockExist = !loading && !!block;
     }
+
   }
 
   return {
@@ -39,43 +39,43 @@ export default BlockContainer = withTracker((props) => {
     block: blockExist ? block : {},
     transferTxs: transactionsExist ? Transactions.find({
       $or: [
-        { 'tx.value.msg.type': 'cosmos-sdk/MsgSend' },
-        { 'tx.value.msg.type': 'cosmos-sdk/MsgMultiSend' },
-      ],
+        { "tx.body.messages.@type": "/cosmos.bank.v1beta1.MsgSend" },
+        { "tx.body.messages.@type": "/cosmos.bank.v1beta1.MsgMultiSend" }
+      ]
     }).fetch() : {},
     stakingTxs: transactionsExist ? Transactions.find({
       $or: [
-        { 'tx.value.msg.type': 'cosmos-sdk/MsgCreateValidator' },
-        { 'tx.value.msg.type': 'cosmos-sdk/MsgEditValidator' },
-        { 'tx.value.msg.type': 'cosmos-sdk/MsgDelegate' },
-        { 'tx.value.msg.type': 'cosmos-sdk/MsgUndelegate' },
-        { 'tx.value.msg.type': 'cosmos-sdk/MsgBeginRedelegate' },
-      ],
+        { "tx.body.messages.@type": "/cosmos.staking.v1beta1.MsgCreateValidator" },
+        { "tx.body.messages.@type": "/cosmos.staking.v1beta1.MsgEditValidator" },
+        { "tx.body.messages.@type": "/cosmos.staking.v1beta1.MsgDelegate" },
+        { "tx.body.messages.@type": "/cosmos.staking.v1beta1.MsgUndelegate" },
+        { "tx.body.messages.@type": "/cosmos.staking.v1beta1.MsgBeginRedelegate" }
+      ]
     }).fetch() : {},
     distributionTxs: transactionsExist ? Transactions.find({
       $or: [
-        { 'tx.value.msg.type': 'cosmos-sdk/MsgWithdrawValidatorCommission' },
-        { 'tx.value.msg.type': 'cosmos-sdk/MsgWithdrawDelegationReward' },
-        { 'tx.value.msg.type': 'cosmos-sdk/MsgModifyWithdrawAddress' },
-      ],
+        { "tx.body.messages.@type": "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission" },
+        { "tx.body.messages.@type": "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward" },
+        { "tx.body.messages.@type": "/cosmos.distribution.v1beta1.MsgModifyWithdrawAddress" }
+      ]
     }).fetch() : {},
     governanceTxs: transactionsExist ? Transactions.find({
       $or: [
-        { 'tx.value.msg.type': 'cosmos-sdk/MsgSubmitProposal' },
-        { 'tx.value.msg.type': 'cosmos-sdk/MsgDeposit' },
-        { 'tx.value.msg.type': 'cosmos-sdk/MsgVote' },
-      ],
+        { "tx.body.messages.@type": "/cosmos.gov.v1beta1.MsgSubmitProposal" },
+        { "tx.body.messages.@type": "/cosmos.gov.v1beta1.MsgDeposit" },
+        { "tx.body.messages.@type": "/cosmos.gov.v1beta1.MsgVote" }
+      ]
     }).fetch() : {},
     slashingTxs: transactionsExist ? Transactions.find({
       $or: [
-        { 'tx.value.msg.type': 'cosmos-sdk/MsgUnjail' },
-      ],
+        { "tx.body.messages.@type": "/cosmos.slashing.v1beta1.MsgUnjail" }
+      ]
     }).fetch() : {},
     IBCTxs: transactionsExist ? Transactions.find({
       $or: [
-        { 'tx.value.msg.type': 'cosmos-sdk/IBCTransferMsg' },
-        { 'tx.value.msg.type': 'cosmos-sdk/IBCReceiveMsg' },
-      ],
+        { "tx.body.messages.@type": "/cosmos.IBCTransferMsg" },
+        { "tx.body.messages.@type": "/cosmos.IBCReceiveMsg" }
+      ]
     }).fetch() : {},
   };
 })(Block);

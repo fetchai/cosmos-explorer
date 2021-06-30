@@ -1,43 +1,13 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Card, CardBody, Spinner, NavbarBrand } from 'reactstrap'
+import { Container, Row, Col, Card, CardBody, Spinner } from 'reactstrap';
 import { Link, } from 'react-router-dom';
 import numbro from 'numbro';
-import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 import Avatar from '../components/Avatar.jsx';
 import TranactionTabs from '../transactions/TransactionTabs.jsx';
 import { Helmet } from 'react-helmet';
 import i18n from 'meteor/universe:i18n';
 import TimeStamp from '../components/TimeStamp.jsx';
-import Tooltip from '@material-ui/core/Tooltip/Tooltip'
-
-/**
- * Get substring of address with three appended in middle of  dots; for UI display
- *
- * @param val subject
- * @param number number of chars to keep before and after dots
- * @returns {string} formatted string
- * @param dots how many dots in middle of string
- */
-
-function format(val, number = 12, dots = 5) {
-  if (val === '') return ''
-  return (
-    val.substring(0, number) +
-    '.'.repeat(dots) +
-    val.substring(val.length - number)
-  )
-}
-
-async function copyToClipboard(str) {
-  return new Promise((resolve) => {
-    navigator.clipboard.writeText(str).then(() => {
-      resolve(true)
-    }, () => {
-      resolve(false)
-    })
-  })
-}
 
 const T = i18n.createComponent();
 export default class Block extends Component {
@@ -62,28 +32,11 @@ export default class Block extends Component {
           stakingTxs: this.props.stakingTxs,
           distributionTxs: this.props.distributionTxs,
           governanceTxs: this.props.governanceTxs,
-          slashingTxs: this.props.slashingTxs,
-          copied: false
+          slashingTxs: this.props.slashingTxs
         })
       }
     }
   }
-
-  async copy() {
-    await copyToClipboard(this.state.DKG.groupSignature);
-    this.setState({ copied: true });
-  }
-
-
-  /**
-   * we show dkg if settings files specifies it, and if we have dkg in this block,
-   *  and the group signature is specified (which it is not in very first few blocks in chain usually)
-   *
-   */
-  showDKGInfo() {
-    return Boolean(Meteor.settings.public.DKGTab && this.props.blockExist && this.props.block.dkg?.groupSignature)
-  }
-
 
   render() {
     if (this.props.loading) {
@@ -101,12 +54,7 @@ export default class Block extends Component {
 
         return <Container id="block">
           <Helmet>
-            <title>
-              Block
-              {numbro(block.height).format('0,0')}
-              {' '}
-              {Meteor.settings.public.networkDisplayName} Explorer
-            </title>
+            <title>Block {numbro(block.height).format("0,0")} on {Meteor.settings.public.chainName} | Big Dipper</title>
             <meta name="description" content={"Block details of height " + numbro(block.height).format("0,0")} />
           </Helmet>
           <h4><T>blocks.block</T> {numbro(block.height).format("0,0")}</h4>
@@ -117,7 +65,7 @@ export default class Block extends Component {
                 <Col md={4} className="label"><T>common.hash</T></Col>
                 <Col md={8} className="value text-nowrap overflow-auto address">{block.hash}</Col>
                 <Col md={4} className="label"><T>blocks.proposer</T></Col>
-                <Col md={8} className="value"><Link to={"/validator/" + ((proposer) ? proposer.operator_address : '')}><Avatar moniker={moniker} profileUrl={profileUrl} address={block.proposerAddress} list={true} /> {moniker}</Link></Col>
+                <Col md={8} className="value"><Link to={"/validator/" + ((block.proposerAddress) ? block.proposerAddress : '')}><Avatar moniker={moniker} profileUrl={profileUrl} address={block.proposerAddress} list={true} /> {moniker}</Link></Col>
                 <Col md={4} className="label"><T>blocks.numOfTransactions</T></Col>
                 <Col md={8} className="value">{numbro(block.transNum).format("0,0")}</Col>
                 <Col md={4} className="label"><T>common.time</T></Col>

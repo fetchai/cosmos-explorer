@@ -4,28 +4,27 @@ import { Transactions } from '/imports/api/transactions/transactions.js';
 import List from './List.jsx';
 
 export default ValidatorDetailsContainer = withTracker((props) => {
-  let transactionsHandle; let transactions; let
-    transactionsExist;
-  let loading = true;
+    let transactionsHandle; let transactions; let
+        transactionsExist;
+    let loading = true;
 
-  if (Meteor.isClient) {
-    transactionsHandle = Meteor.subscribe('transactions.list', props.limit);
-    loading = (!transactionsHandle.ready() && props.limit == Meteor.settings.public.initialPageSize);
-
-    if (!loading) {
-      transactions = Transactions.find({}, { sort: { height: -1 } }).fetch();
-      transactionsExist = !loading && !!transactions;
+    if (Meteor.isClient) {
+        transactionsHandle = Meteor.subscribe('transactions.list', props.limit);
+        loading = (!transactionsHandle.ready() && props.limit == Meteor.settings.public.initialPageSize);
+        if (!loading) {
+            transactions = Transactions.find({}, { sort: { height: -1 } }).fetch();
+            transactionsExist = !loading && !!transactions;
+        }
     }
-  }
 
-  if (Meteor.isServer) {
-    transactions = Transactions.find({}, { sort: { height: -1 } }).fetch();
-    transactionsExist = !!transactions;
-  }
+    if (Meteor.isServer) {
+        transactions = Transactions.find({}, { sort: { height: -1 } }).fetch();
+        transactionsExist = !!transactions;
+    }
 
-  return {
-    loading,
-    transactionsExist,
-    transactions: transactionsExist ? transactions : {},
-  };
+    return {
+        loading,
+        transactionsExist,
+        transactions: transactionsExist ? transactions : {},
+    };
 })(List);

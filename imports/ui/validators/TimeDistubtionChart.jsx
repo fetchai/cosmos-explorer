@@ -183,10 +183,10 @@ export default class TimeDistubtionChart extends Component {
     };
   }
 
-  render () {
+  render() {
     const data = this.populateChartData();
     return [
-      <Card key="timeilne">
+      <Card key="timeline">
         <CardHeader className="text-capitalize">
           History Missed
           {this.props.type}

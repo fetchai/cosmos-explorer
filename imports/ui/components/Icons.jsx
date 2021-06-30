@@ -12,21 +12,21 @@ export const DenomSymbol = (props) => {
 
 
 export const ProposalStatusIcon = (props) => {
-  switch (props.status) {
-  case 'Passed':
-    return <i className="fas fa-check-circle text-success" />;
-  case 'Rejected':
-    return <i className="fas fa-times-circle text-danger" />;
-  case 'Removed':
-    return <i className="fas fa-trash-alt text-dark" />;
-  case 'DepositPeriod':
-    return <i className="fas fa-battery-half text-warning" />;
-  case 'VotingPeriod':
-    return <i className="fas fa-hand-paper text-info" />;
-  default:
-    return <i />;
-  }
-};
+    switch (props.status){
+    case 'PROPOSAL_STATUS_PASSED':
+        return <i className="fas fa-check-circle text-success"></i>;
+    case 'PROPOSAL_STATUS_REJECTED':
+        return <i className="fas fa-times-circle text-danger"></i>;
+    case 'PROPOSAL_STATUS_REMOVED':
+        return <i className="fas fa-trash-alt text-dark"></i>
+    case 'PROPOSAL_STATUS_DEPOSIT_PERIOD':
+        return <i className="fas fa-battery-half text-warning"></i>;
+    case 'PROPOSAL_STATUS_VOTING_PERIOD':
+        return <i className="fas fa-hand-paper text-info"></i>;
+    default:
+        return <i></i>;
+    }
+}
 
 export const VoteIcon = (props) => {
   switch (props.vote) {

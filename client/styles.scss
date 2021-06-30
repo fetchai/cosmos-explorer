@@ -207,6 +207,17 @@ body {
     &#main, &#transaction, &#block {
       padding-top: 6rem;
       padding-bottom: 3.85rem;
+
+      .banner {
+        a {
+          display: block;
+          width: 100%;
+          
+          img {
+            max-width: 100%
+          }
+        }
+      }
     }
 
     &#transaction .card.card-body {
@@ -653,6 +664,10 @@ body {
   }
 
   .blocks-list {
+    @media only screen and (max-width: 767px) {
+      display: none; 
+    }
+    
     margin-top: 0.2em;
 
     .block {
@@ -719,6 +734,12 @@ body {
     }
   }
 
+  .tx-list-homepage {
+    overflow-y: hidden;
+    overflow-x: auto;
+    height: 52em;
+  }
+  
   @media only screen and (max-width: 767px) {
     div {
       &#main, &#transaction, &#block {

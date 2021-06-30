@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { HTTP } from 'meteor/http';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Validators } from '/imports/api/validators/validators.js';
 import { ValidatorRecords } from '/imports/api/records/records.js';
@@ -21,13 +22,14 @@ export default ValidatorDetailsContainer = withTracker((props) => {
   let options = { address: props.address };
 
   let chainStatus;
+  let stakingParams;
   let validatorExist;
   let validator;
   let validatorRecords;
 
   if (Meteor.isServer || !loading) {
     if (props.address.indexOf(Meteor.settings.public.bech32PrefixValAddr) != -1) {
-      options = { operator_address: props.address };
+      options = { operator_address: props.address }
     }
     validator = Validators.findOne(options);
 
@@ -40,7 +42,8 @@ export default ValidatorDetailsContainer = withTracker((props) => {
     if (Meteor.isServer) {
       loading = false;
       validatorExist = !!validator && !!validatorRecords && !!chainStatus;
-    } else {
+    }
+    else {
       validatorExist = !loading && !!validator && !!validatorRecords && !!chainStatus;
     }
 

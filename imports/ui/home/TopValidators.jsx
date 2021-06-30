@@ -17,37 +17,28 @@ export default class TopValidators extends Component {
     };
   }
 
-  componentDidMount() {
-    const self = this;
-    self.timer = Meteor.setInterval(function() {
-      if (self.props.validators.length > 0) {
-        const validators = self.shuffle(self.props.validators);
-        validators.splice(10, validators.length - 10);
-        // console.log(validators);
-        self.setState({
-          validators: validators.map((validator, i) => (
-            <tr key={i}>
-              <td>
-                <Link to={`/validator/${validator.address}`}>
-                  <Avatar moniker={validator.description.moniker} profileUrl={validator.profile_url} address={validator.address} list />
-                  {validator.description.moniker}
-                </Link>
-              </td>
-              <td className="voting-power">
-                {numbro(validator.voting_power).format('0,0')}
-              </td>
-              <td>
-                <Progress animated value={validator.uptime}>
-                  {validator.uptime ? validator.uptime.toFixed(2) : 0}
-                  %
-                </Progress>
-              </td>
-            </tr>
-          )),
-        });
-      }
-    }, 5000);
-  }
+    componentDidMount(){
+        let self = this;
+        self.timer = Meteor.setInterval(function(){
+            if (self.props.validators.length> 0){
+                let validators = self.shuffle(self.props.validators);
+                validators.splice(10, validators.length-10);
+                // console.log(validators);
+                self.setState({
+                    validators: validators.map((validator, i ) => {
+                        return <tr key={i}>
+                            <td><Link to={"/validator/"+validator.address}>
+                                <Avatar moniker={validator.description.moniker} profileUrl={validator.profile_url} address={validator.address} list={true} />
+                                {validator.description.moniker}
+                            </Link></td>
+                            <td className="voting-power">{numbro(Math.floor(validator.tokens/Meteor.settings.public.powerReduction)).format('0,0')}</td>
+                            <td><Progress animated value={validator.uptime}>{validator.uptime?validator.uptime.toFixed(2):0}%</Progress></td>
+                        </tr>
+                    })
+                })
+            }
+        },5000);
+    }
 
   componentWillUnmount() {
     Meteor.clearInterval(this.timer);
