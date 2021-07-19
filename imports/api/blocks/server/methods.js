@@ -224,6 +224,7 @@ Meteor.methods({
             catch (e) {
                 console.log(url);
                 console.log(e);
+                SYNCING = false;
                 return "failed to sync: " + e;
             }
 
@@ -331,6 +332,7 @@ Meteor.methods({
                     }
                     catch (e) {
                         console.log("failed to get validator set at height %o: %o", height, e)
+                        SYNCING = false;
                         return "failed to get validator set"
                     }
 
@@ -417,7 +419,7 @@ Meteor.methods({
                         let genesisTime = new Date(Meteor.settings.public.genesisTime);
                         timeDiff = Math.abs(dateLatest.getTime() - dateLast.getTime());
                         // blockTime = (chainStatus.blockTime * (blockData.height - 1) + timeDiff) / blockData.height;
-                        blockTime = (dateLatest.getTime() - genesisTime.getTime()) / blockData.height;
+                        blockTime = (dateLatest.getTime() - genesisTime.getTime()) / (blockData.height - Meteor.settings.params.startHeight);
                     }
 
                     let endGetValidatorsTime = new Date();
