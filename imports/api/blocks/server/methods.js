@@ -419,7 +419,7 @@ Meteor.methods({
                         let genesisTime = new Date(Meteor.settings.public.genesisTime);
                         timeDiff = Math.abs(dateLatest.getTime() - dateLast.getTime());
                         // blockTime = (chainStatus.blockTime * (blockData.height - 1) + timeDiff) / blockData.height;
-                        blockTime = (dateLatest.getTime() - genesisTime.getTime()) / blockData.height;
+                        blockTime = (dateLatest.getTime() - genesisTime.getTime()) / (blockData.height - Meteor.settings.params.startHeight);
                     }
 
                     let endGetValidatorsTime = new Date();
