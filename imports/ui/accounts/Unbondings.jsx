@@ -19,7 +19,7 @@ export default class AccountUnbondings extends Component {
     return (
       <Card>
         <CardHeader>
-          {(numUnbondings > 0) ? numUnbondings : <T>accounts.no</T>}
+          {(numUnbondings > 0) ? numUnbondings + " " : <T>accounts.no</T>}
           <T>accounts.unbonding</T>
           {(numUnbondings > 1) ? <T>accounts.plural</T> : ''}
         </CardHeader>
