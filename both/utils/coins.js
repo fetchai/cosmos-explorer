@@ -19,7 +19,11 @@ export default class Coin {
         );
 
         if (!this._coin) {
-            throw "no coin with denom '" + denom + "' from settings"
+            this._coin = {
+                "denom": denom,
+                "displayName": denom,
+                "fraction": 1,
+            };
         }
 
         // denom => afet
