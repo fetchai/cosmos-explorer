@@ -224,6 +224,7 @@ Meteor.methods({
             catch (e) {
                 console.log(url);
                 console.log(e);
+                SYNCING = false;
                 return "failed to sync: " + e;
             }
 
@@ -331,6 +332,7 @@ Meteor.methods({
                     }
                     catch (e) {
                         console.log("failed to get validator set at height %o: %o", height, e)
+                        SYNCING = false;
                         return "failed to get validator set"
                     }
 
