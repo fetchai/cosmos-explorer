@@ -252,11 +252,11 @@ export default class Validator extends Component {
                                     <Col sm={4} className="label"><T>validators.proposerPriority</T></Col>
                                     <Col sm={8} className="value">{this.props.validator.proposer_priority ? numbro(this.props.validator.proposer_priority).format('0,0') : 'N/A'}</Col>
                                     <Col sm={4} className="label"><T>validators.delegatorShares</T></Col>
-                                    <Col sm={8} className="value">{numbro(this.props.validator.delegator_shares).format('0,0.00')}</Col>
+                                    <Col sm={8} className="value">{numbro(this.props.validator.delegator_shares).format('0,0')}</Col>
                                     {(this.state.currentUserDelegation) ? <Col sm={4} className="label"><T>validators.userDelegateShares</T></Col> : ''}
-                                    {(this.state.currentUserDelegation) ? <Col sm={8} className="value">{numbro(this.state.currentUserDelegation.delegation.shares).format('0,0.00')}</Col> : ''}
+                                    {(this.state.currentUserDelegation) ? <Col sm={8} className="value">{numbro(this.state.currentUserDelegation.delegation.shares).format('0,0')}</Col> : ''}
                                     <Col sm={4} className="label"><T>validators.tokens</T></Col>
-                                    <Col sm={8} className="value">{numbro(this.props.validator.tokens).format('0,0.00')}</Col>
+                                    <Col sm={8} className="value">{numbro(this.props.validator.tokens).format('0,0')}</Col>
                                     {(this.props.validator.jailed) ? <Col xs={12} >
                                         <Row><Col md={4} className="label"><T>validators.unbondingHeight</T></Col>
                                             <Col md={8} className="value">{numbro(this.props.validator.unbonding_height).format('0,0')}</Col>
