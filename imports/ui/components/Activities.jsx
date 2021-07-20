@@ -59,7 +59,7 @@ export default class Activites extends Component {
             case "/cosmos.staking.v1beta1.MsgCreateValidator":
                 return <p><Account address={msg.delegator_address} /> {(this.props.invalid) ? <T>activities.failedTo</T> : ''}<MsgType type={msg["@type"]} /> <T>activities.operatingAt</T> <span className="address"><Account address={msg.validator_address} /></span> <T>activities.withMoniker</T> <Link to="#">{msg.description.moniker}</Link><T>common.fullStop</T></p>
             case "/cosmos.staking.v1beta1.MsgEditValidator":
-                return <p><Account address={msg.address} /> {(this.props.invalid) ? <T>activities.failedTo</T> : ''}<MsgType type={msg["@type"]} /></p>
+                return <p><Account address={msg.validator_address} /> {(this.props.invalid) ? <T>activities.failedTo</T> : ''}<MsgType type={msg["@type"]} /></p>
             case "/cosmos.staking.v1beta1.MsgDelegate":
                 return <p><Account address={msg.delegator_address} /> {(this.props.invalid) ? <T>activities.failedTo</T> : ''}<MsgType type={msg["@type"]} /> <span className="text-warning">{new Coin(msg.amount.amount, msg.amount.denom).toString()}</span> <T>activities.to</T> <Account address={msg.validator_address} /><T>common.fullStop</T></p>
             case "/cosmos.staking.v1beta1.MsgUndelegate":
