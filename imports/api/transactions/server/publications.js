@@ -23,18 +23,17 @@ publishComposite('transactions.list', function (limit = 30) {
 });
 
 publishComposite('transactions.validator', function (validatorAddress, delegatorAddress, limit = 100) {
-    let query = {};
-    if (validatorAddress && delegatorAddress) {
-        query = { $or: [{ "tx_response.logs.events.attributes.value": validatorAddress }, { "tx_response.logs.events.attributes.value": delegatorAddress }] }
+    let filters = [];
+    if (delegatorAddress) {
+        filters.push({ "tx_response.logs.events.attributes.value": delegatorAddress });
     }
-
-    if (!validatorAddress && delegatorAddress) {
-        query = { "tx_response.logs.events.attributes.value": delegatorAddress }
+    if (validatorAddress) {
+        filters.push({ "tx_response.logs.events.attributes.value": validatorAddress });
     }
 
     return {
         find() {
-            return Transactions.find(query, { sort: { height: -1 }, limit: limit })
+            return Transactions.find({ $or: filters }, { sort: { height: -1 }, limit: limit })
         },
         children: [
             {
