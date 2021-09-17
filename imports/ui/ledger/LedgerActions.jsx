@@ -102,14 +102,28 @@ const TypeMeta = {
 
 const CoinAmount = (props) => {
     if (!props.coin && !props.amount) return null;
-    let coin = props.coin || new Coin(props.amount, props.denom);
+    let amount = props.amount;
+    if (Array.isArray(amount)) {
+        amount = amount[0].amount;
+    } 
+    if (typeof amount == 'object' && !(amount instanceof Big)) {
+        amount = amount.amount;
+    }
+    let coin = props.coin || new Coin(amount, props.denom);
     return <span><span className={props.className || 'coin'}>{coin.toString()}</span> </span>
 }
 
 
 const Amount = (props) => {
     if (!props.coin && !props.amount) return null;
-    let coin = props.coin || new Coin(props.amount, props.denom);
+    let amount = props.amount;
+    if (Array.isArray(amount)) {
+        amount = amount[0].amount;
+    } 
+    if (typeof amount == 'object' && !(amount instanceof Big)) {
+        amount = amount.amount;
+    }
+    let coin = props.coin || new Coin(amount, props.denom);
     return <span><span className={props.className || 'amount'}>{coin.toString()}</span></span>
 }
 
