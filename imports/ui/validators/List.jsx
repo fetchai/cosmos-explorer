@@ -8,6 +8,9 @@ import TimeStamp from '../components/TimeStamp.jsx';
 import SentryBoundary from '../components/SentryBoundary.jsx';
 import Big from 'big.js';
 
+// disable scientific notation usage
+Big.NE = -1e+6
+Big.PE = +1e+6
 
 const ValidatorRow = (props) => {
     let moniker = (props.validator.description && props.validator.description.moniker) ? props.validator.description.moniker : props.validator.address;

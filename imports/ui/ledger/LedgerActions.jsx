@@ -15,6 +15,10 @@ import TimeStamp from '../components/TimeStamp.jsx';
 import { PropTypes } from 'prop-types';
 import Big from 'big.js'
 
+// disable scientific notation usage
+Big.NE = -1e+6
+Big.PE = +1e+6
+
 const maxHeightModifier = {
     setMaxHeight: {
         enabled: true,
