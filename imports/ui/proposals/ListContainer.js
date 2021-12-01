@@ -1,15 +1,14 @@
-import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
-import { Proposals } from '/imports/api/proposals/proposals.js';
-import List from './List.jsx';
+import { Meteor } from "meteor/meteor";
+import { withTracker } from "meteor/react-meteor-data";
+import { Proposals } from "/imports/api/proposals/proposals.js";
+import List from "./List.jsx";
 
 export default ProposalListContainer = withTracker((props) => {
-  let proposalsHandle; let proposals; let
-    proposalsExist;
+  let proposalsHandle, proposals, proposalsExist;
   let loading = true;
 
   if (Meteor.isClient) {
-    proposalsHandle = Meteor.subscribe('proposals.list');
+    proposalsHandle = Meteor.subscribe("proposals.list");
     loading = !proposalsHandle.ready();
   }
 
