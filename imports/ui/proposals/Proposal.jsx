@@ -66,17 +66,16 @@ export default class Proposal extends Component{
 
     componentDidUpdate(prevProps){
         if (this.props.proposal != prevProps.proposal){
-            // console.log(this.props.proposal.value);
             this.setState({
                 proposal: this.props.proposal,
                 deposit: <div>{this.props.proposal.total_deposit?this.props.proposal.total_deposit.map((deposit, i) => {
-                    return <div key={i}>{new Coin(deposit.amount, deposit.denom).toString()}</div>
+                    return <div key={i}>{new Coin(deposit.amount, deposit.denom).toString(6)}</div>
                 }):''} </div>
             });
 
             let now = moment();
             const powerReduction = Meteor.settings.public.powerReduction || Coin.StakingCoin.fraction;
-            let totalVotingPower = this.props.chain.activeVotingPower * powerReduction;
+            let totalVotingPower = (this.props.activeVotingPower || this.props.chain.activeVotingPower) * powerReduction;
             if (this.props.proposal.voting_start_time != '0001-01-01T00:00:00Z'){
                 if (now.diff(moment(this.props.proposal.voting_start_time)) > 0){
                     let endVotingTime = moment(this.props.proposal.voting_end_time);
@@ -97,7 +96,7 @@ export default class Proposal extends Component{
                             abstainPercent: (totalVotes>0)?parseInt(this.props.proposal.tally.abstain)/totalVotes*100:0,
                             noPercent: (totalVotes>0)?parseInt(this.props.proposal.tally.no)/totalVotes*100:0,
                             noWithVetoPercent: (totalVotes>0)?parseInt(this.props.proposal.tally.no_with_veto)/totalVotes*100:0,
-                            proposalValid: (this.state.totalVotes/totalVotingPower > parseFloat(this.props.chain.gov.tallyParams.quorum))?true:false
+                            proposalValid: (this.state.totalVotes/totalVotingPower > parseFloat(this.props.chain.gov.tally_params.quorum))?true:false
                         })
                     }
                     else{
@@ -116,7 +115,7 @@ export default class Proposal extends Component{
                             abstainPercent: (totalVotes>0)?parseInt(this.props.proposal.final_tally_result.abstain)/totalVotes*100:0,
                             noPercent: (totalVotes>0)?parseInt(this.props.proposal.final_tally_result.no)/totalVotes*100:0,
                             noWithVetoPercent: (totalVotes>0)?parseInt(this.props.proposal.final_tally_result.no_with_veto)/totalVotes*100:0,
-                            proposalValid: (this.state.totalVotes/totalVotingPower > parseFloat(this.props.chain.gov.tallyParams.quorum))?true:false
+                            proposalValid: (this.state.totalVotes/totalVotingPower > parseFloat(this.props.chain.gov.tally_params.quorum))?true:false
                         })
                     }
                 }
@@ -263,7 +262,7 @@ export default class Proposal extends Component{
                         </Col>
                         <Col className="voting-power-percent data" md={3}>
                             <i className="material-icons d-md-none">equalizer</i>
-                            {(vote.votingPower!==undefined)?numbro(vote.votingPower/this.state.totalVotes).format('0,0.00%'):""}
+                            {(vote.votingPower!==undefined)?numbro(vote.votingPower/this.state.totalVotes).format('0,0.000000%'):""}
                         </Col>
                     </Row></Card>
                 )}
@@ -280,7 +279,7 @@ export default class Proposal extends Component{
                 // console.log(this.state.proposal);
                 const proposalId = Number(this.props.proposal.proposalId), maxProposalId = Number(this.props.proposalCount);
                 const powerReduction = Meteor.settings.public.powerReduction || Coin.StakingCoin.fraction;
-                let totalVotingPower = this.props.chain.activeVotingPower * powerReduction;
+                let totalVotingPower = (this.props.activeVotingPower || this.props.chain.activeVotingPower) * powerReduction;
                 let proposalType = this.props.proposal.content["@type"].split('.');
                 proposalType = proposalType[proposalType.length-1].match(/[A-Z]+[^A-Z]*|[^A-Z]+/g).join(" ");
 
@@ -294,7 +293,7 @@ export default class Proposal extends Component{
                         <Row className="mb-2 border-top">
                             <Col md={3} className="label"><T>proposals.proposalID</T></Col>
                             <Col md={this.state.user?6:9} className="value">{this.props.proposal.proposalId}</Col>
-                            {/* {this.state.user?<Col md={3}><ProposalActionButtons history={this.props.history} proposalId={proposalId}/></Col>:null} */}
+                            {/* {(this.state.user && !this.state.voteEnded) ?<Col md={3}><ProposalActionButtons history={this.props.history} proposalId={proposalId}/></Col>:null} */}
                         </Row>
                         <Row className="mb-2 border-top">
                             <Col md={3} className="label"><T>proposals.proposer</T></Col>
@@ -316,7 +315,7 @@ export default class Proposal extends Component{
                         {(this.props.proposal.content.type === 'cosmos-sdk/CommunityPoolSpendProposal')?<Row className="mb-2 border-top">
                             <Col md={3} className="label"><T>proposals.amount</T></Col>
                             <Col md={9} className="value"> {this.props.proposal.content.amount.map((amount, j) => {
-                                return <div key={j}>{new Coin(amount.amount, amount.denom).toString()}</div>
+                                return <div key={j}>{new Coin(amount.amount, amount.denom).toString(6)}</div>
                             })}</Col> 
                         </Row>:null}
                         <Row className="mb-2 border-top">
@@ -338,7 +337,7 @@ export default class Proposal extends Component{
                                             return <li key={i}>
                                                 <Account address={deposit.depositor} />
                                                 {deposit.amount.map((amount, j) => {
-                                                    return <div key={j}>{new Coin(amount.amount, amount.denom).toString()}</div>
+                                                    return <div key={j}>{new Coin(amount.amount, amount.denom).toString(6)}</div>
                                                 })}
                                             </li>
                                         }):''}
@@ -439,7 +438,7 @@ export default class Proposal extends Component{
                                         <Card body className="tally-info">
                                             <em>
                                                 <T _purify={false} percent={numbro(this.state.totalVotes/totalVotingPower).format("0.00%")}>proposals.percentageVoted</T><br/>
-                                                {this.state.proposalValid?<T _props={{className:'text-success'}} tentative={(!this.state.voteEnded)?'(tentatively) ':''} _purify={false}>proposals.validMessage</T>:(this.state.voteEnded)?<T _props={{className:'text-danger'}} quorum={numbro(this.props.chain.gov.tallyParams.quorum).format("0.00%")} _purify={false}>proposals.invalidMessage</T>:<T moreVotes={numbro((totalVotingPower*this.props.chain.gov.tallyParams.quorum-this.state.totalVotes)/Meteor.settings.public.powerReduction).format("0,0")} _purify={false}>proposals.moreVoteMessage</T>}
+                                                {this.state.proposalValid?<T _props={{className:'text-success'}} tentative={(!this.state.voteEnded)?'(tentatively) ':''} _purify={false}>proposals.validMessage</T>:(this.state.voteEnded)?<T _props={{className:'text-danger'}} quorum={numbro(this.props.chain.gov.tally_params.quorum).format("0.00%")} _purify={false}>proposals.invalidMessage</T>:<T moreVotes={numbro((totalVotingPower*this.props.chain.gov.tally_params.quorum-this.state.totalVotes)/Meteor.settings.public.powerReduction).format("0,0")} _purify={false}>proposals.moreVoteMessage</T>}
                                             </em>
                                         </Card>
                                     </Col>
