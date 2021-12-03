@@ -14,6 +14,8 @@ import numbro from 'numbro';
 import TimeStamp from '../components/TimeStamp.jsx';
 import { PropTypes } from 'prop-types';
 import Big from 'big.js'
+import { GasPrice, SigningStargateClient } from "@cosmjs/stargate";
+import { VoteOption } from "cosmjs-types/cosmos/gov/v1beta1/gov.js";
 
 // disable scientific notation usage
 Big.NE = -1e+6
@@ -992,18 +994,75 @@ class ProposalActionButtons extends LedgerButton {
             <Input name="memo" onChange={this.handleInputChange}
                 placeholder="Memo(optional)" type="textarea" value={this.state.memo} />
         </TabPane>
-
     }
 
-    /*getSimulateBody (txMsg) {
-        txMsg = txMsg && txMsg.value && txMsg.value.msg &&
-            txMsg.value.msg.length && txMsg.value.msg[0].value || {}
-        return {...txMsg.content.value,
-            initial_deposit: txMsg.initial_deposit,
-            proposer: txMsg.proposer,
-            proposal_type: "text"
+    simulate = () => {
+        this.setStateOnSuccess('simulating', {
+            gasEstimate: 200000,
+            activeTab: '3',
+        })
+    }
+    
+    sign = () => {
+        if (this.state.signing) return
+        try {
+            this.initStateOnLoad('signing')
+            const txCtx = this.getTxContext()
+            
+            let voteOpt = VoteOption.UNRECOGNIZED
+            switch (this.state.voteOption) {
+                case "Yes":
+                    voteOpt = VoteOption.VOTE_OPTION_YES
+                    break;
+                case "No":
+                    voteOpt = VoteOption.VOTE_OPTION_NO
+                    break;
+                case "NoWithVeto":
+                    voteOpt = VoteOption.VOTE_OPTION_NO_WITH_VETO
+                    break;
+                case "Abstain":
+                    voteOpt = VoteOption.VOTE_OPTION_ABSTAIN
+                    break;
+                default:
+                    throw new Exception("invalide vote option: " + this.state.voteOption);
+            }
+            
+            const voteMsg = {
+                typeUrl: "/cosmos.gov.v1beta1.MsgVote",
+                value: {
+                    proposalId: this.props.proposalId.toString(),
+                    voter: txCtx.bech32,
+                    option: voteOpt,
+                }
+            };
+            const fees = {
+                amount: [{
+                    denom: txCtx.denom,
+                    amount: Big(this.state.gasEstimate * Meteor.settings.public.ledger.gasPrice).round(0, Big.roundUp).toString(),
+                }],
+                gas: this.state.gasEstimate.toString(),
+            };
+            SigningStargateClient.connectWithSigner(
+                "http://localhost:26657", // TODO get that from cfg
+                this.ledger,
+                { prefix: "fetch", gasPrice: GasPrice.fromString("" + Meteor.settings.public.ledger.gasPrice + txCtx.denom) }
+            ).then((client) => {
+                client.signAndBroadcast(
+                    txCtx.bech32,
+                    [voteMsg],
+                    fees,
+                    txCtx.memo,
+                ).then((response) => {
+                    this.setStateOnSuccess('signing', {
+                        txHash: response.transactionHash,
+                        activeTab: '4'
+                    })
+                });
+            })
+        } catch (e) {
+            this.setStateOnError('signing', e.message)
         }
-    }*/
+    }
 
     getPath = () => {
         let { pathPreFix, pathSuffix } = TypeMeta[this.state.actionType];
