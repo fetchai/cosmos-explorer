@@ -978,14 +978,16 @@ class ProposalActionButtons extends LedgerButton {
                 break;
             case Types.DEPOSIT:
                 title = `Deposit to Proposal ${this.props.proposalId}`
-                inputs = (<InputGroup>
-                    <Input name="depositAmount" onChange={this.handleInputChange}
-                        data-type='coin' placeholder="Amount"
-                        min={Coin.MinStake} max={maxAmount.stakingAmount} type="number"
-                        invalid={this.state.depositAmount != null && !isBetween(this.state.depositAmount, 1, maxAmount)} />
-                    <InputGroupAddon addonType="append">{Coin.StakingCoin.displayName}</InputGroupAddon>
+                inputs = (<div>
+                    <InputGroup>
+                        <Input name="depositAmount" onChange={this.handleInputChange}
+                            data-type='coin' placeholder="Amount"
+                            min={Coin.MinStake} max={maxAmount.stakingAmount} type="number"
+                            invalid={this.state.depositAmount != null && !isBetween(this.state.depositAmount, 1, maxAmount)} />
+                        <InputGroupAddon addonType="append">{Coin.StakingCoin.displayName}</InputGroupAddon>
+                    </InputGroup>
                     <div>your available balance: <Amount coin={maxAmount} /></div>
-                </InputGroup>)
+                </div>)
                 break;
         }
         return <TabPane tabId="2">
@@ -997,70 +999,115 @@ class ProposalActionButtons extends LedgerButton {
     }
 
     simulate = () => {
-        this.setStateOnSuccess('simulating', {
-            gasEstimate: 200000,
-            activeTab: '3',
-        })
+        switch (this.state.actionType) {
+        case Types.VOTE:
+            this.setStateOnSuccess('simulating', {
+                gasEstimate: 200000,
+                activeTab: '3',
+            });
+            break
+        default:    
+            if (this.state.simulating) return
+            this.initStateOnLoad('simulating')
+            try {
+                this.createMessage(this.runSimulatation);
+            } catch (e) {
+                this.setStateOnError('simulating', e.message)
+            }
+            break;
+        }
     }
     
     sign = () => {
-        if (this.state.signing) return
-        try {
-            this.initStateOnLoad('signing')
-            const txCtx = this.getTxContext()
-            
-            let voteOpt = VoteOption.UNRECOGNIZED
-            switch (this.state.voteOption) {
-                case "Yes":
-                    voteOpt = VoteOption.VOTE_OPTION_YES
-                    break;
-                case "No":
-                    voteOpt = VoteOption.VOTE_OPTION_NO
-                    break;
-                case "NoWithVeto":
-                    voteOpt = VoteOption.VOTE_OPTION_NO_WITH_VETO
-                    break;
-                case "Abstain":
-                    voteOpt = VoteOption.VOTE_OPTION_ABSTAIN
-                    break;
-                default:
-                    throw new Exception("invalide vote option: " + this.state.voteOption);
-            }
-            
-            const voteMsg = {
-                typeUrl: "/cosmos.gov.v1beta1.MsgVote",
-                value: {
-                    proposalId: this.props.proposalId.toString(),
-                    voter: txCtx.bech32,
-                    option: voteOpt,
+        switch (this.state.actionType) {
+        case Types.VOTE:
+            if (this.state.signing) return
+            try {
+                this.initStateOnLoad('signing')
+                const txCtx = this.getTxContext()
+                
+                let voteOpt = VoteOption.UNRECOGNIZED
+                switch (this.state.voteOption) {
+                    case "Yes":
+                        voteOpt = VoteOption.VOTE_OPTION_YES
+                        break;
+                    case "No":
+                        voteOpt = VoteOption.VOTE_OPTION_NO
+                        break;
+                    case "NoWithVeto":
+                        voteOpt = VoteOption.VOTE_OPTION_NO_WITH_VETO
+                        break;
+                    case "Abstain":
+                        voteOpt = VoteOption.VOTE_OPTION_ABSTAIN
+                        break;
+                    default:
+                        throw new Error("invalide vote option: " + this.state.voteOption);
                 }
-            };
-            const fees = {
-                amount: [{
-                    denom: txCtx.denom,
-                    amount: Big(this.state.gasEstimate * Meteor.settings.public.ledger.gasPrice).round(0, Big.roundUp).toString(),
-                }],
-                gas: this.state.gasEstimate.toString(),
-            };
-            SigningStargateClient.connectWithSigner(
-                "http://localhost:26657", // TODO get that from cfg
-                this.ledger,
-                { prefix: "fetch", gasPrice: GasPrice.fromString("" + Meteor.settings.public.ledger.gasPrice + txCtx.denom) }
-            ).then((client) => {
-                client.signAndBroadcast(
-                    txCtx.bech32,
-                    [voteMsg],
-                    fees,
-                    txCtx.memo,
-                ).then((response) => {
-                    this.setStateOnSuccess('signing', {
-                        txHash: response.transactionHash,
-                        activeTab: '4'
-                    })
-                });
-            })
-        } catch (e) {
-            this.setStateOnError('signing', e.message)
+                
+                const voteMsg = {
+                    typeUrl: "/cosmos.gov.v1beta1.MsgVote",
+                    value: {
+                        proposalId: this.props.proposalId.toString(),
+                        voter: txCtx.bech32,
+                        option: voteOpt,
+                    }
+                };
+                const fees = {
+                    amount: [{
+                        denom: txCtx.denom,
+                        amount: Big(this.state.gasEstimate * Meteor.settings.public.ledger.gasPrice).round(0, Big.roundUp).toString(),
+                    }],
+                    gas: this.state.gasEstimate.toString(),
+                };
+                SigningStargateClient.connectWithSigner(
+                    "http://localhost:26657", // TODO get that from cfg
+                    this.ledger,
+                    { prefix: "fetch", gasPrice: GasPrice.fromString("" + Meteor.settings.public.ledger.gasPrice + txCtx.denom) }
+                ).then((client) => {
+                    client.signAndBroadcast(
+                        txCtx.bech32,
+                        [voteMsg],
+                        fees,
+                        txCtx.memo,
+                    ).then((response) => {
+                        this.setStateOnSuccess('signing', {
+                            txHash: response.transactionHash,
+                            activeTab: '4'
+                        })
+                    });
+                })
+            } catch (e) {
+                this.setStateOnError('signing', e.message)
+            }
+            break;
+        default:
+            if (this.state.signing) return
+            this.initStateOnLoad('signing')
+            try {
+                let txMsg = this.state.txMsg;
+                const txContext = this.getTxContext();
+                const bytesToSign = Ledger.getBytesToSign(txMsg, txContext);
+                this.ledger.sign(bytesToSign, this.state.transportBLE).then((sig) => {
+                    try {
+                        Ledger.applySignature(txMsg, txContext, sig);
+                        Meteor.call('transaction.submit', txMsg, (err, res) => {
+                            if (err) {
+                                this.setStateOnError('signing', err.reason)
+                            } else if (res) {
+                                this.setStateOnSuccess('signing', {
+                                    txHash: res,
+                                    activeTab: '4'
+                                })
+                            }
+                        })
+                    } catch (e) {
+                        this.setStateOnError('signing', e.message)
+                    }
+                }, (err) => this.setStateOnError('signing', err.message))
+            } catch (e) {
+                this.setStateOnError('signing', e.message)
+            }
+            break;
         }
     }
 

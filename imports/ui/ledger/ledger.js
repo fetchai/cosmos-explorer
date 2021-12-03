@@ -303,10 +303,9 @@ export class Ledger {
     }
 
     const tmpCopy = Object.assign({}, unsignedTx, {});
-
     tmpCopy.value.signatures = [
       {
-        signature: secp256k1Sig.toString("base64"),
+        signature: Buffer.from(secp256k1Sig).toString("base64"),
         account_number: txContext.accountNumber.toString(),
         sequence: txContext.sequence.toString(),
         pub_key: {
@@ -498,11 +497,9 @@ export class Ledger {
       fromUtf8(serializeSignDoc(signDoc))
     );
     this.checkLedgerErrors(response);
-    console.log("1");
     // we have to parse the signature from Ledger as it's in DER format
     const signature = signatureImport(response.signature);
     const stdSignature = encodeSecp256k1Signature(account.pubKey, signature);
-    console.log(signDoc);
     return {
       signed: signDoc,
       signature: stdSignature,
