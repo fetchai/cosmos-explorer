@@ -447,6 +447,28 @@ class LedgerButton extends Component {
         this.initStateOnLoad('signing')
         try {
             let txMsg = this.state.txMsg;
+            // simulate still need the option string ("yes/no...")
+            // but broadcast want it as an int :)
+            if (this.state.actionType == Types.VOTE) {
+                switch (txMsg.value.msg[0].value.option) {
+                    case 'Yes':
+                        txMsg.value.msg[0].value.option = 1;
+                        break
+                    case 'Abstain':
+                        txMsg.value.msg[0].value.option = 2;
+                        break
+                    case 'No':
+                        txMsg.value.msg[0].value.option = 3;
+                        break
+                    case 'NoWithVeto':
+                        txMsg.value.msg[0].value.option = 4;
+                        break
+                    default:
+                        txMsg.value.msg[0].value.option = 0;
+                        break
+                }
+            }
+            
             const txContext = this.getTxContext();
             const bytesToSign = Ledger.getBytesToSign(txMsg, txContext);
             this.ledger.sign(bytesToSign, this.state.transportBLE).then((sig) => {
