@@ -74,7 +74,7 @@ Meteor.methods({
                 let page = 0;
 
                 do {
-                  url = RPC + `/validators?page=${++page}&per_page=100`;
+                  url = RPC + `/validators?page=${++page}&per_page=1000`;
                   let response = HTTP.get(url);
                   result = JSON.parse(response.content).result;
                   validators = [...validators, ...result.validators];
@@ -152,7 +152,11 @@ Meteor.methods({
               proposal.deposits = deposits;
             }
 
-            url = API + "/gov/proposals/" + proposals[i].proposalId + "/votes";
+            url =
+              API +
+              "/gov/proposals/" +
+              proposals[i].proposalId +
+              "/votes?limit=10000";
             response = HTTP.get(url);
             if (response.statusCode == 200) {
               let votes = JSON.parse(response.content).result;
