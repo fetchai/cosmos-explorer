@@ -1,0 +1,71 @@
+{
+    "public": {
+        "chainName": "capricorn-1",
+        "chainId": "capricorn-1",
+        "gtm": "",
+        "genesisTime": "2021-07-16T14:00:00Z",
+        "slashingWindow": 250,
+        "uptimeWindow": 250,
+        "initialPageSize": 30,
+        "secp256k1": false,
+        "bech32PrefixAccAddr": "fetch",
+        "bech32PrefixAccPub": "fetchpub",
+        "bech32PrefixValAddr": "fetchvaloper",
+        "bech32PrefixValPub": "fetchvaloperpub",
+        "bech32PrefixConsAddr": "fetchvalcons",
+        "bech32PrefixConsPub": "fetchvalconspub",
+        "tokenTap": true,
+        "tokenTapURL": "https://faucet-capricorn.fetch.ai/api/v3/claims",
+        "bondDenom": "atestfet",
+        "powerReduction": 1000000000000000000,
+        "coins": [
+            {
+                "denom": "atestfet",
+                "displayName": "TESTFET",
+                "fraction": 1000000000000000000
+            },
+            {
+                "denom": "nanomobx",
+                "displayName": "MOBX",
+                "fraction": 1000000000
+            }
+        ],
+        "ledger": {
+            "coinType": 118,
+            "appName": "Cosmos",
+            "appVersion": "2.16.0",
+            "gasPrice": 5000000000
+        },
+        "modules": {
+            "bank": true,
+            "supply": true,
+            "minting": true,
+            "gov": true,
+            "distribution": true
+        },
+        "coingeckoId": "",
+        "networks": "",
+        "banners": false
+    },
+    "remote": {
+        "rpc": "https://rpc-capricorn.fetch.ai",
+        "api": "https://rest-capricorn.fetch.ai"
+    },
+    "debug": {
+        "startTimer": true
+    },
+    "params": {
+        "startHeight": 159100,
+        "defaultBlockTime": 5000,
+        "validatorUpdateWindow": 300,
+        "blockInterval": 15000,
+        "transactionsInterval": 5000,
+        "keybaseFetchingInterval": 18000000,
+        "consensusInterval": 1000,
+        "statusInterval": 7500,
+        "signingInfoInterval": 1800000,
+        "proposalInterval": 5000,
+        "missedBlocksInterval": 60000,
+        "delegationInterval": 900000
+    }
+}
