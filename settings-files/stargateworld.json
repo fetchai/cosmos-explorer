@@ -29,7 +29,7 @@
       "coinType": 118,
       "appName": "Cosmos",
       "appVersion": "2.16.0",
-      "gasPrice": 0.02
+      "gasPrice": 5000000000
     },
     "modules": {
       "bank": true,
