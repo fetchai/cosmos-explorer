@@ -1,9 +1,9 @@
 {
   "public": {
-    "chainName": "fetchhub-2",
-    "chainId": "fetchhub-2",
+    "chainName": "fetchhub-4",
+    "chainId": "fetchhub-4",
     "gtm": "",
-    "genesisTime": "2021-09-16T14:00:00Z",
+    "genesisTime": "2022-04-05T14:00:00Z",
     "slashingWindow": 250,
     "uptimeWindow": 250,
     "initialPageSize": 30,
@@ -23,6 +23,11 @@
         "denom": "afet",
         "displayName": "FET",
         "fraction": 1000000000000000000
+      },
+      {
+        "denom": "nanomobx",
+        "displayName": "MOBX",
+        "fraction": 1000000000
       }
     ],
     "ledger": {
@@ -50,7 +55,7 @@
     "startTimer": true
   },
   "params": {
-    "startHeight": 2436701,
+    "startHeight": 5300201,
     "defaultBlockTime": 5000,
     "validatorUpdateWindow": 300,
     "blockInterval": 15000,
