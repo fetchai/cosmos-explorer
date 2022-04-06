@@ -32,7 +32,7 @@ jobs:
         env:
           SOURCE_TAG: ${{ steps.tag_name.outputs.SOURCE_TAG }} 
       - name: Setup GCloud
-        uses: google-github-actions/setup-gcloud@master
+        uses: google-github-actions/setup-gcloud@v0
         with:
           service_account_key: ${{ secrets.GCLOUD_KEY_IMAGES }}
       - name: Configure Docker
