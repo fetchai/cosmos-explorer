@@ -9,4 +9,5 @@ cd /opt/big_dipper/bundle/programs/server && npm install --production
 
 export PORT=3000
 export METEOR_SETTINGS="$(cat $METEOR_SETTINGS_FILE)"
-node /opt/big_dipper/bundle/main.js
+# --no-wasm-code-gc fix "archived threads in combination with wasm not supported" ¯\_(ツ)_/¯
+node --no-wasm-code-gc /opt/big_dipper/bundle/main.js

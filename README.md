@@ -48,12 +48,12 @@ This project is a fork from the excellent [Big Dipper](https://github.com/forbol
 
 ```sh
 meteor npm install --save
-meteor --settings settings.json
+SERVER_NODE_OPTIONS="--no-wasm-code-gc" meteor --settings settings.json
 ```
 
 ### Run via docker-compose
 ```sh
-METEOR_SETTINGS=$(cat settings.json) docker-compose up
+docker-compose up
 ```
 
 ### Run in production
