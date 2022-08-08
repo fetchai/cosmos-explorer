@@ -240,7 +240,7 @@ Meteor.methods({
                 this.unblock();
                 // let url = RPC+'/block?height=' + height;
 
-                url = `${API}/cosmos/base/tendermint/v1beta/blocks/${height}`;
+                url = `${API}/cosmos/base/tendermint/v1beta1/blocks/${height}`;
                 let analyticsData = {};
 
                 const bulkValidators = Validators.rawCollection().initializeUnorderedBulkOp();
