@@ -18,7 +18,7 @@ const fetchFromUrl = (url) => {
 Meteor.methods({
     'accounts.getAccountDetail': function (address) {
         this.unblock();
-        let url = API + '/auth/accounts/'+ address;
+        let url = API + '/cosmos/auth/v1beta1/accounts/'+ address;
         try{
             let available = HTTP.get(url);
             if (available.statusCode == 200){
@@ -31,7 +31,7 @@ Meteor.methods({
                     account = response.value.BaseVestingAccount.BaseAccount
 
                 try{
-                    url = API + '/bank/balances/' + address;
+                    url = API + '/cosmos/bank/v1beta1/balances/' + address;
                     response = HTTP.get(url);
                     let balances = JSON.parse(response.content).result;
                     account.coins = balances;

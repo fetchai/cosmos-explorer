@@ -51,7 +51,7 @@ Meteor.methods({
     this.unblock();
     let url = "";
     try {
-      url = API + "/blocks/latest";
+      url = API + "/cosmos/base/tendermint/v1beta1/blocks/latest";
       let response = HTTP.get(url);
       let latestBlock = JSON.parse(response.content);
 
