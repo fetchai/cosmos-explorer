@@ -118,7 +118,9 @@ Meteor.methods({
           if (Meteor.settings.public.modules.bank) {
             try {
               url =
-                API + "/cosmos/bank/v1beta1/supply/" + Coin.StakingCoin.denom;
+                API +
+                "/cosmos/bank/v1beta1/supply/by_denom?denom=" +
+                Coin.StakingCoin.denom;
               let response = HTTP.get(url);
               let supply = JSON.parse(response.content);
               chainStates.totalSupply = parseInt(supply.amount.amount);
