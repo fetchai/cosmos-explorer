@@ -23,20 +23,20 @@ Meteor.methods({
             let available = HTTP.get(url);
             if (available.statusCode == 200){
                 // return JSON.parse(available.content).account
-                let response = JSON.parse(available.content).result;
-                let account;
+                let response = JSON.parse(available.content);
+                let account = response.account;
                 if ((response.type === 'cosmos-sdk/Account') || (response.type === 'cosmos-sdk/BaseAccount'))
-                    account = response.value;
+                    account = response.account;
                 else if (response.type === 'cosmos-sdk/DelayedVestingAccount' || response.type === 'cosmos-sdk/ContinuousVestingAccount')
                     account = response.value.BaseVestingAccount.BaseAccount
 
                 try{
                     url = API + '/cosmos/bank/v1beta1/balances/' + address;
                     response = HTTP.get(url);
-                    let balances = JSON.parse(response.content).result;
+                    let balances = JSON.parse(response.content).balances;
                     account.coins = balances;
 
-                    if (account && account.account_number != null)
+                    if (account && account.account_number !== null)
                         return account
                     return null
                 }

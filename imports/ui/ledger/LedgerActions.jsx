@@ -72,10 +72,10 @@ const TypeMeta = {
     },
     [Types.WITHDRAW]: {
         button: 'withdraw',
-        pathPreFix: 'distribution/delegators',
+        pathPreFix: 'cosmos/distribution/v1beta1/delegators',
         pathSuffix: 'rewards',
         warning: '',
-        gasAdjustment: '1.6'
+        gasAdjustment: '1.5'
     },
     [Types.SEND]: {
         button: 'transfer',
@@ -83,24 +83,24 @@ const TypeMeta = {
         pathPreFix: 'bank/accounts',
         pathSuffix: 'transfers',
         warning: '',
-        gasAdjustment: '1.8'
+        gasAdjustment: '1.5'
     },
     [Types.SUBMITPROPOSAL]: {
         button: 'new',
         path: 'gov/proposals',
-        gasAdjustment: '1.4'
+        gasAdjustment: '1.5'
     },
     [Types.VOTE]: {
         button: 'vote',
         pathPreFix: 'gov/proposals',
         pathSuffix: 'votes',
-        gasAdjustment: '2.5'
+        gasAdjustment: '1.5'
     },
     [Types.DEPOSIT]: {
         button: 'deposit',
         pathPreFix: 'gov/proposals',
         pathSuffix: 'deposits',
-        gasAdjustment: '2'
+        gasAdjustment: '1.5'
     }
 }
 
@@ -427,7 +427,7 @@ class LedgerButton extends Component {
 
     runSimulatation = (txMsg, simulateBody) => {
         let gasAdjustment = TypeMeta[this.state.actionType].gasAdjustment || DEFAULT_GAS_ADJUSTMENT;
-        Meteor.call('transaction.simulate', simulateBody, this.state.user, this.state.currentUser.accountNumber, this.state.currentUser.sequence, this.getPath(), gasAdjustment, (err, res) => {
+        Meteor.call('transaction.simulate', txMsg, gasAdjustment, (err, res) => {
             if (res) {
                 Ledger.applyGas(txMsg, res, Meteor.settings.public.ledger.gasPrice, Coin.StakingCoin.denom);
                 this.setStateOnSuccess('simulating', {
@@ -790,26 +790,32 @@ class DelegationButtons extends LedgerButton {
 class WithdrawButton extends LedgerButton {
 
     createMessage = (callback) => {
-        Meteor.call('transaction.execute', { from: this.state.user }, this.getPath(), (err, res) => {
+        Meteor.call('get.rewards', this.state.user, (err, res) => {
             if (res) {
+                let allDelegatedValidators = [];
+                let operatorAddress = null;
+                for (let reward of res.rewards) {
+                    allDelegatedValidators.push(reward.validator_address);
+                }
                 Meteor.call('isValidator', this.state.user, (error, result) => {
                     if (result && result.operator_address) {
-                        res.value.msg.push({
-                            type: 'cosmos-sdk/MsgWithdrawValidatorCommission',
-                            value: { validator_address: result.operator_address }
-                        })
+                        operatorAddress = result.operator_address
                     }
-                    callback(res, res)
-                })
-            }
-            else {
+                    let txMsgs = Ledger.createWithdraw(
+                        this.getTxContext(),
+                        allDelegatedValidators,
+                        operatorAddress,
+                    );
+                    callback(txMsgs, this.getSimulateBody(txMsgs));
+                });
+            } else {
                 this.setState({
                     loading: false,
                     simulating: false,
-                    errorMessage: 'something went wrong'
-                })
+                    errorMessage: 'something went wrong ' + JSON.stringify(res),
+                });
             }
-        })
+        });
     }
 
     supportAction(action) {
