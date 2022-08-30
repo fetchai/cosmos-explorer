@@ -240,7 +240,7 @@ Meteor.methods({
                 this.unblock();
                 // let url = RPC+'/block?height=' + height;
 
-                url = `${API}/blocks/${height}`;
+                url = `${API}/cosmos/base/tendermint/v1beta1/blocks/${height}`;
                 let analyticsData = {};
 
                 const bulkValidators = Validators.rawCollection().initializeUnorderedBulkOp();
@@ -259,11 +259,11 @@ Meteor.methods({
                     let blockData = {};
                     let block = JSON.parse(response.content);
                     blockData.height = height;
-                    blockData.hash = block.block_id.hash;
+                    blockData.hash = Buffer.from(block.block_id.hash, "base64").toString("hex").toUpperCase();
                     blockData.transNum = block.block.data.txs ? block.block.data.txs.length : 0;
                     blockData.time = block.block.header.time;
-                    blockData.lastBlockHash = block.block.header.last_block_id.hash;
-                    blockData.proposerAddress = block.block.header.proposer_address;
+                    blockData.lastBlockHash = Buffer.from(block.block.header.last_block_id.hash, "base64").toString("hex").toUpperCase();
+                    blockData.proposerAddress = Buffer.from(block.block.header.proposer_address, "base64").toString("hex").toUpperCase();
                     blockData.validators = [];
 
 
@@ -365,7 +365,11 @@ Meteor.methods({
                         // console.log(precommits);
                         for (let i = 0; i < precommits.length; i++) {
                             if (precommits[i] != null) {
-                                blockData.validators.push(precommits[i].validator_address);
+                                blockData.validators.push(
+                                    precommits[i].validator_address
+                                        ? Buffer.from(precommits[i].validator_address, "base64").toString("hex").toUpperCase()
+                                        : null
+                                    );
                             }
                         }
 
@@ -389,7 +393,10 @@ Meteor.methods({
 
                             for (j in precommits) {
                                 if (precommits[j] != null) {
-                                    let precommitAddress = precommits[j].validator_address;
+                                    if (precommits[j].validator_address === null) {
+                                        continue;
+                                    }
+                                    let precommitAddress = Buffer.from(precommits[j].validator_address, "base64").toString("hex").toUpperCase();
                                     if (address == precommitAddress) {
                                         record.exists = true;
                                         bulkUpdateLastSeen.find({ address: precommitAddress }).upsert().updateOne({ $set: { lastSeen: blockData.time } });

@@ -1,6 +1,6 @@
 import { HTTP } from "meteor/http";
 import { Validators } from "../../validators/validators";
-
+import Big from "big.js";
 import {
   encodePubkey,
   makeAuthInfoBytes,
@@ -90,48 +90,66 @@ Meteor.methods({
       return data.txhash;
     }
   },
-  "transaction.execute": function (body, path) {
+  "get.rewards": function (delegatorBech32) {
     this.unblock();
-    const url = `${API}/${path}`;
-    data = {
-      base_req: {
-        ...body,
-        chain_id: Meteor.settings.public.chainId,
-        simulate: false,
-      },
-    };
-    let response = HTTP.post(url, { data });
+    const url = `${API}/cosmos/distribution/v1beta1/delegators/${delegatorBech32}/rewards`;
+    console.log("getDelegations", url);
+    let response = HTTP.get(url);
     if (response.statusCode == 200) {
       return JSON.parse(response.content);
     }
   },
-  "transaction.simulate": function (
-    txMsg,
-    from,
-    accountNumber,
-    sequence,
-    path,
-    adjustment = "1.2"
-  ) {
+  "transaction.simulate": function (txMsg, adjustment = "1.2") {
     this.unblock();
-    const url = `${API}/${path}`;
-    console.log(txMsg);
-    data = {
-      ...txMsg,
-      base_req: {
-        from: from,
-        chain_id: Meteor.settings.public.chainId,
-        gas_adjustment: adjustment,
-        account_number: accountNumber,
-        sequence: sequence.toString(),
-        simulate: true,
+    const url = `${API}/cosmos/tx/v1beta1/simulate`;
+    let aminoTypes = new AminoTypes({
+      ...createAuthzAminoConverters(),
+      ...createBankAminoConverters(),
+      ...createDistributionAminoConverters(),
+      ...createGovAminoConverters(),
+      ...createStakingAminoConverters("fetch"),
+      ...createIbcAminoConverters(),
+      ...createFreegrantAminoConverters(),
+    });
+    let legacyTx = txMsg.value;
+    console.log("simulate", JSON.stringify(legacyTx));
+    const signedTxBody = {
+      typeUrl: "/cosmos.tx.v1beta1.TxBody",
+      value: {
+        messages: legacyTx.msg.map((msg) => aminoTypes.fromAmino(msg)),
+        memo: legacyTx.memo,
       },
     };
-    console.log(url);
-    console.log(data);
+
+    let registry = new Registry(defaultRegistryTypes);
+    const signedTxBodyBytes = registry.encode(signedTxBody);
+    const pubkey = encodePubkey(legacyTx.signatures[0].pub_key);
+    const signedSequence = Int53.fromString(
+      legacyTx.signatures[0].sequence
+    ).toNumber();
+
+    const signedAuthInfoBytes = makeAuthInfoBytes(
+      [{ pubkey, sequence: signedSequence }],
+      [],
+      0,
+      SignMode.SIGN_MODE_LEGACY_AMINO_JSON
+    );
+
+    const rawTx = TxRaw.fromPartial({
+      bodyBytes: signedTxBodyBytes,
+      authInfoBytes: signedAuthInfoBytes,
+      signatures: legacyTx.signatures,
+    });
+
+    data = {
+      tx_bytes: toBase64(TxRaw.encode(rawTx).finish()),
+    };
     let response = HTTP.post(url, { data });
     if (response.statusCode == 200) {
-      return JSON.parse(response.content).gas_estimate;
+      return Big(JSON.parse(response.content).gas_info.gas_used)
+        .mul(Big(adjustment))
+        .round(0)
+        .toString();
     }
   },
   isValidator: function (address) {

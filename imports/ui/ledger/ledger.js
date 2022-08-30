@@ -429,6 +429,33 @@ export class Ledger {
     return Ledger.createSkeleton(txContext, [txMsg]);
   }
 
+  // Creates a new withdraw rewards tx based on the input parameters
+  // the function expects a complete txContext
+  // if operatorAddress is given, it will also withdraw commissions.
+  static createWithdraw(txContext, validatorsBech32, operatorAddress) {
+    let msgs = [];
+    for (let validatorBech32 of validatorsBech32) {
+      msgs.push({
+        type: "cosmos-sdk/MsgWithdrawDelegationReward",
+        value: {
+          delegator_address: txContext.bech32,
+          validator_address: validatorBech32,
+        },
+      });
+    }
+
+    if (operatorAddress) {
+      msgs.push({
+        type: "cosmos-sdk/MsgWithdrawValidatorCommission",
+        value: {
+          validator_address: operatorAddress,
+        },
+      });
+    }
+
+    return Ledger.createSkeleton(txContext, msgs);
+  }
+
   static createSubmitProposal(txContext, title, description, deposit) {
     const txMsg = {
       type: "cosmos-sdk/MsgSubmitProposal",
