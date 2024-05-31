@@ -1,60 +1,82 @@
 {
-    "public": {
-        "chainName": "eridanus-1",
-        "chainId": "eridanus-1",
-        "gtm": "",
-        "genesisTime": "2022-04-27T16:30:00Z",
-        "slashingWindow": 250,
-        "uptimeWindow": 250,
-        "initialPageSize": 30,
-        "secp256k1": false,
-        "bech32PrefixAccAddr": "asi",
-        "bech32PrefixAccPub": "asipub",
-        "bech32PrefixValAddr": "asivaloper",
-        "bech32PrefixValPub": "asivaloperpub",
-        "bech32PrefixConsAddr": "asivalcons",
-        "bech32PrefixConsPub": "asivalconspub",
-        "tokenTap": true,
-        "tokenTapURL": "https://faucet-eridanus-1.fetch.ai/api/v3/claims",
-        "bondDenom": "atestasi",
-        "powerReduction": 1000000000000000000,
-        "coins": [{"denom":"atestasi","displayName":"TESTASI","fraction":1000000000000000000},{"denom":"nanomobx","displayName":"MOBX","fraction":1000000000},{"denom":"ulrn","displayName":"LRN","fraction":1000000},{"denom":"nanonomx","displayName":"NOMX","fraction":1000000000}],
-        "ledger": {
-            "coinType": 118,
-            "appName": "Cosmos",
-            "appVersion": "2.16.0",
-            "gasPrice": 5000000000
-        },
-        "modules": {
-            "bank": true,
-            "supply": true,
-            "minting": true,
-            "gov": true,
-            "distribution": true
-        },
-        "coingeckoId": "",
-        "networks": "",
-        "banners": false
+  "public": {
+    "chainName": "eridanus-1",
+    "chainId": "eridanus-1",
+    "gtm": "",
+    "genesisTime": "2022-04-27T16:30:00Z",
+    "slashingWindow": 250,
+    "uptimeWindow": 250,
+    "initialPageSize": 30,
+    "secp256k1": false,
+    "bech32PrefixAccAddr": "asi",
+    "bech32PrefixAccPub": "asipub",
+    "bech32PrefixValAddr": "asivaloper",
+    "bech32PrefixValPub": "asivaloperpub",
+    "bech32PrefixConsAddr": "asivalcons",
+    "bech32PrefixConsPub": "asivalconspub",
+    "tokenTap": true,
+    "tokenTapURL": "https://faucet-eridanus-1.fetch.ai/api/v3/claims",
+    "bondDenom": "atestasi",
+    "powerReduction": 1000000000000000000,
+    "coins": [
+      {
+        "denom": "atestasi",
+        "displayName": "TESTASI",
+        "fraction": 1000000000000000000
+      },
+      {
+        "denom": "nanomobx",
+        "displayName": "MOBX",
+        "fraction": 1000000000
+      },
+      {
+        "denom": "ulrn",
+        "displayName": "LRN",
+        "fraction": 1000000
+      },
+      {
+        "denom": "nanonomx",
+        "displayName": "NOMX",
+        "fraction": 1000000000
+      }
+    ],
+    "ledger": {
+      "coinType": 118,
+      "appName": "Cosmos",
+      "appVersion": "2.16.0",
+      "gasPrice": 5000000000
     },
-    "remote": {
-        "rpc": "https://rpc-eridanus-1.t-v3-london.fetch-ai.com",
-        "api": "https://rest-eridanus-1.t-v3-london.fetch-ai.com"
+    "modules": {
+      "bank": true,
+      "supply": true,
+      "minting": true,
+      "gov": true,
+      "distribution": true
     },
-    "debug": {
-        "startTimer": true
-    },
-    "params": {
-        "startHeight": 1,
-        "defaultBlockTime": 5000,
-        "validatorUpdateWindow": 300,
-        "blockInterval": 15000,
-        "transactionsInterval": 5000,
-        "keybaseFetchingInterval": 18000000,
-        "consensusInterval": 1000,
-        "statusInterval": 7500,
-        "signingInfoInterval": 1800000,
-        "proposalInterval": 5000,
-        "missedBlocksInterval": 60000,
-        "delegationInterval": 900000
-    }
+    "coingeckoId": "",
+    "networks": "",
+    "banners": false
+  },
+  "remote": {
+    "rpc": "https://rpc-eridanus-1.t-v3-london.fetch-ai.com",
+    "api": "https://rest-eridanus-1.t-v3-london.fetch-ai.com"
+  },
+  "debug": {
+    "startTimer": true
+  },
+  "params": {
+    "startHeight": 1,
+    "defaultBlockTime": 5000,
+    "validatorUpdateWindow": 300,
+    "blockInterval": 15000,
+    "transactionsInterval": 5000,
+    "keybaseFetchingInterval": 18000000,
+    "consensusInterval": 1000,
+    "statusInterval": 7500,
+    "signingInfoInterval": 1800000,
+    "proposalInterval": 5000,
+    "missedBlocksInterval": 60000,
+    "delegationInterval": 900000
+  }
 }
+
