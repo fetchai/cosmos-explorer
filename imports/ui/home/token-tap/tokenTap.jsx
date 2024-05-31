@@ -56,7 +56,7 @@ export default class TokenTap extends Component {
 
     validCosmosAddress = (address) => {
 
-        return useBech32Config(defaultBech32Config("fetch"), () => {
+        return useBech32Config(defaultBech32Config(Meteor.settings.public.bech32PrefixAccAddr), () => {
             try {
                 AccAddress.fromBech32(address);
             } catch (e) {
